@@ -1,0 +1,82 @@
+{
+    "ticker": "BEAM",
+    "epochs": [
+        {
+            "epoch": 375,
+            "expected": 0.0052087,
+            "actual": 0,
+            "pool_stake": 6070759280,
+            "total_stake": 25174903471204236,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.0052087,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.0052087,
+            "epoch_cumulative_diff": -0.0052087
+        },
+        {
+            "epoch": 376,
+            "expected": 0.0057418,
+            "actual": 0,
+            "pool_stake": 6718032407,
+            "total_stake": 25272403210023564,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.0109505,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.0057418,
+            "epoch_cumulative_diff": -0.0109505
+        },
+        {
+            "epoch": 377,
+            "expected": 0.00737745,
+            "actual": 0,
+            "pool_stake": 8606127728,
+            "total_stake": 25197315592272395,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.01832795,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.00737745,
+            "epoch_cumulative_diff": -0.01832795
+        },
+        {
+            "epoch": 378,
+            "expected": 0.0074015,
+            "actual": 0,
+            "pool_stake": 8606526351,
+            "total_stake": 25116738054461618,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.02572945,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.0074015,
+            "epoch_cumulative_diff": -0.02572945
+        },
+        {
+            "epoch": 379,
+            "expected": 0.007418926849734820291305006604,
+            "actual": 0,
+            "pool_stake": 8606942784,
+            "total_stake": 25058875481572529,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.03314837684973482,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.00741892684973482,
+            "epoch_cumulative_diff": -0.03314837684973482
+        }
+    ],
+    "max_positive_diff": 0,
+    "max_negative_diff": 0.03314837684973482,
+    "cumulative_diff": -0.03314837684973482,
+    "cumulative_expected_blocks": 0.03314837684973482,
+    "cumulative_actual_blocks": 0,
+    "max_actual_blocks": 0,
+    "max_expected_blocks": 0.00741892684973482,
+    "current_lifetime_luck": 0.0,
+    "max_epoch_blocks": 0.00741892684973482,
+    "max_cumulative_diff": 0.03314837684973482,
+    "highest_lifetime_luck": 100.0,
+    "lowest_lifetime_luck": 0.0
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script>
+		var data_url = '/pools/{{pool_id}}/epochs';
+	</script>
+	<script type="text/javascript" src="../static/js/paper-full.min.js"></script>
+	<script type="text/javascript" src="../static/js/performance_chart.js"></script>
+	<style type="text/css">
+		html,
+		body {
+			margin: 0;
+			overflow: scroll;
+			height: 100%;
+			width: 200%;
+		}
+
+		/* Scale canvas with resize attribute to full size */
+		canvas[resize] {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+<body class="fullscreen">
+	<canvas resize="true" id="myCanvas" resize></canvas>
+</body>
+</html>

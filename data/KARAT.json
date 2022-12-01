@@ -1,0 +1,82 @@
+{
+    "ticker": "KARAT",
+    "epochs": [
+        {
+            "epoch": 375,
+            "expected": 0.00429652,
+            "actual": 0,
+            "pool_stake": 5007621258,
+            "total_stake": 25174903471204236,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.00429652,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.00429652,
+            "epoch_cumulative_diff": -0.00429652
+        },
+        {
+            "epoch": 376,
+            "expected": 0.0242229,
+            "actual": 0,
+            "pool_stake": 28341349595,
+            "total_stake": 25272403210023564,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.028519419999999997,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.0242229,
+            "epoch_cumulative_diff": -0.028519419999999997
+        },
+        {
+            "epoch": 377,
+            "expected": 0.194584,
+            "actual": 0,
+            "pool_stake": 226990868172,
+            "total_stake": 25197315592272395,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.22310342,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.194584,
+            "epoch_cumulative_diff": -0.22310342
+        },
+        {
+            "epoch": 378,
+            "expected": 0.195345,
+            "actual": 0,
+            "pool_stake": 227149433240,
+            "total_stake": 25116738054461618,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.41844842,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.195345,
+            "epoch_cumulative_diff": -0.41844842
+        },
+        {
+            "epoch": 379,
+            "expected": 0.1981953752730620257033303433,
+            "actual": 0,
+            "pool_stake": 229933019907,
+            "total_stake": 25058875481572529,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.616643795273062,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.19819537527306202,
+            "epoch_cumulative_diff": -0.616643795273062
+        }
+    ],
+    "max_positive_diff": 0,
+    "max_negative_diff": 0.616643795273062,
+    "cumulative_diff": -0.616643795273062,
+    "cumulative_expected_blocks": 0.616643795273062,
+    "cumulative_actual_blocks": 0,
+    "max_actual_blocks": 0,
+    "max_expected_blocks": 0.19819537527306202,
+    "current_lifetime_luck": 0.0,
+    "max_epoch_blocks": 0.19819537527306202,
+    "max_cumulative_diff": 0.616643795273062,
+    "highest_lifetime_luck": 100.0,
+    "lowest_lifetime_luck": 0.0
+}

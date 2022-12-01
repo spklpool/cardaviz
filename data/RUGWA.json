@@ -1,0 +1,56 @@
+{
+    "ticker": "RUGWA",
+    "epochs": [
+        {
+            "epoch": 377,
+            "expected": 0.000426581,
+            "actual": 0,
+            "pool_stake": 497623370,
+            "total_stake": 25197315592272395,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.000426581,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.000426581,
+            "epoch_cumulative_diff": -0.000426581
+        },
+        {
+            "epoch": 378,
+            "expected": 0.000427948,
+            "actual": 0,
+            "pool_stake": 497623370,
+            "total_stake": 25116738054461618,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.0008545289999999999,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.000427948,
+            "epoch_cumulative_diff": -0.0008545289999999999
+        },
+        {
+            "epoch": 379,
+            "expected": 0.0004289364381057008871250768948,
+            "actual": 0,
+            "pool_stake": 497623370,
+            "total_stake": 25058875481572529,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.0012834654381057007,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.0004289364381057009,
+            "epoch_cumulative_diff": -0.0012834654381057007
+        }
+    ],
+    "max_positive_diff": 0,
+    "max_negative_diff": 0.0012834654381057007,
+    "cumulative_diff": -0.0012834654381057007,
+    "cumulative_expected_blocks": 0.0012834654381057007,
+    "cumulative_actual_blocks": 0,
+    "max_actual_blocks": 0,
+    "max_expected_blocks": 0.0004289364381057009,
+    "current_lifetime_luck": 0.0,
+    "max_epoch_blocks": 0.0004289364381057009,
+    "max_cumulative_diff": 0.0012834654381057007,
+    "highest_lifetime_luck": 100.0,
+    "lowest_lifetime_luck": 0.0
+}

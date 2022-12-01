@@ -1,0 +1,43 @@
+{
+    "ticker": "FENRR",
+    "epochs": [
+        {
+            "epoch": 378,
+            "expected": 0.00088122,
+            "actual": 0,
+            "pool_stake": 1024693443,
+            "total_stake": 25116738054461618,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.00088122,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.00088122,
+            "epoch_cumulative_diff": -0.00088122
+        },
+        {
+            "epoch": 379,
+            "expected": 0.0008832550520902726894766807574,
+            "actual": 0,
+            "pool_stake": 1024693443,
+            "total_stake": 25058875481572529,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.0017644750520902728,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.0008832550520902727,
+            "epoch_cumulative_diff": -0.0017644750520902728
+        }
+    ],
+    "max_positive_diff": 0,
+    "max_negative_diff": 0.0017644750520902728,
+    "cumulative_diff": -0.0017644750520902728,
+    "cumulative_expected_blocks": 0.0017644750520902728,
+    "cumulative_actual_blocks": 0,
+    "max_actual_blocks": 0,
+    "max_expected_blocks": 0.0008832550520902727,
+    "current_lifetime_luck": 0.0,
+    "max_epoch_blocks": 0.0008832550520902727,
+    "max_cumulative_diff": 0.0017644750520902728,
+    "highest_lifetime_luck": 100.0,
+    "lowest_lifetime_luck": 0.0
+}

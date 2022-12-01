@@ -1,0 +1,69 @@
+{
+    "ticker": "MCO",
+    "epochs": [
+        {
+            "epoch": 376,
+            "expected": 0.0806,
+            "actual": 0,
+            "pool_stake": 94303785164,
+            "total_stake": 25272403210023564,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.0806,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -0.0806,
+            "epoch_cumulative_diff": -0.0806
+        },
+        {
+            "epoch": 377,
+            "expected": 1.42629,
+            "actual": 0,
+            "pool_stake": 1663823064820,
+            "total_stake": 25197315592272395,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 1.50689,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -1.42629,
+            "epoch_cumulative_diff": -1.50689
+        },
+        {
+            "epoch": 378,
+            "expected": 1.65955,
+            "actual": 0,
+            "pool_stake": 1929743951461,
+            "total_stake": 25116738054461618,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 3.16644,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -1.65955,
+            "epoch_cumulative_diff": -3.16644
+        },
+        {
+            "epoch": 379,
+            "expected": 2.063845232396683204694636597,
+            "actual": 0,
+            "pool_stake": 2394335217216,
+            "total_stake": 25058875481572529,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 5.2302852323966835,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -2.0638452323966834,
+            "epoch_cumulative_diff": -5.2302852323966835
+        }
+    ],
+    "max_positive_diff": 0,
+    "max_negative_diff": 5.2302852323966835,
+    "cumulative_diff": -5.2302852323966835,
+    "cumulative_expected_blocks": 5.2302852323966835,
+    "cumulative_actual_blocks": 0,
+    "max_actual_blocks": 0,
+    "max_expected_blocks": 2.0638452323966834,
+    "current_lifetime_luck": 0.0,
+    "max_epoch_blocks": 2.0638452323966834,
+    "max_cumulative_diff": 5.2302852323966835,
+    "highest_lifetime_luck": 100.0,
+    "lowest_lifetime_luck": 0.0
+}

@@ -1,0 +1,43 @@
+{
+    "ticker": "AURA",
+    "epochs": [
+        {
+            "epoch": 378,
+            "expected": 6.20905,
+            "actual": 0,
+            "pool_stake": 7219991428342,
+            "total_stake": 25116738054461618,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 6.20905,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -6.20905,
+            "epoch_cumulative_diff": -6.20905
+        },
+        {
+            "epoch": 379,
+            "expected": 6.77175,
+            "actual": 6,
+            "pool_stake": 7856110171020,
+            "total_stake": 25058875481572529,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 12.980781629331009,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": -6.771731629331009,
+            "epoch_cumulative_diff": -12.980781629331009
+        }
+    ],
+    "max_positive_diff": 0,
+    "max_negative_diff": 12.980781629331009,
+    "cumulative_diff": -12.980781629331009,
+    "cumulative_expected_blocks": 12.980781629331009,
+    "cumulative_actual_blocks": 0,
+    "max_actual_blocks": 0,
+    "max_expected_blocks": 6.771731629331009,
+    "current_lifetime_luck": 0.0,
+    "max_epoch_blocks": 6.771731629331009,
+    "max_cumulative_diff": 12.980781629331009,
+    "highest_lifetime_luck": 100.0,
+    "lowest_lifetime_luck": 0.0
+}

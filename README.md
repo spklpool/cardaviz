@@ -1,5 +1,5 @@
 # cardaviz
-Cardavis has a mission to provide the community with compelling visualizations to help them gain insights into the Cardano ecosystem.
+CardaviZ has a mission to provide the community with compelling visualizations to help them gain insights into the Cardano ecosystem.
 
 iT is a framework for visualizing Cardano blockchain data.  It is built on top of cardano-db-sync, but can incorporate data from other sources.  The initial implementation currently provides a visualization of stake pool performance.
 

@@ -1,5 +1,6 @@
 import simplejson as json
 
+#TODO: pull this directly from the single pool aliance repo and delete the copy in static
 def is_ticker_in_spa(ticker):
     with open("static/spa.json", encoding='utf-8') as data_file:
         spa_json = json.load(data_file)

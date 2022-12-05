@@ -15,6 +15,14 @@ python -m venv venv
 pip install -r requirements.txt
 source venv/bin/activate
 ```
+or on Windows, replace the last line with 
+```commandline
+venv\Scripts\activate.bat
+```
+And then run flask with:
+```commandline
+flask --app main run
+```
 After that, you should be able to load up this URL in a browser 
 http://127.0.0.1:5000/pools/spkl
 and see a performance visualization of the SPKL stake pool.
@@ -26,3 +34,4 @@ Then run the following to start updating the json files in the data folder conti
 ```commandline
 python update.py
 ```
+When you first run it, it might take a few minutes to a few hours depending on far behind the data in your data directory is.  Once it's caught up, it will only update as new blocks are inserted into the database. The updated data will be visible in the visualisations on the next refresh of your browser.

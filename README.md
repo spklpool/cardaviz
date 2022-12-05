@@ -1,5 +1,7 @@
 # cardaviz
-Cardaviz is a framework for visualizing Cardano blockchain data.  It is built on top of cardano-db-sync, but can incorporate data from other sources.  The initial implementation currently provides a visualization of stake pool performance.
+Cardavis has a mission to provide the community with compelling visualizations to help them gain insights into the Cardano ecosystem.
+
+iT is a framework for visualizing Cardano blockchain data.  It is built on top of cardano-db-sync, but can incorporate data from other sources.  The initial implementation currently provides a visualization of stake pool performance.
 
 ## Technical Implementation
 The application consists of a Flask app that serves HTML from templates, a Javascript library built on top of Paper.js and a Python script that pulls data from cardano-db-sync database, processes it for quick rendering in the UI and saves the processed data to json files that can be quickly served by a Flask route.

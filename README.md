@@ -27,6 +27,8 @@ After that, you should be able to load up this URL in a browser
 http://127.0.0.1:5000/pools/spkl
 and see a performance visualization of the SPKL stake pool.
 
+>Note:  this runs a development Flask server. Using it in a production environment would have severe security and perormance consequences.  Read up on how to run a production Flask server before exposing it to the world.
+
 ## Running data updates
 To run the data updates, you will need a postgresql database that is being updated with cardano-db-sync.  Open database.ini and fill in the information to connect to your database.
 

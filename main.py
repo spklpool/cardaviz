@@ -1,3 +1,5 @@
+import time
+
 
 from flask import Flask, render_template
 
@@ -18,8 +20,9 @@ def get_pool(pool_ticker):
 
 @app.route("/pools/<pool_ticker>/epochs")
 def get_pool_epochs(pool_ticker):
-    if len(pool_ticker) < 10:
-        pool_json_path = "data/" + pool_ticker.upper() + ".json"
-    return open(pool_json_path, "r").read()
+    start = time.time()
+    loaded_file = open("data/" + pool_ticker.upper() + ".json", "r").read()
+    print(f'Time: {time.time() - start}')
+    return loaded_file
 
 

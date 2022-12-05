@@ -94,6 +94,7 @@ function draw_if_data_finished_loading() {
     }
 }
 
+// The black background that fills the canvas.
 function draw_black_background() {
     var rect = new paper.Path.Rectangle({
         point: [0, 0],
@@ -105,6 +106,7 @@ function draw_black_background() {
     rect.fillColor = 'black';
 }
 
+// The dark grey lines that separate each epoch.
 function draw_epoch_separator_lines(number_of_epochs) {
     for (epoch = 0; epoch < number_of_epochs; epoch ++) {
 
@@ -129,6 +131,7 @@ function draw_epoch_separator_lines(number_of_epochs) {
     }
 }
 
+// the dark grey lines that separate each block.
 function draw_block_separator_lines(block_height) {
     for (height = 0; height < (middleY * 2); height += block_height) {
         var block_separator_path = new paper.Path();
@@ -138,6 +141,7 @@ function draw_block_separator_lines(block_height) {
     }
 }
 
+// Draws the expected and actual blocks, as well as the epoch and cumulative performance lines.
 function draw_epochs(pool_data, diff_path, block_offset, block_height, cumulative_diff_scaling_factor) {
     for (var epoch = 0; epoch < pool_data["epochs"].length; epoch++) {
         var epochBlockCount = parseFloat(pool_data["epochs"][epoch].actual);
@@ -188,6 +192,8 @@ function draw_epochs(pool_data, diff_path, block_offset, block_height, cumulativ
     }
 }
 
+// Creates the object that will form the yellow cumulative performance line by appending a couple points to it
+// for each epoch, then smoothing it out.
 function start_cumulative_path() {
     var cumulativeDiffPath = new paper.Path();
     cumulativeDiffPath.strokeColor = 'yellow';
@@ -195,6 +201,7 @@ function start_cumulative_path() {
     return cumulativeDiffPath;
 }
 
+// The main function that does all the drawing
 function drawPoolPerformanceChart(data) {
     var max_cumulative_diff_adjustment_buffer = 0.1;
     var blockHeight = middleY / (data.max_epoch_blocks + 1);
@@ -207,6 +214,9 @@ function drawPoolPerformanceChart(data) {
     drawLegend(document.documentElement.scrollLeft, legend_y, data['highest_lifetime_luck'], data['lowest_lifetime_luck'], data['current_lifetime_luck'], data["ticker"])
 }
 
+// Draws the axis on the right for the cumulative performance yellow line.
+// the values are scaled so that the cumulative performance line takes up the entire height so the values on the axis are
+// scaled accordingly.  Also, depending on how many blocks a pool produces, the height of a block also scales.
 function drawRightAxisLuckBar(max_epoch_blocks, middleY, block_height, max_cumulative_diff, total_expected_blocks, canvasRequiredWidth) {
     var desired_number_of_axis_text = 6;
     var axis_text_count = 2;
@@ -247,6 +257,9 @@ function drawRightAxisLuckBar(max_epoch_blocks, middleY, block_height, max_cumul
     }
 }
 
+// draws a legend in a semi transparent box.
+// all objects are originally drawn at 0,0 and then repositioned to where they should be
+// this is to make them fall in the same position later when we reposition them again when scrolling
 function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_luck, current_lifetime_luck, ticker) {
     if (legend_path == null) {
         var legend_rect = new paper.Rectangle([legend_x, legend_y], [legend_width, legend_height]);
@@ -259,7 +272,7 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
 
     if (ticker_text == null) {
         ticker_text = new paper.PointText({
-            point: [legend_x + 20, legend_y + 30],
+            point: [0, 0],
             content: "ticker: " + ticker,
             style: {
                 fontFamily: 'Courier New',
@@ -273,7 +286,7 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
 
     if (legend_expected_block_text == null) {
         legend_expected_block_text = new paper.PointText({
-            point: [legend_x + 50, legend_y + 60],
+            point: [0, 0],
             content: ': expected blocks',
             style: {
                 fontFamily: 'Courier New',
@@ -286,7 +299,7 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
     legend_expected_block_text.position = new Point(legend_x + 152.3, legend_y + 55);
 
     if (legend_expected_path == null) {
-        var legend_expected_rect = new paper.Rectangle([legend_x + 15, legend_y + 49], [blockWidth, 13]);
+        var legend_expected_rect = new paper.Rectangle([0, 0], [blockWidth, 13]);
         legend_expected_path = new paper.Path.Rectangle(legend_expected_rect, blockRounding);
         legend_expected_path.strokeColor = 'blue';
         legend_expected_path.strokeWidth = 2;
@@ -296,7 +309,7 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
 
     if (legend_actual_block_text == null) {
         legend_actual_block_text = new paper.PointText({
-            point: [legend_x + 50, legend_y + 90],
+            point: [0, 0],
             content: ': actual blocks ',
             style: {
                 fontFamily: 'Courier New',
@@ -309,7 +322,7 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
     legend_actual_block_text.position = new Point(legend_x + 147, legend_y + 85);
 
     if (legend_actual_path == null) {
-        var legend_actual_rect = new paper.Rectangle([legend_x + 30, legend_y + 79], [blockWidth, 13]);
+        var legend_actual_rect = new paper.Rectangle([0, 0], [blockWidth, 13]);
         legend_actual_path = new paper.Path.Rectangle(legend_actual_rect, blockRounding);
         legend_actual_path.fillColor = '#D3D3D3';
         legend_actual_path.strokeWidth = 2;
@@ -320,8 +333,8 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
         legend_green_path = new paper.Path();
         legend_green_path.strokeColor = 'green';
         legend_green_path.strokeWidth = 5;
-        legend_green_path.add(legend_x + 30, legend_y + 110);
-        legend_green_path.add(legend_x + 59, legend_y + 110);
+        legend_green_path.add(0, 0);
+        legend_green_path.add(29, 0);
     }
     legend_green_path.position = new Point(legend_x + 40, legend_y + 110);
 
@@ -329,8 +342,8 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
         legend_red_path = new paper.Path();
         legend_red_path.strokeColor = 'red';
         legend_red_path.strokeWidth = 5;
-        legend_red_path.add(legend_x + 30, legend_y + 120);
-        legend_red_path.add(legend_x + 59, legend_y + 120);
+        legend_red_path.add(0, 0);
+        legend_red_path.add(29, 0);
     }
     legend_red_path.position = new Point(legend_x + 40, legend_y + 120);
 
@@ -339,14 +352,14 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
         legend_cumulative_path = new paper.Path();
         legend_cumulative_path.strokeColor = 'yellow';
         legend_cumulative_path.strokeWidth = 5;
-        legend_cumulative_path.add(legend_x + 30, legend_y + 149);
-        legend_cumulative_path.add(legend_x + 59, legend_y + 149);
+        legend_cumulative_path.add(0, 0);
+        legend_cumulative_path.add(29, 0);
     }
     legend_cumulative_path.position = new Point(legend_x + 40, legend_y + 149);
 
     if (legend_performance_text == null) {
         legend_performance_text = new paper.PointText({
-            point: [legend_x + 50, legend_y + 120],
+            point: [0, 0],
             content: ": epoch performance",
             style: {
                 fontFamily: 'Courier New',
@@ -360,7 +373,7 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
 
     if (legend_green_text == null) {
         legend_green_text = new paper.PointText({
-            point: [legend_x + 270, legend_y + 120],
+            point: [0, 0],
             content: " over",
             style: {
                 fontFamily: 'Courier New',
@@ -374,7 +387,7 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
 
     if (legend_red_text == null) {
         legend_red_text = new paper.PointText({
-            point: [legend_x + 320, legend_y + 120],
+            point: [0, 0],
             content: " under",
             style: {
                 fontFamily: 'Courier New',
@@ -388,7 +401,7 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
 
     if (legend_cumulative_text == null) {
         legend_cumulative_text = new paper.PointText({
-            point: [legend_x + 50, legend_y + 153],
+            point: [0, 0],
             content: ": cumulative performance",
             style: {
                 fontFamily: 'Courier New',
@@ -402,7 +415,7 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
 
     if (legend_highest_luck_text == null) {
         legend_highest_luck_text = new paper.PointText({
-            point: [legend_x + 70, legend_y + 187],
+            point: [0, 0],
             content: 'highest performance : ' + highest_lifetime_luck.toFixed(2) + "%",
             style: {
                 fontFamily: 'Courier New',
@@ -416,7 +429,7 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
 
     if (legend_lowest_lifetime_luck_text == null) {
         legend_lowest_lifetime_luck_text = new paper.PointText({
-            point: [legend_x + 70, legend_y + 215],
+            point: [0, 0],
             content: 'lowest performance  : ' + lowest_lifetime_luck.toFixed(2) + "%",
             style: {
                 fontFamily: 'Courier New',
@@ -430,7 +443,7 @@ function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_l
 
     if (legend_current_lifetime_luck_text == null) {
         legend_current_lifetime_luck_text = new paper.PointText({
-            point: [legend_x + 70, legend_y + 242],
+            point: [0, 0],
             content: 'current performance : ' + current_lifetime_luck.toFixed(2) + "%",
             style: {
                 fontFamily: 'Courier New',

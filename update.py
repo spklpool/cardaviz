@@ -372,8 +372,44 @@ def get_pool_metadata_url(pool_id):
             conn.close()
     return ret
 
+
+def refresh_most_stale_pool_for_epoch(epoch):
+    directory = 'data'
+    all_files = os.listdir(directory)
+    all_files = [os.path.join(directory, f) for f in all_files]
+    all_files.sort(key=lambda x: os.path.getmtime(x))
+    filename = all_files[0]
+    print("updating " + filename)
+    tickers_json = json.load(open('static/tickers.json'))
+    pool_json = json.load(open(filename))
+    pool_ticker = pool_json['ticker']
+    if pool_ticker in tickers_json:
+        pool_id = tickers_json[pool_ticker]
+        refresh_epoch(pool_json, pool_id, epoch)
+    return "done"
+
+
+def refresh_all_pools_for_epoch(epoch):
+    directory = 'data'
+    current_count = 0
+    all_files = os.listdir(directory)
+    for filename in all_files:
+        current_count += 1
+        pool_file = os.path.join(directory, filename)
+        if os.path.isfile(pool_file):
+            print("updating " + str(current_count) + " of " + str(len(all_files)) + " - " + pool_file)
+            tickers_json = json.load(open('static/tickers.json'))
+            pool_json = json.load(open(pool_file))
+            pool_ticker = pool_json['ticker']
+            if pool_ticker in tickers_json:
+                pool_id = tickers_json[pool_ticker]
+                refresh_epoch(pool_json, pool_id, epoch)
+    return "done"
+
+
 #TODO: add a method to efficiently discover new pools as part of the update
 def update():
+    latest_epoch = get_latest_epoch()
     updates_file_name = 'static/updates.json'
     pool_tickers_file_name = 'static/pool_tickers.json'
 
@@ -418,7 +454,9 @@ def update():
             with open(updates_file_name, 'w') as outfile:
                 json.dump(updates_json, outfile, indent=4, use_decimal=True)
         else:
-            print('nothing to update - will speep for a minute and try again')
+            print('nothing to update - will update the most stale pool, then try again')
+            refresh_most_stale_pool_for_epoch(latest_epoch - 1)
+            refresh_most_stale_pool_for_epoch(latest_epoch)
 
         print('out of ' + str(len(query_results)) + ' keeping ' + str(len(valid_pools_needing_updates)) + ' that have working tickers')
 
@@ -429,7 +467,8 @@ def update():
             try:
                 pool_json_path = "data/" + row['ticker'].upper() + ".json"
                 pool_json = json.load(open(pool_json_path))
-                refresh_epoch(pool_json, row['view'], 379)
+                refresh_epoch(pool_json, row['view'], latest_epoch - 1)
+                refresh_epoch(pool_json, row['view'], latest_epoch)
 
             except (Exception) as metadata_error:
                 print(metadata_error)
@@ -441,7 +480,7 @@ def update():
             conn.close()
 
 
-    sleep(60)
+#refresh_all_pools_for_epoch(380)
+while True:
     update()
-
-update()
+    sleep(10)

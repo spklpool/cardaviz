@@ -1506,33 +1506,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 47.7445,
             "cumulative_actual_blocks": 47,
-            "epoch_diff": -0.19712,
+            "epoch_diff": -0.197120,
             "epoch_cumulative_diff": -0.744770
         },
         {
             "epoch": 380,
             "expected": 1.18172,
-            "actual": 1,
+            "actual": 2,
             "pool_stake": 1371303161329,
             "total_stake": 25065309972207037,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 48.9262,
-            "cumulative_actual_blocks": 48,
-            "epoch_diff": -0.18172,
-            "epoch_cumulative_diff": -0.926490
+            "cumulative_actual_blocks": 49,
+            "epoch_diff": 0.81828,
+            "epoch_cumulative_diff": 0.073510
+        },
+        {
+            "epoch": 381,
+            "expected": 1.27331,
+            "actual": 0,
+            "pool_stake": 1479078804768,
+            "total_stake": 25090595813788584,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 50.1995,
+            "cumulative_actual_blocks": 49,
+            "epoch_diff": -1.27331,
+            "epoch_cumulative_diff": -1.19980
         }
     ],
     "max_positive_diff": 2.97668,
     "max_negative_diff": 5.93554,
-    "cumulative_diff": -0.926490,
-    "cumulative_expected_blocks": 48.9262,
-    "cumulative_actual_blocks": 48,
+    "cumulative_diff": -1.19980,
+    "cumulative_expected_blocks": 50.1995,
+    "cumulative_actual_blocks": 49,
     "max_actual_blocks": 6,
     "max_expected_blocks": 2.22718,
-    "current_lifetime_luck": 98.1069,
+    "current_lifetime_luck": 97.6105,
     "max_epoch_blocks": 6,
     "max_cumulative_diff": 5.93554,
-    "highest_lifetime_luck": 106.084,
-    "lowest_lifetime_luck": 87.8684
+    "highest_lifetime_luck": 105.930,
+    "lowest_lifetime_luck": 88.1761
 }

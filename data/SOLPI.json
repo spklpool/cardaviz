@@ -1246,33 +1246,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 577.291,
             "cumulative_actual_blocks": 592,
-            "epoch_diff": 4.7981,
+            "epoch_diff": 4.79810,
             "epoch_cumulative_diff": 14.7077
         },
         {
             "epoch": 380,
             "expected": 13.2528,
-            "actual": 2,
+            "actual": 11,
             "pool_stake": 15378899047415,
             "total_stake": 25065309972207037,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 590.544,
-            "cumulative_actual_blocks": 594,
-            "epoch_diff": -11.2528,
-            "epoch_cumulative_diff": 3.4549
+            "cumulative_actual_blocks": 603,
+            "epoch_diff": -2.2528,
+            "epoch_cumulative_diff": 12.4549
+        },
+        {
+            "epoch": 381,
+            "expected": 13.2467,
+            "actual": 3,
+            "pool_stake": 15387409819115,
+            "total_stake": 25090595813788584,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 603.791,
+            "cumulative_actual_blocks": 606,
+            "epoch_diff": -10.2467,
+            "epoch_cumulative_diff": 2.2082
         }
     ],
     "max_positive_diff": 31.0233,
     "max_negative_diff": 4.23069,
-    "cumulative_diff": 3.4549,
-    "cumulative_expected_blocks": 590.544,
-    "cumulative_actual_blocks": 594,
+    "cumulative_diff": 2.2082,
+    "cumulative_expected_blocks": 603.791,
+    "cumulative_actual_blocks": 606,
     "max_actual_blocks": 23,
     "max_expected_blocks": 13.8273,
-    "current_lifetime_luck": 100.585,
+    "current_lifetime_luck": 100.366,
     "max_epoch_blocks": 23,
     "max_cumulative_diff": 31.0233,
-    "highest_lifetime_luck": 105.253,
-    "lowest_lifetime_luck": 99.2836
+    "highest_lifetime_luck": 105.138,
+    "lowest_lifetime_luck": 99.2993
 }

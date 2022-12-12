@@ -1935,33 +1935,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3836.17,
             "cumulative_actual_blocks": 3819,
-            "epoch_diff": 0.2552,
+            "epoch_diff": 0.255200,
             "epoch_cumulative_diff": -17.2059
         },
         {
             "epoch": 380,
             "expected": 13.7492,
-            "actual": 2,
+            "actual": 15,
             "pool_stake": 15954935209320,
             "total_stake": 25065309972207037,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3849.92,
-            "cumulative_actual_blocks": 3821,
-            "epoch_diff": -11.7492,
-            "epoch_cumulative_diff": -28.9551
+            "cumulative_actual_blocks": 3834,
+            "epoch_diff": 1.2508,
+            "epoch_cumulative_diff": -15.9551
+        },
+        {
+            "epoch": 381,
+            "expected": 13.6698,
+            "actual": 5,
+            "pool_stake": 15878883595152,
+            "total_stake": 25090595813788584,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 3863.59,
+            "cumulative_actual_blocks": 3839,
+            "epoch_diff": -8.6698,
+            "epoch_cumulative_diff": -24.6249
         }
     ],
     "max_positive_diff": 41.8914,
     "max_negative_diff": 25.5554,
-    "cumulative_diff": -28.9551,
-    "cumulative_expected_blocks": 3849.92,
-    "cumulative_actual_blocks": 3821,
+    "cumulative_diff": -24.6249,
+    "cumulative_expected_blocks": 3863.59,
+    "cumulative_actual_blocks": 3839,
     "max_actual_blocks": 54,
     "max_expected_blocks": 40.0287,
-    "current_lifetime_luck": 99.2488,
+    "current_lifetime_luck": 99.3635,
     "max_epoch_blocks": 54,
     "max_cumulative_diff": 41.8914,
-    "highest_lifetime_luck": 101.088,
-    "lowest_lifetime_luck": 99.3362
+    "highest_lifetime_luck": 101.084,
+    "lowest_lifetime_luck": 99.3386
 }

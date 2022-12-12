@@ -193,33 +193,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 99.9197,
             "cumulative_actual_blocks": 91,
-            "epoch_diff": -3.4468,
+            "epoch_diff": -3.44680,
             "epoch_cumulative_diff": -8.91970
         },
         {
             "epoch": 380,
             "expected": 16.4354,
-            "actual": 6,
+            "actual": 13,
             "pool_stake": 19072135021352,
             "total_stake": 25065309972207037,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 116.355,
-            "cumulative_actual_blocks": 97,
-            "epoch_diff": -10.4354,
-            "epoch_cumulative_diff": -19.3551
+            "cumulative_actual_blocks": 104,
+            "epoch_diff": -3.4354,
+            "epoch_cumulative_diff": -12.3551
+        },
+        {
+            "epoch": 381,
+            "expected": 16.4229,
+            "actual": 5,
+            "pool_stake": 19076873218710,
+            "total_stake": 25090595813788584,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 132.778,
+            "cumulative_actual_blocks": 109,
+            "epoch_diff": -11.4229,
+            "epoch_cumulative_diff": -23.7780
         }
     ],
     "max_positive_diff": 0,
-    "max_negative_diff": 19.3551,
-    "cumulative_diff": -19.3551,
-    "cumulative_expected_blocks": 116.355,
-    "cumulative_actual_blocks": 97,
+    "max_negative_diff": 23.7780,
+    "cumulative_diff": -23.7780,
+    "cumulative_expected_blocks": 132.778,
+    "cumulative_actual_blocks": 109,
     "max_actual_blocks": 22,
     "max_expected_blocks": 16.4468,
-    "current_lifetime_luck": 83.3656,
+    "current_lifetime_luck": 82.0919,
     "max_epoch_blocks": 22,
-    "max_cumulative_diff": 19.3551,
+    "max_cumulative_diff": 23.7780,
     "highest_lifetime_luck": 100,
-    "lowest_lifetime_luck": 83.3655
+    "lowest_lifetime_luck": 82.0919
 }

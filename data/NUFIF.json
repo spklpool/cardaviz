@@ -1636,33 +1636,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 5907.13,
             "cumulative_actual_blocks": 5894,
-            "epoch_diff": 0.8128,
+            "epoch_diff": 0.812800,
             "epoch_cumulative_diff": -13.1475
         },
         {
             "epoch": 380,
             "expected": 48.1998,
-            "actual": 13,
+            "actual": 40,
             "pool_stake": 55932476647766,
             "total_stake": 25065309972207037,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 5955.33,
-            "cumulative_actual_blocks": 5907,
-            "epoch_diff": -35.1998,
-            "epoch_cumulative_diff": -48.3473
+            "cumulative_actual_blocks": 5934,
+            "epoch_diff": -8.1998,
+            "epoch_cumulative_diff": -21.3473
+        },
+        {
+            "epoch": 381,
+            "expected": 48.1730,
+            "actual": 11,
+            "pool_stake": 55957708876469,
+            "total_stake": 25090595813788584,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 6003.50,
+            "cumulative_actual_blocks": 5945,
+            "epoch_diff": -37.1730,
+            "epoch_cumulative_diff": -58.5203
         }
     ],
     "max_positive_diff": 5.82274,
     "max_negative_diff": 80.6714,
-    "cumulative_diff": -48.3473,
-    "cumulative_expected_blocks": 5955.33,
-    "cumulative_actual_blocks": 5907,
+    "cumulative_diff": -58.5203,
+    "cumulative_expected_blocks": 6003.50,
+    "cumulative_actual_blocks": 5945,
     "max_actual_blocks": 65,
     "max_expected_blocks": 50.598,
-    "current_lifetime_luck": 99.1885,
+    "current_lifetime_luck": 99.0256,
     "max_epoch_blocks": 65,
     "max_cumulative_diff": 80.6714,
-    "highest_lifetime_luck": 100.098,
-    "lowest_lifetime_luck": 98.6454
+    "highest_lifetime_luck": 100.097,
+    "lowest_lifetime_luck": 98.6563
 }

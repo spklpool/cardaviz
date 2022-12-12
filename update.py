@@ -454,9 +454,9 @@ def update():
             with open(updates_file_name, 'w') as outfile:
                 json.dump(updates_json, outfile, indent=4, use_decimal=True)
         else:
-            print('nothing to update - will update the most stale pool, then try again')
-            refresh_most_stale_pool_for_epoch(latest_epoch - 1)
-            refresh_most_stale_pool_for_epoch(latest_epoch)
+            print('nothing to update - waiting a few seconds')
+#            refresh_most_stale_pool_for_epoch(latest_epoch - 1)
+#            refresh_most_stale_pool_for_epoch(latest_epoch)
 
         print('out of ' + str(len(query_results)) + ' keeping ' + str(len(valid_pools_needing_updates)) + ' that have working tickers')
 

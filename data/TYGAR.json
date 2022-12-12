@@ -1701,33 +1701,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 625.811,
             "cumulative_actual_blocks": 646,
-            "epoch_diff": -0.80895,
+            "epoch_diff": -0.808950,
             "epoch_cumulative_diff": 20.1858
         },
         {
             "epoch": 380,
             "expected": 2.73376,
-            "actual": 4,
+            "actual": 6,
             "pool_stake": 3172344206759,
             "total_stake": 25065309972207037,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 628.545,
-            "cumulative_actual_blocks": 650,
-            "epoch_diff": 1.26624,
-            "epoch_cumulative_diff": 21.4520
+            "cumulative_actual_blocks": 652,
+            "epoch_diff": 3.26624,
+            "epoch_cumulative_diff": 23.4520
+        },
+        {
+            "epoch": 381,
+            "expected": 2.72212,
+            "actual": 2,
+            "pool_stake": 3162017831812,
+            "total_stake": 25090595813788584,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 631.267,
+            "cumulative_actual_blocks": 654,
+            "epoch_diff": -0.72212,
+            "epoch_cumulative_diff": 22.7299
         }
     ],
     "max_positive_diff": 26.5216,
     "max_negative_diff": 8.56932,
-    "cumulative_diff": 21.4520,
-    "cumulative_expected_blocks": 628.545,
-    "cumulative_actual_blocks": 650,
+    "cumulative_diff": 22.7299,
+    "cumulative_expected_blocks": 631.267,
+    "cumulative_actual_blocks": 654,
     "max_actual_blocks": 24,
     "max_expected_blocks": 16.2395,
-    "current_lifetime_luck": 103.413,
+    "current_lifetime_luck": 103.601,
     "max_epoch_blocks": 24,
     "max_cumulative_diff": 26.5216,
-    "highest_lifetime_luck": 104.220,
-    "lowest_lifetime_luck": 98.6366
+    "highest_lifetime_luck": 104.201,
+    "lowest_lifetime_luck": 98.6425
 }

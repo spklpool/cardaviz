@@ -27,7 +27,7 @@ app = Flask(__name__)
 
 map_of_pool_jsons = ThreadSafeDictOfPoolJson()
 
-directory = '/root/git/cardaviz/data/'
+directory = 'data/'
 logging.info('starting initial load of datadirectory [' + directory + '] for changes')
 all_files = os.listdir(directory)
 for filename in all_files:

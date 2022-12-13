@@ -68,9 +68,6 @@ def get_pool(pool_ticker):
 
 @app.route("/pools/<pool_ticker>/epochs")
 def get_pool_epochs(pool_ticker):
-    start = time.time()
-    loaded_file = map_of_pool_jsons[pool_ticker.upper()]
-    print(f'Time: {time.time() - start}')
-    return loaded_file
+    return map_of_pool_jsons[pool_ticker.upper()]
 
 

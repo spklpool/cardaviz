@@ -2200,7 +2200,7 @@
         },
         {
             "epoch": 380,
-            "expected": 0.0000327359,
+            "expected": 3.27359e-05,
             "actual": 0,
             "pool_stake": 37987754,
             "total_stake": 25065309972207037,
@@ -2209,6 +2209,19 @@
             "cumulative_expected_blocks": 101.158,
             "cumulative_actual_blocks": 78,
             "epoch_diff": -0.0000327359,
+            "epoch_cumulative_diff": -23.1602
+        },
+        {
+            "epoch": 381,
+            "expected": 0.0000327029,
+            "actual": 0,
+            "pool_stake": 37987754,
+            "total_stake": 25090595813788584,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 101.158,
+            "cumulative_actual_blocks": 78,
+            "epoch_diff": -0.0000327029,
             "epoch_cumulative_diff": -23.1602
         }
     ],

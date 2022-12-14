@@ -27,7 +27,7 @@ app = Flask(__name__)
 
 map_of_pool_jsons = ThreadSafeDictOfPoolJson()
 
-directory = 'data/'
+directory = '/var/www/html/data/'
 logging.info('starting initial load of datadirectory [' + directory + '] for changes')
 all_files = os.listdir(directory)
 for filename in all_files:
@@ -63,10 +63,10 @@ def get_landing_page():
 
 @app.route("/pools/<pool_ticker>")
 def get_pool(pool_ticker):
-    return render_template('perfchart.html', pool_ticker=pool_ticker)
+    return render_template('perfchart.html', pool_ticker=pool_ticker.upper())
 
 
-@app.route("/pools/<pool_ticker>/epochs")
+@app.route("/data/<pool_ticker>.json")
 def get_pool_epochs(pool_ticker):
     return map_of_pool_jsons[pool_ticker.upper()]
 

@@ -9,6 +9,7 @@ from decimal import Decimal, getcontext
 import urllib.request
 import os
 
+data_folder = '/var/www/html/data'
 
 class AppURLopener(urllib.request.FancyURLopener):
     version = "Mozilla/5.0"
@@ -83,10 +84,9 @@ def getExpectedEpochBlocksForPool(epoch, epoch_stake, total_stake):
 
 
 def quick_refresh():
-    directory = 'data'
     latest_epoch = get_latest_epoch()
-    for filename in os.listdir(directory):
-        pool_file = os.path.join(directory, filename)
+    for filename in os.listdir(data_folder):
+        pool_file = os.path.join(data_folder, filename)
         if os.path.isfile(pool_file):
             print(pool_file)
             tickers_json = json.load(open('static/tickers.json'))
@@ -171,7 +171,7 @@ def refresh_epoch(pool_json, pool_id, epoch_to_update):
         if conn is not None:
             conn.close()
 
-    ticker_json_file_name = 'data/' + pool_ticker.upper() + '.json'
+    ticker_json_file_name = data_folder + '/' + pool_ticker.upper() + '.json'
     print("dumping pool to json file: " + ticker_json_file_name)
     try:
         with open(ticker_json_file_name, 'w') as outfile:
@@ -210,9 +210,8 @@ def getTotalStakeForEpoch(epoch):
 
 
 def recalculate_all_pools():
-    directory = 'data'
-    for filename in os.listdir(directory):
-        pool_file = os.path.join(directory, filename)
+    for filename in os.listdir(data_folder):
+        pool_file = os.path.join(data_folder, filename)
         if os.path.isfile(pool_file):
             print(pool_file)
             tickers_json = json.load(open('static/tickers.json'))
@@ -290,7 +289,7 @@ def recalculate_pool(pool_json):
         pool_json['highest_lifetime_luck'] = 0
         pool_json['lowest_lifetime_luck'] = 0
 
-    ticker_json_file_name = 'data/' + pool_ticker.upper() + '.json'
+    ticker_json_file_name = data_folder + '/' + pool_ticker.upper() + '.json'
     print("dumping pool to json file: " + ticker_json_file_name)
     try:
         with open(ticker_json_file_name, 'w') as outfile:
@@ -374,9 +373,8 @@ def get_pool_metadata_url(pool_id):
 
 
 def refresh_most_stale_pool_for_epoch(epoch):
-    directory = 'data'
-    all_files = os.listdir(directory)
-    all_files = [os.path.join(directory, f) for f in all_files]
+    all_files = os.listdir(data_folder)
+    all_files = [os.path.join(data_folder, f) for f in all_files]
     all_files.sort(key=lambda x: os.path.getmtime(x))
     filename = all_files[0]
     print("updating " + filename)
@@ -390,12 +388,11 @@ def refresh_most_stale_pool_for_epoch(epoch):
 
 
 def refresh_all_pools_for_epoch(epoch):
-    directory = 'data'
     current_count = 0
-    all_files = os.listdir(directory)
+    all_files = os.listdir(data_folder)
     for filename in all_files:
         current_count += 1
-        pool_file = os.path.join(directory, filename)
+        pool_file = os.path.join(data_folder, filename)
         if os.path.isfile(pool_file):
             print("updating " + str(current_count) + " of " + str(len(all_files)) + " - " + pool_file)
             tickers_json = json.load(open('static/tickers.json'))
@@ -455,8 +452,6 @@ def update():
                 json.dump(updates_json, outfile, indent=4, use_decimal=True)
         else:
             print('nothing to update - waiting a few seconds')
-#            refresh_most_stale_pool_for_epoch(latest_epoch - 1)
-#            refresh_most_stale_pool_for_epoch(latest_epoch)
 
         print('out of ' + str(len(query_results)) + ' keeping ' + str(len(valid_pools_needing_updates)) + ' that have working tickers')
 
@@ -465,7 +460,7 @@ def update():
             processing_count += 1
             print('processing ' + str(processing_count) + ' of ' + str(len(valid_pools_needing_updates)))
             try:
-                pool_json_path = "data/" + row['ticker'].upper() + ".json"
+                pool_json_path = data_folder + "/" + row['ticker'].upper() + ".json"
                 pool_json = json.load(open(pool_json_path))
                 refresh_epoch(pool_json, row['view'], latest_epoch - 1)
                 refresh_epoch(pool_json, row['view'], latest_epoch)

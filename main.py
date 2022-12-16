@@ -27,7 +27,8 @@ app = Flask(__name__)
 
 map_of_pool_jsons = ThreadSafeDictOfPoolJson()
 
-directory = '/var/www/html/data/'
+directory = 'data/'
+#directory = '/var/www/html/data/'
 logging.info('starting initial load of datadirectory [' + directory + '] for changes')
 all_files = os.listdir(directory)
 for filename in all_files:

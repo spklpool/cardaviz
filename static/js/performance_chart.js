@@ -19,6 +19,7 @@ var textHeight = 35;
 var textWidth = 15;
 var epoch_text_offset = 15;
 var epoch_text_vertical_offset = 30;
+var right_axis_legend_width = 120;
 
 // legend objects
 var legend_path = null;
@@ -56,9 +57,6 @@ fetch(data_url)
 paper.install(window);
 
 window.onload = function() {
-    var canvas = document.getElementById('myCanvas');
-    paper.setup(canvas);
-    draw_black_background
     setTimeout(draw_if_data_finished_loading, 100);
 }
 
@@ -79,7 +77,6 @@ document.addEventListener('readystatechange', (event) => {
 function scroll_if_first_drawing_complete() {
     if (first_drawing_complete) {
         console.log("scrolling to current epoch");
-        document.documentElement.scrollLeft = canvasRequiredWidth - document.documentElement.clientWidth + 100;
     } else {
         setTimeout(scroll_if_first_drawing_complete, 100);
     }
@@ -203,11 +200,16 @@ function start_cumulative_path() {
 
 // The main function that does all the drawing
 function drawPoolPerformanceChart(data) {
+    console.log('entering drawPoolPerformanceChart');
     var max_cumulative_diff_adjustment_buffer = 0.1;
     var blockHeight = middleY / (data.max_epoch_blocks + 1);
+    canvasRequiredWidth = data["epochs"].length * epochWidth;
+    var canvas = document.getElementById('myCanvas');
+    document.body.style.width = canvasRequiredWidth + right_axis_legend_width + 'px';
+    document.documentElement.scrollLeft = canvasRequiredWidth - document.documentElement.clientWidth + right_axis_legend_width;
+    paper.setup(canvas);
     draw_black_background();
     draw_epoch_separator_lines(data["epochs"].length);
-    canvasRequiredWidth = data["epochs"].length * epochWidth;
     draw_block_separator_lines(blockHeight);
     draw_epochs(data, start_cumulative_path(), block_to_epoch_width_margin / 2, blockHeight, middleY / ((data.max_cumulative_diff + max_cumulative_diff_adjustment_buffer) * blockHeight));
     drawRightAxisLuckBar(data.max_epoch_blocks, middleY, blockHeight, data.max_cumulative_diff, data.cumulative_expected_blocks, canvasRequiredWidth);

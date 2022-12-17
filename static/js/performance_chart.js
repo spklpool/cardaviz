@@ -165,7 +165,7 @@ class StakePoolPerformanceChart {
             var epochBlockExpected = parseFloat(this.data["epochs"][epoch].expected);
             var epochBlockDiff = epochBlockCount - epochBlockExpected;
 
-            var epochX = epoch_offset + (epoch * this.epochWidth);
+            var epochX = this.epoch_offset + (epoch * this.epochWidth);
             this.draw_text(epochX + epoch_text_offset, this.paper.view.size.height - epoch_text_vertical_offset, this.data["epochs"][epoch].epoch, 310, 16, 'white');
 
             // blocks - actual and expected
@@ -215,8 +215,8 @@ class StakePoolPerformanceChart {
                 skip_text_count = 0;
                 var right_axis_path = new paper.Path();
                 right_axis_path.strokeColor = 'yellow';
-                right_axis_path.add(new paper.Point(epoch_offset + canvasRequiredWidth, height));
-                right_axis_path.add(new paper.Point(epoch_offset + canvasRequiredWidth + 20, height));
+                right_axis_path.add(new paper.Point(this.epoch_offset + canvasRequiredWidth, height));
+                right_axis_path.add(new paper.Point(this.epoch_offset + canvasRequiredWidth + 20, height));
                 right_axis_path.strokeWidth = 5;
                 var axis_content = '';
                 if (height == (total_height / 2)) {
@@ -228,7 +228,7 @@ class StakePoolPerformanceChart {
                     var current_axis_diff = (((total_height / 2) - height) / this.block_height)/((total_height / 2) / this.block_height) * (max_cumulative_diff / total_expected_blocks)
                     axis_content = ((1 + current_axis_diff) * 100).toFixed(2) + "%";
                 }
-                this.draw_text(epoch_offset + canvasRequiredWidth + 75, height + 3, axis_content, 0, 18, 'yellow')
+                this.draw_text(this.epoch_offset + canvasRequiredWidth + 75, height + 3, axis_content, 0, 18, 'yellow')
             }
         }
     }
@@ -285,12 +285,15 @@ class StakePoolPerformanceChart {
 
     draw(data) {
         if (this.canvas_required_width > this.document.documentElement.clientWidth) {
+            console.log('too big');
             this.document.body.style.width = this.canvas_required_width + this.right_axis_legend_width + 'px';
             this.document.documentElement.scrollLeft = this.canvas_required_width - this.document.documentElement.clientWidth + this.right_axis_legend_width;
         } else {
+            console.log('too small');
             this.document.body.style.width = document.documentElement.clientWidth;
             var epochs_to_offset = (document.documentElement.clientWidth - this.canvas_required_width) / this.epochWidth
-            epoch_offset = Math.ceil(epochs_to_offset) * this.blockWidth;
+            this.epoch_offset = Math.ceil(epochs_to_offset) * this.blockWidth;
+            console.log('offsetting by ' + this.epoch_offset);
         }
         this.paper.setup(this.canvas);
         var view_size = this.paper.view.size
@@ -306,7 +309,6 @@ class StakePoolPerformanceChart {
 var epoch_text_offset = 15;
 var epoch_text_vertical_offset = 30;
 var right_axis_legend_width = 120;
-var epoch_offset = 0;
 
 
 console.log('fetching data from ' + data_url);

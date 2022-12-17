@@ -1,91 +1,35 @@
 
-var middleY = 300;
-var canvasRequiredWidth = 0;
-var legend_y = middleY + 30;
-var legend_width = 420;
-var legend_height = 260;
-var blockRounding = 3;
-var block_to_epoch_width_margin = 4;
-var epochWidth = 30;
-var blockWidth = epochWidth - block_to_epoch_width_margin;
+var chart = null;
 var global_data = null;
-var calculated_current_lifetime_luck = 0;
-var first_drawing = true;
-var scrolling_changed = false;
-var size_changed = false;
 var data_fetch_completed = false;
-var global_data = null;
 var first_drawing_complete = false;
-var textHeight = 35;
-var textWidth = 15;
-var epoch_text_offset = 15;
-var epoch_text_vertical_offset = 30;
-var right_axis_legend_width = 120;
-var epoch_offset = 0;
 
-// legend objects
-var legend_path = null;
-var ticker_text = null;
-var legend_expected_block_text = null;
-var legend_expected_rect = null;
-var legend_expected_path = null;
-var legend_actual_block_text = null;
-var legend_performance_text = null;
-var legend_cumulative_text = null;
-var legend_highest_luck_text = null;
-var legend_lowest_lifetime_luck_text = null;
-var legend_current_lifetime_luck_text = null;
-var legend_green_text = null;
-var legend_red_text = null;
-var legend_cumulative_path = null;
-var legend_actual_path = null;
-var legend_green_path = null;
-var legend_red_path = null;
+class StakePoolPerformanceChart {
+    canvas = null;
+    paper = null;
+    data = null;
+    document = null;
+    legend_initialized = false;
+    background_color = 'black'
+    separator_line_color = '#282828';
+    current_epoch_color = '#282828';
+    actual_block_color = '#D3D3D3';
+    expected_block_color = 'blue';
+    middleY = 300;
+    legend_y = 0;
+    legend_width = 420;
+    legend_height = 260;
+    block_rounding = 3;
+    block_to_epoch_width_margin = 4;
+    epochWidth = 30;
+    blockWidth = 0;
+    block_height = 0;
+    epoch_text_offset = 15;
+    epoch_text_vertical_offset = 30;
+    right_axis_legend_width = 120;
+    epoch_offset = 0;
 
-console.log('fetching data from ' + data_url);
-fetch(data_url)
-.then(function (response) {
-    return response.json();
-})
-.then(function (data) {
-    console.log('data fetch completed');
-    global_data = data;
-    data_fetch_completed = true;
-})
-.catch(function (err) {
-    console.log('error: ' + err);
-});
-
-paper.install(window);
-
-window.onload = function() {
-    setTimeout(draw_if_data_finished_loading, 100);
-}
-
-document.addEventListener('scroll', function(event) {
-    console.log('scroll, scroll, scroll...');
-    scrolling_changed = true;
-    if (first_drawing_complete) {
-        drawLegend(document.documentElement.scrollLeft, legend_y);
-    }
-});
-
-window.addEventListener("resize", (event) => {
-    console.log('resize, resize, resize...');
-    size_changed = true;
-    if (first_drawing_complete) {
-        resetLegend();
-        drawPoolPerformanceChart(global_data);
-    }
-}, true);
-
-document.addEventListener('readystatechange', (event) => {
-    if (document.readyState === "complete") {
-        scroll_if_first_drawing_complete();
-    }
-});
-
-function resetLegend() {
+    // legend objects
     legend_path = null;
     ticker_text = null;
     legend_expected_block_text = null;
@@ -103,7 +47,307 @@ function resetLegend() {
     legend_actual_path = null;
     legend_green_path = null;
     legend_red_path = null;
+
+    constructor(canvas, paper, data, document) {
+        this.canvas = canvas;
+        this.paper = paper;
+        this.data = data;
+        this.document = document;
+        this.legend_y = this.middleY + 30;
+        this.blockWidth = this.epochWidth - this.block_to_epoch_width_margin;
+        this.block_height = (this.paper.view.size.height / 2) / (this.data.max_epoch_blocks + 1);
+        this.canvas_required_width = data["epochs"].length * this.epochWidth;
+    }
+
+    resetLegend() {
+        this.legend_path = null;
+        this.ticker_text = null;
+        this.legend_expected_block_text = null;
+        this.legend_expected_rect = null;
+        this.legend_expected_path = null;
+        this.legend_actual_block_text = null;
+        this.legend_performance_text = null;
+        this.legend_cumulative_text = null;
+        this.legend_highest_luck_text = null;
+        this.legend_lowest_lifetime_luck_text = null;
+        this.legend_current_lifetime_luck_text = null;
+        this.legend_green_text = null;
+        this.legend_red_text = null;
+        this.legend_cumulative_path = null;
+        this.legend_actual_path = null;
+        this.legend_green_path = null;
+        this.legend_red_path = null;
+    }
+
+    draw_background_solid_rectangle(x, y, width, height, color) {
+        var rect = new paper.Path.Rectangle({
+            point: [x, y],
+            size: [width, height],
+            strokeColor: color
+        });
+        rect.sendToBack();
+        rect.fillColor = color;
+    }
+
+    draw_translucent_rectangle(x, y, width, height, strokeColor, fillColor, opacity, block_rounding) {
+        var rect = new paper.Rectangle([0, 0], [width, height]);
+        var path = new paper.Path.Rectangle(rect, block_rounding);
+        path.strokeColor = strokeColor;
+        path.fillColor = fillColor;
+        path.opacity = opacity;
+        return path;
+    }
+
+    draw_solid_rectangle(x, y, width, height, color, block_rounding) {
+        var rect = new paper.Rectangle([x, y], [width, height]);
+        var path = new paper.Path.Rectangle(rect, block_rounding);
+        path.fillColor = color;
+        return path;
+    }
+
+    draw_hollow_rectangle(x, y, width, height, color, block_rounding) {
+        var rect = new paper.Rectangle([x, y], [width, height]);
+        var path = new paper.Path.Rectangle(rect, block_rounding);
+        path.strokeColor = color;
+        path.strokeWidth = 2
+        return path;
+    }
+
+    draw_line(start_x, start_y, end_x, end_y, color, strokeWidth) {
+        var linePath = new paper.Path();
+        linePath.strokeColor = color;
+        linePath.add(new paper.Point(start_x, start_y));
+        linePath.add(new paper.Point(end_x, end_y));
+        linePath.strokeWidth = strokeWidth;
+        return linePath;
+    }
+
+    draw_matrix_lines(number_of_epochs, height) {
+        for (var epoch = 0; epoch < number_of_epochs; epoch ++) {
+            var line_x = this.epoch_offset + (this.epochWidth * epoch);
+            this.draw_line(line_x, 0, line_x, height, this.separator_line_color, 2);
+            if (epoch == (number_of_epochs - 1)) {
+                var extra_line_x = this.epoch_offset + (this.epochWidth * (epoch + 1));
+                this.draw_line(extra_line_x, 0, extra_line_x, height, this.separator_line_color, 2);
+                this.draw_solid_rectangle(line_x, 1, this.epochWidth, height, this.current_epoch_color, 0);
+            }
+        }
+        for (var current_height = 0; current_height < height; current_height += this.block_height) {
+            this.draw_line(this.epoch_offset, current_height, this.epoch_offset + this.canvas_required_width, current_height, this.separator_line_color, 2);
+        }
+    }
+
+    start_cumulative_path() {
+        var cumulativeDiffPath = new paper.Path();
+        cumulativeDiffPath.strokeColor = 'yellow';
+        cumulativeDiffPath.strokeWidth = 5;
+        return cumulativeDiffPath;
+    }
+
+    draw_text(x, y, text, rotation, fontSize, color) {
+        return new paper.PointText({
+            point: [x, y],
+            content: text,
+            style: {
+                fontFamily: 'Courier New',
+                fontWeight: 'bold',
+                fontSize: fontSize,
+                fillColor: color,
+                justification: 'center'
+            }
+        }).rotate(rotation);
+    }
+
+    draw_epochs(diff_path, block_offset, block_height, cumulative_diff_scaling_factor) {
+        var middle_y = this.paper.view.size.height / 2;
+        for (var epoch = 0; epoch < this.data["epochs"].length; epoch++) {
+            var epochBlockCount = parseFloat(this.data["epochs"][epoch].actual);
+            var epochBlockExpected = parseFloat(this.data["epochs"][epoch].expected);
+            var epochBlockDiff = epochBlockCount - epochBlockExpected;
+
+            var epochX = epoch_offset + (epoch * this.epochWidth);
+            this.draw_text(epochX + epoch_text_offset, this.paper.view.size.height - epoch_text_vertical_offset, this.data["epochs"][epoch].epoch, 310, 16, 'white');
+
+            // blocks - actual and expected
+            for (var epochBlock = 0; epochBlock < epochBlockCount; epochBlock++) {
+                this.draw_solid_rectangle(epochX + block_offset, middle_y - ((epochBlock + 1) * block_height), this.blockWidth, block_height, this.actual_block_color, this.blockRounding)
+            }
+            this.draw_hollow_rectangle(epochX + block_offset, middle_y - (epochBlockExpected * block_height), this.blockWidth, epochBlockExpected * block_height, this.expected_block_color, this.blockRounding);
+
+            if (epoch < this.data["epochs"].length - 1) {
+                // performance diff lines
+                var diffPath = new paper.Path();
+                if (epochBlockDiff > 0) {
+                    diffPath.strokeColor = 'green';
+                } else {
+                    diffPath.strokeColor = 'red';
+                }
+                diffPath.strokeWidth = 5;
+                diffPath.add(new paper.Point(epochX, middle_y - (epochBlockDiff * block_height)));
+                diffPath.add(new paper.Point(epochX + this.epochWidth, middle_y - (epochBlockDiff * block_height)));
+
+                // cumulative performance line
+                diff_path.add(new paper.Point(epochX + 14, middle_y - (cumulative_diff_scaling_factor * (this.data['epochs'][epoch]['epoch_cumulative_diff'] * block_height))));
+                diff_path.add(new paper.Point(epochX + 16, middle_y - (cumulative_diff_scaling_factor * (this.data['epochs'][epoch]['epoch_cumulative_diff'] * block_height))));
+
+                // make cumulative line prettier
+                diff_path.smooth({ type: 'catmull-rom', factor: 1.0 });
+                diff_path.bringToFront();
+            }
+        }
+    }
+
+    // Draws the axis on the right for the cumulative performance yellow line.
+    // the values are scaled so that the cumulative performance line takes up the entire height so the values on the axis are
+    // scaled accordingly.  Also, depending on how many blocks a pool produces, the height of a block also scales.
+    drawRightAxisLuckBar(max_epoch_blocks, total_height, block_height, max_cumulative_diff, total_expected_blocks, canvasRequiredWidth) {
+        var desired_number_of_axis_text = 6;
+        var axis_text_count = 2;
+        if (max_epoch_blocks > desired_number_of_axis_text) {
+            axis_text_count = Math.ceil(max_epoch_blocks / desired_number_of_axis_text);
+        }
+        var skip_text_count = 0;
+        for (var height = 0; height <= total_height; height += this.block_height) {
+            console.log('height: ' + height);
+            console.log('total_height: ' + total_height);
+            skip_text_count ++;
+            if (height > 0 && skip_text_count == axis_text_count) {
+                skip_text_count = 0;
+                var right_axis_path = new paper.Path();
+                right_axis_path.strokeColor = 'yellow';
+                right_axis_path.add(new paper.Point(epoch_offset + canvasRequiredWidth, height));
+                right_axis_path.add(new paper.Point(epoch_offset + canvasRequiredWidth + 20, height));
+                right_axis_path.strokeWidth = 5;
+                var axis_content = '';
+                if (height == (total_height / 2)) {
+                    axis_content = "100%";
+                } else if (height > (total_height / 2)) {
+                    var current_axis_diff = ((height - (total_height / 2)) / this.block_height)/((total_height / 2) / this.block_height) * (max_cumulative_diff / total_expected_blocks)
+                    axis_content = ((1 - current_axis_diff) * 100).toFixed(2) + "%";
+                } else {
+                    var current_axis_diff = (((total_height / 2) - height) / this.block_height)/((total_height / 2) / this.block_height) * (max_cumulative_diff / total_expected_blocks)
+                    axis_content = ((1 + current_axis_diff) * 100).toFixed(2) + "%";
+                }
+                this.draw_text(epoch_offset + canvasRequiredWidth + 75, height + 3, axis_content, 0, 18, 'yellow')
+            }
+        }
+    }
+
+    // draws a legend in a semi transparent box.
+    // all objects are originally drawn at 0,0 and then repositioned to where they should be
+    // this is to make them fall in the same position later when we reposition them again when scrolling
+    drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_luck, current_lifetime_luck, ticker) {
+        console.log('drawing legend [' + legend_x + ',' + legend_y + ']');
+        if (!this.legend_initialized) {
+            this.legend_path = this.draw_translucent_rectangle(0, 0, this.legend_width, this.legend_height, '#D3D3D3', 'black', 0.9, 20);
+            this.ticker_text = this.draw_text(0, 0, "ticker: " + ticker, 0, 18, '#D3D3D3');
+            this.legend_expected_block_text = this.draw_text(0, 0, ': expected blocks', 0, 18, 'blue');
+            this.legend_expected_path = this.draw_hollow_rectangle(0, 0, this.blockWidth, 13, 'blue', this.blockRounding);
+            this.legend_actual_block_text = this.draw_text(0, 0, ': actual blocks ', 0, 18, '#D3D3D3');
+            this.legend_actual_path = this.draw_solid_rectangle(0, 0, this.blockWidth, 13, '#D3D3D3', this.blockRounding);
+            this.legend_green_path = this.draw_line(0, 0, 29, 0, 'green', 5);
+            this.legend_red_path = this.draw_line(0, 0, 29, 0, 'red', 5);
+            this.legend_performance_text = this.draw_text(0, 0, ': epoch performance', 0, 18, 'yellow');
+            this.legend_green_text = this.draw_text(0, 0, ' over', 0, 18, 'green');
+            this.legend_red_text = this.draw_text(0, 0, ' under', 0, 18, 'red');
+            this.legend_cumulative_text = this.draw_text(0, 0, ': cumulative performance', 0, 18, 'yellow');
+            this.legend_highest_luck_text = this.draw_text(0, 0, 'highest performance : ' + highest_lifetime_luck.toFixed(2) + '%', 0, 18, 'yellow');
+            this.legend_lowest_luck_text = this.draw_text(0, 0, 'lowest performance  : ' + lowest_lifetime_luck.toFixed(2) + '%', 0, 18, 'yellow');
+            this.legend_current_lifetime_luck_text = this.draw_text(0, 0, 'current performance : ' + current_lifetime_luck.toFixed(2) + '%', 0, 18, 'yellow');
+            this.legend_initialized = true;
+        }
+        this.legend_path.position = new Point(legend_x + 220, legend_y + this.legend_height / 2);
+        this.ticker_text.position = new Point(legend_x + 95, legend_y + 25);
+        this.legend_expected_block_text.position = new Point(legend_x + 152.3, legend_y + 55);
+        this.legend_expected_path.position = new Point(legend_x + 40.5, legend_y + 55.5);
+        this.legend_actual_block_text.position = new Point(legend_x + 147, legend_y + 85);
+        this.legend_actual_path.position = new Point(legend_x + 40.5, legend_y + 85);
+        this.legend_green_path.position = new Point(legend_x + 40, legend_y + 110);
+        this.legend_red_path.position = new Point(legend_x + 40, legend_y + 120);
+
+        if (this.legend_cumulative_path == null) {
+            this.legend_cumulative_path = new paper.Path();
+            this.legend_cumulative_path.strokeColor = 'yellow';
+            this.legend_cumulative_path.strokeWidth = 5;
+            this.legend_cumulative_path.add(0, 0);
+            this.legend_cumulative_path.add(29, 0);
+        }
+        this.legend_cumulative_path.position = new Point(legend_x + 40, legend_y + 149);
+        this.legend_performance_text.position = new Point(legend_x + 163.2, legend_y + 115);
+        this.legend_green_text.position = new Point(legend_x + 290, legend_y + 115);
+        this.legend_red_text.position = new Point(legend_x + 350, legend_y + 115);
+        this.legend_cumulative_text.position = new Point(legend_x + 60 + (this.legend_cumulative_text.bounds.width / 2), legend_y + 148);
+        this.legend_highest_luck_text.position = new Point(legend_x + 84 + (this.legend_highest_luck_text.bounds.width / 2), legend_y + 181.5);
+        this.legend_lowest_luck_text.position = new Point(legend_x + 84 + (this.legend_lowest_luck_text.bounds.width / 2), legend_y + 209.5);
+        this.legend_current_lifetime_luck_text.position = new Point(legend_x + 84 + (this.legend_current_lifetime_luck_text.bounds.width / 2), legend_y + 236.5);
+    }
+
+
+    draw(data) {
+        if (this.canvas_required_width > this.document.documentElement.clientWidth) {
+            this.document.body.style.width = this.canvas_required_width + this.right_axis_legend_width + 'px';
+            this.document.documentElement.scrollLeft = this.canvas_required_width - this.document.documentElement.clientWidth + this.right_axis_legend_width;
+        } else {
+            this.document.body.style.width = document.documentElement.clientWidth;
+            var epochs_to_offset = (document.documentElement.clientWidth - this.canvas_required_width) / this.epochWidth
+            epoch_offset = Math.ceil(epochs_to_offset) * this.blockWidth;
+        }
+        this.paper.setup(this.canvas);
+        var view_size = this.paper.view.size
+        this.draw_background_solid_rectangle(0, 0, view_size.width, view_size.height, this.background_color);
+        this.draw_matrix_lines(this.data["epochs"].length, view_size.height);
+        var max_cumulative_diff_adjustment_buffer = 0.1;
+        this.draw_epochs(this.start_cumulative_path(), this.block_to_epoch_width_margin / 2, this.block_height, (view_size.height / 2) / ((this.data.max_cumulative_diff + max_cumulative_diff_adjustment_buffer) * this.block_height));
+        this.drawRightAxisLuckBar(this.data.max_epoch_blocks, view_size.height, this.blockHeight, this.data.max_cumulative_diff, this.data.cumulative_expected_blocks, this.canvas_required_width);
+        this.drawLegend(this.document.documentElement.scrollLeft, (view_size.height / 2) + 30, this.data['highest_lifetime_luck'], this.data['lowest_lifetime_luck'], this.data['current_lifetime_luck'], this.data["ticker"]);
+    }
 }
+
+var epoch_text_offset = 15;
+var epoch_text_vertical_offset = 30;
+var right_axis_legend_width = 120;
+var epoch_offset = 0;
+
+
+console.log('fetching data from ' + data_url);
+fetch(data_url)
+.then(function (response) {
+    return response.json();
+})
+.then(function (data) {
+    console.log('data fetch completed');
+    global_data = data;
+    data_fetch_completed = true;
+})
+.catch(function (err) {
+    console.log('error: ' + err);
+});
+
+window.onload = function() {
+    setTimeout(draw_if_data_finished_loading, 100);
+}
+
+document.addEventListener('scroll', function(event) {
+    console.log('scroll, scroll, scroll...');
+    if (first_drawing_complete) {
+        chart.drawLegend(document.documentElement.scrollLeft, (paper.view.size.height / 2) + 30, global_data['highest_lifetime_luck'], global_data['lowest_lifetime_luck'], global_data['current_lifetime_luck'], global_data["ticker"]);
+    }
+});
+
+window.addEventListener("resize", (event) => {
+    console.log('resize, resize, resize...');
+    if (first_drawing_complete) {
+        chart.resetLegend();
+        draw_if_data_finished_loading();
+    }
+}, true);
+
+document.addEventListener('readystatechange', (event) => {
+    if (document.readyState === "complete") {
+        scroll_if_first_drawing_complete();
+    }
+});
+
 
 function scroll_if_first_drawing_complete() {
     if (first_drawing_complete) {
@@ -115,388 +359,14 @@ function scroll_if_first_drawing_complete() {
 
 function draw_if_data_finished_loading() {
     if (data_fetch_completed) {
-        drawPoolPerformanceChart(global_data);
+        paper.install(window);
+        var canvas = document.getElementById('myCanvas');
+        paper.setup(canvas);
+        chart = new StakePoolPerformanceChart(canvas, paper, global_data, document);
+        chart.draw(global_data);
         first_drawing_complete = true;
     } else {
         setTimeout(draw_if_data_finished_loading, 100);
     }
 }
 
-// The black background that fills the canvas.
-function draw_black_background() {
-    var rect = new paper.Path.Rectangle({
-        point: [0, 0],
-        size: [paper.view.size.width, paper.view.size.height],
-        strokeColor: 'black',
-        selected: true
-    });
-    rect.sendToBack();
-    rect.fillColor = 'black';
-}
-
-// The dark grey lines that separate each epoch.
-function draw_epoch_separator_lines(number_of_epochs) {
-    for (epoch = 0; epoch < number_of_epochs; epoch ++) {
-
-        // epoch separation lines
-        var epochSeparatorPath = new paper.Path();
-        epochSeparatorPath.strokeColor = '#282828';
-        epochSeparatorPath.add(new paper.Point(epoch_offset + (epochWidth * epoch), 0));
-        epochSeparatorPath.add(new paper.Point(epoch_offset + (epochWidth * epoch), middleY * 2));
-
-        // add an extra line at the end to make it pretty
-        if (epoch == (number_of_epochs - 1)) {
-            var lastEpochSeparatorPath = new paper.Path();
-            lastEpochSeparatorPath.strokeColor = '#282828';
-            lastEpochSeparatorPath.add(new paper.Point(epoch_offset + (epochWidth * (epoch + 1), 0)));
-            lastEpochSeparatorPath.add(new paper.Point(epoch_offset + (epochWidth * (epoch + 1), middleY * 2)));
-
-            // grey rectangle for last epoc to indicate it is still under way
-            var last_epoch_rect = new paper.Rectangle([epoch_offset + (epochWidth * epoch), 1], [epochWidth, middleY * 2]);
-            var last_epoch_path = new paper.Path.Rectangle(last_epoch_rect, blockRounding);
-            last_epoch_path.fillColor = '#282828';
-        }
-    }
-}
-
-// the dark grey lines that separate each block.
-function draw_block_separator_lines(block_height) {
-    for (height = 0; height < (middleY * 2); height += block_height) {
-        var block_separator_path = new paper.Path();
-        block_separator_path.strokeColor = '#282828';
-        block_separator_path.add(new paper.Point(epoch_offset, height));
-        block_separator_path.add(new paper.Point(epoch_offset + canvasRequiredWidth, height));
-    }
-}
-
-// Draws the expected and actual blocks, as well as the epoch and cumulative performance lines.
-function draw_epochs(pool_data, diff_path, block_offset, block_height, cumulative_diff_scaling_factor) {
-    for (var epoch = 0; epoch < pool_data["epochs"].length; epoch++) {
-        var epochBlockCount = parseFloat(pool_data["epochs"][epoch].actual);
-        var epochBlockExpected = parseFloat(pool_data["epochs"][epoch].expected);
-        var epochBlockDiff = epochBlockCount - epochBlockExpected;
-
-        var epochX = epoch_offset + (epoch * epochWidth);
-        var epochText = new paper.PointText({
-            point: [epochX + epoch_text_offset, (middleY * 2) + epoch_text_vertical_offset],
-            content: pool_data["epochs"][epoch].epoch,
-            style: {
-                fontFamily: 'Courier New',
-                fontWeight: 'bold',
-                fontSize: 16,
-                fillColor: 'white',
-                justification: 'center'
-            }
-        }).rotate(310);
-
-        // actual blocks
-        for (var epochBlock = 0; epochBlock < epochBlockCount; epochBlock++) {
-            var rect = new paper.Rectangle([epochX + block_offset, middleY - ((epochBlock + 1) * block_height)], [blockWidth, block_height]);
-            var path = new paper.Path.Rectangle(rect, blockRounding);
-            path.fillColor = '#D3D3D3';
-        }
-
-        // expected rectangle
-        var expected_rect = new paper.Rectangle([epochX + block_offset, middleY - (epochBlockExpected * block_height)], [blockWidth, epochBlockExpected * block_height]);
-        var expected_path = new paper.Path.Rectangle(expected_rect, blockRounding);
-        expected_path.strokeColor = 'blue';
-        expected_path.strokeWidth = 2;
-
-        if (epoch < pool_data["epochs"].length - 1) {
-            // performance diff lines
-            var diffPath = new paper.Path();
-            if (epochBlockDiff > 0) {
-                diffPath.strokeColor = 'green';
-            } else {
-                diffPath.strokeColor = 'red';
-            }
-            diffPath.strokeWidth = 5;
-            diffPath.add(new paper.Point(epochX, middleY - (epochBlockDiff * block_height)));
-            diffPath.add(new paper.Point(epochX + epochWidth, middleY - (epochBlockDiff * block_height)));
-
-            // cumulative performance line
-            diff_path.add(new paper.Point(epochX + 14, middleY - (cumulative_diff_scaling_factor * (pool_data['epochs'][epoch]['epoch_cumulative_diff'] * block_height))));
-            diff_path.add(new paper.Point(epochX + 16, middleY - (cumulative_diff_scaling_factor * (pool_data['epochs'][epoch]['epoch_cumulative_diff'] * block_height))));
-
-            // make cumulative line prettier
-            diff_path.smooth({ type: 'catmull-rom', factor: 1.0 });
-            diff_path.bringToFront();
-        }
-    }
-}
-
-// Creates the object that will form the yellow cumulative performance line by appending a couple points to it
-// for each epoch, then smoothing it out.
-function start_cumulative_path() {
-    var cumulativeDiffPath = new paper.Path();
-    cumulativeDiffPath.strokeColor = 'yellow';
-    cumulativeDiffPath.strokeWidth = 5;
-    return cumulativeDiffPath;
-}
-
-// The main function that does all the drawing
-function drawPoolPerformanceChart(data) {
-    console.log('drawing chart');
-    var max_cumulative_diff_adjustment_buffer = 0.1;
-    var blockHeight = middleY / (data.max_epoch_blocks + 1);
-    canvasRequiredWidth = data["epochs"].length * epochWidth;
-    var canvas = document.getElementById('myCanvas');
-    if (canvasRequiredWidth > document.documentElement.clientWidth) {
-        document.body.style.width = canvasRequiredWidth + right_axis_legend_width + 'px';
-        document.documentElement.scrollLeft = canvasRequiredWidth - document.documentElement.clientWidth + right_axis_legend_width;
-    } else {
-        document.body.style.width = document.documentElement.clientWidth;
-        epochs_to_offset = (document.documentElement.clientWidth - canvasRequiredWidth) / epochWidth
-        epoch_offset = Math.ceil(epochs_to_offset) * blockWidth;
-    }
-    paper.setup(canvas);
-    draw_black_background();
-    draw_epoch_separator_lines(data["epochs"].length);
-    draw_block_separator_lines(blockHeight);
-    draw_epochs(data, start_cumulative_path(), block_to_epoch_width_margin / 2, blockHeight, middleY / ((data.max_cumulative_diff + max_cumulative_diff_adjustment_buffer) * blockHeight));
-    drawRightAxisLuckBar(data.max_epoch_blocks, middleY, blockHeight, data.max_cumulative_diff, data.cumulative_expected_blocks, canvasRequiredWidth);
-    drawLegend(document.documentElement.scrollLeft, legend_y, data['highest_lifetime_luck'], data['lowest_lifetime_luck'], data['current_lifetime_luck'], data["ticker"])
-}
-
-// Draws the axis on the right for the cumulative performance yellow line.
-// the values are scaled so that the cumulative performance line takes up the entire height so the values on the axis are
-// scaled accordingly.  Also, depending on how many blocks a pool produces, the height of a block also scales.
-function drawRightAxisLuckBar(max_epoch_blocks, middleY, block_height, max_cumulative_diff, total_expected_blocks, canvasRequiredWidth) {
-    var desired_number_of_axis_text = 6;
-    var axis_text_count = 2;
-    if (max_epoch_blocks > desired_number_of_axis_text) {
-        axis_text_count = Math.ceil(max_epoch_blocks / desired_number_of_axis_text);
-    }
-    var skip_text_count = 0;
-    for (height = 0; height <= (middleY * 2); height += block_height) {
-        skip_text_count ++;
-        if (height > 0 && skip_text_count == axis_text_count) {
-            skip_text_count = 0;
-            var right_axis_path = new paper.Path();
-            right_axis_path.strokeColor = 'yellow';
-            right_axis_path.add(new paper.Point(epoch_offset + canvasRequiredWidth, height));
-            right_axis_path.add(new paper.Point(epoch_offset + canvasRequiredWidth + 20, height));
-            right_axis_path.strokeWidth = 5;
-
-            if (height == middleY) {
-                axis_content = "100%";
-            } else if (height > middleY) {
-                current_axis_diff = ((height - middleY) / block_height)/(middleY / block_height) * (max_cumulative_diff / total_expected_blocks)
-                axis_content = ((1 - current_axis_diff) * 100).toFixed(2) + "%";
-            } else {
-                current_axis_diff = ((middleY - height) / block_height)/(middleY / block_height) * (max_cumulative_diff / total_expected_blocks)
-                axis_content = ((1 + current_axis_diff) * 100).toFixed(2) + "%";
-            }
-            var axis_text = new paper.PointText({
-            point: [epoch_offset + canvasRequiredWidth + 25, height + 3],
-            content: axis_content,
-            style: {
-                fontFamily: 'Courier New',
-                fontSize: 18,
-                fillColor: 'yellow',
-                justification: 'left'
-            }
-            })
-        }
-    }
-}
-
-// draws a legend in a semi transparent box.
-// all objects are originally drawn at 0,0 and then repositioned to where they should be
-// this is to make them fall in the same position later when we reposition them again when scrolling
-function drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_luck, current_lifetime_luck, ticker) {
-    console.log('drawing legend [' + legend_x + ',' + legend_y + ']');
-    if (legend_path == null) {
-        var legend_rect = new paper.Rectangle([0, 0], [legend_width, legend_height]);
-        legend_path = new paper.Path.Rectangle(legend_rect, blockRounding);
-        legend_path.strokeColor = '#D3D3D3';
-        legend_path.fillColor = 'black';
-        legend_path.opacity = 0.9;
-    }
-    legend_path.position = new Point(legend_x + 220, legend_y + legend_height / 2);
-
-    if (ticker_text == null) {
-        ticker_text = new paper.PointText({
-            point: [0, 0],
-            content: "ticker: " + ticker,
-            style: {
-                fontFamily: 'Courier New',
-                fontSize: 18,
-                fillColor: '#D3D3D3',
-                justification: 'left'
-            }
-        })
-    }
-    ticker_text.position = new Point(legend_x + 95, legend_y + 25);
-
-    if (legend_expected_block_text == null) {
-        legend_expected_block_text = new paper.PointText({
-            point: [0, 0],
-            content: ': expected blocks',
-            style: {
-                fontFamily: 'Courier New',
-                fontSize: 18,
-                fillColor: 'blue',
-                justification: 'left'
-            }
-        })
-    }
-    legend_expected_block_text.position = new Point(legend_x + 152.3, legend_y + 55);
-
-    if (legend_expected_path == null) {
-        var legend_expected_rect = new paper.Rectangle([0, 0], [blockWidth, 13]);
-        legend_expected_path = new paper.Path.Rectangle(legend_expected_rect, blockRounding);
-        legend_expected_path.strokeColor = 'blue';
-        legend_expected_path.strokeWidth = 2;
-    }
-    legend_expected_path.position = new Point(legend_x + 40.5, legend_y + 55.5);
-
-
-    if (legend_actual_block_text == null) {
-        legend_actual_block_text = new paper.PointText({
-            point: [0, 0],
-            content: ': actual blocks ',
-            style: {
-                fontFamily: 'Courier New',
-                fontSize: 18,
-                fillColor: '#D3D3D3',
-                justification: 'left'
-            }
-        })
-    }
-    legend_actual_block_text.position = new Point(legend_x + 147, legend_y + 85);
-
-    if (legend_actual_path == null) {
-        var legend_actual_rect = new paper.Rectangle([0, 0], [blockWidth, 13]);
-        legend_actual_path = new paper.Path.Rectangle(legend_actual_rect, blockRounding);
-        legend_actual_path.fillColor = '#D3D3D3';
-        legend_actual_path.strokeWidth = 2;
-    }
-    legend_actual_path.position = new Point(legend_x + 40.5, legend_y + 85);
-
-    if (legend_green_path == null) {
-        legend_green_path = new paper.Path();
-        legend_green_path.strokeColor = 'green';
-        legend_green_path.strokeWidth = 5;
-        legend_green_path.add(0, 0);
-        legend_green_path.add(29, 0);
-    }
-    legend_green_path.position = new Point(legend_x + 40, legend_y + 110);
-
-    if (legend_red_path == null) {
-        legend_red_path = new paper.Path();
-        legend_red_path.strokeColor = 'red';
-        legend_red_path.strokeWidth = 5;
-        legend_red_path.add(0, 0);
-        legend_red_path.add(29, 0);
-    }
-    legend_red_path.position = new Point(legend_x + 40, legend_y + 120);
-
-
-    if (legend_cumulative_path == null) {
-        legend_cumulative_path = new paper.Path();
-        legend_cumulative_path.strokeColor = 'yellow';
-        legend_cumulative_path.strokeWidth = 5;
-        legend_cumulative_path.add(0, 0);
-        legend_cumulative_path.add(29, 0);
-    }
-    legend_cumulative_path.position = new Point(legend_x + 40, legend_y + 149);
-
-    if (legend_performance_text == null) {
-        legend_performance_text = new paper.PointText({
-            point: [0, 0],
-            content: ": epoch performance",
-            style: {
-                fontFamily: 'Courier New',
-                fontSize: 18,
-                fillColor: '#D3D3D3',
-                justification: 'left'
-            }
-        })
-    }
-    legend_performance_text.position = new Point(legend_x + 163.2, legend_y + 115);
-
-    if (legend_green_text == null) {
-        legend_green_text = new paper.PointText({
-            point: [0, 0],
-            content: " over",
-            style: {
-                fontFamily: 'Courier New',
-                fontSize: 18,
-                fillColor: 'green',
-                justification: 'left'
-            }
-        })
-    }
-    legend_green_text.position = new Point(legend_x + 290, legend_y + 115);
-
-    if (legend_red_text == null) {
-        legend_red_text = new paper.PointText({
-            point: [0, 0],
-            content: " under",
-            style: {
-                fontFamily: 'Courier New',
-                fontSize: 18,
-                fillColor: 'red',
-                justification: 'left'
-            }
-        })
-    }
-    legend_red_text.position = new Point(legend_x + 350, legend_y + 115);
-
-    if (legend_cumulative_text == null) {
-        legend_cumulative_text = new paper.PointText({
-            point: [0, 0],
-            content: ": cumulative performance",
-            style: {
-                fontFamily: 'Courier New',
-                fontSize: 18,
-                fillColor: 'yellow',
-                justification: 'left'
-            }
-        })
-    }
-    legend_cumulative_text.position = new Point(legend_x + 60 + (legend_cumulative_text.bounds.width / 2), legend_y + 148);
-
-    if (legend_highest_luck_text == null) {
-        legend_highest_luck_text = new paper.PointText({
-            point: [0, 0],
-            content: 'highest performance : ' + highest_lifetime_luck.toFixed(2) + "%",
-            style: {
-                fontFamily: 'Courier New',
-                fontSize: 18,
-                fillColor: 'yellow',
-                justification: 'left'
-            }
-        })
-    }
-    legend_highest_luck_text.position = new Point(legend_x + 84 + (legend_highest_luck_text.bounds.width / 2), legend_y + 181.5);
-
-    if (legend_lowest_lifetime_luck_text == null) {
-        legend_lowest_lifetime_luck_text = new paper.PointText({
-            point: [0, 0],
-            content: 'lowest performance  : ' + lowest_lifetime_luck.toFixed(2) + "%",
-            style: {
-                fontFamily: 'Courier New',
-                fontSize: 18,
-                fillColor: 'yellow',
-                justification: 'left'
-            }
-        })
-    }
-    legend_lowest_lifetime_luck_text.position = new Point(legend_x + 84 + (legend_lowest_lifetime_luck_text.bounds.width / 2), legend_y + 209.5);
-
-    if (legend_current_lifetime_luck_text == null) {
-        legend_current_lifetime_luck_text = new paper.PointText({
-            point: [0, 0],
-            content: 'current performance : ' + current_lifetime_luck.toFixed(2) + "%",
-            style: {
-                fontFamily: 'Courier New',
-                fontSize: 18,
-                fillColor: 'yellow',
-                justification: 'left'
-            }
-        })
-    }
-    legend_current_lifetime_luck_text.position = new Point(legend_x + 84 + (legend_current_lifetime_luck_text.bounds.width / 2), legend_y + 236.5);
-}

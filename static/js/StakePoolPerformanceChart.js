@@ -71,7 +71,7 @@ class StakePoolPerformanceChart {
     }
 
     draw_background_solid_rectangle(x, y, width, height, color) {
-        var rect = new paper.Path.Rectangle({
+        var rect = new this.paper.Path.Rectangle({
             point: [x, y],
             size: [width, height],
             strokeColor: color
@@ -81,8 +81,8 @@ class StakePoolPerformanceChart {
     }
 
     draw_translucent_rectangle(x, y, width, height, strokeColor, fillColor, opacity, blockRounding) {
-        var rect = new paper.Rectangle([0, 0], [width, height]);
-        var path = new paper.Path.Rectangle(rect, blockRounding);
+        var rect = new this.paper.Rectangle([0, 0], [width, height]);
+        var path = new this.paper.Path.Rectangle(rect, blockRounding);
         path.strokeColor = strokeColor;
         path.fillColor = fillColor;
         path.opacity = opacity;
@@ -90,25 +90,25 @@ class StakePoolPerformanceChart {
     }
 
     draw_solid_rectangle(x, y, width, height, color, blockRounding) {
-        var rect = new paper.Rectangle([x, y], [width, height]);
-        var path = new paper.Path.Rectangle(rect, blockRounding);
+        var rect = new this.paper.Rectangle([x, y], [width, height]);
+        var path = new this.paper.Path.Rectangle(rect, blockRounding);
         path.fillColor = color;
         return path;
     }
 
     draw_hollow_rectangle(x, y, width, height, color, blockRounding) {
-        var rect = new paper.Rectangle([x, y], [width, height]);
-        var path = new paper.Path.Rectangle(rect, blockRounding);
+        var rect = new this.paper.Rectangle([x, y], [width, height]);
+        var path = new this.paper.Path.Rectangle(rect, blockRounding);
         path.strokeColor = color;
         path.strokeWidth = 2
         return path;
     }
 
     draw_line(start_x, start_y, end_x, end_y, color, strokeWidth) {
-        var linePath = new paper.Path();
+        var linePath = new this.paper.Path();
         linePath.strokeColor = color;
-        linePath.add(new paper.Point(start_x, start_y));
-        linePath.add(new paper.Point(end_x, end_y));
+        linePath.add(new this.paper.Point(start_x, start_y));
+        linePath.add(new this.paper.Point(end_x, end_y));
         linePath.strokeWidth = strokeWidth;
         return linePath;
     }
@@ -129,14 +129,14 @@ class StakePoolPerformanceChart {
     }
 
     start_cumulative_path() {
-        var cumulativeDiffPath = new paper.Path();
+        var cumulativeDiffPath = new this.paper.Path();
         cumulativeDiffPath.strokeColor = 'yellow';
         cumulativeDiffPath.strokeWidth = 5;
         return cumulativeDiffPath;
     }
 
     draw_text(x, y, text, rotation, fontSize, color) {
-        return new paper.PointText({
+        return new this.paper.PointText({
             point: [x, y],
             content: text,
             style: {
@@ -167,19 +167,19 @@ class StakePoolPerformanceChart {
 
             if (epoch < this.data["epochs"].length - 1) {
                 // performance diff lines
-                var diffPath = new paper.Path();
+                var diffPath = new this.paper.Path();
                 if (epochBlockDiff > 0) {
                     diffPath.strokeColor = 'green';
                 } else {
                     diffPath.strokeColor = 'red';
                 }
                 diffPath.strokeWidth = 5;
-                diffPath.add(new paper.Point(epochX, middle_y - (epochBlockDiff * blockHeight)));
-                diffPath.add(new paper.Point(epochX + this.epochWidth, middle_y - (epochBlockDiff * blockHeight)));
+                diffPath.add(new this.paper.Point(epochX, middle_y - (epochBlockDiff * blockHeight)));
+                diffPath.add(new this.paper.Point(epochX + this.epochWidth, middle_y - (epochBlockDiff * blockHeight)));
 
                 // cumulative performance line
-                diff_path.add(new paper.Point(epochX + 14, middle_y - (cumulative_diff_scaling_factor * (this.data['epochs'][epoch]['epoch_cumulative_diff'] * blockHeight))));
-                diff_path.add(new paper.Point(epochX + 16, middle_y - (cumulative_diff_scaling_factor * (this.data['epochs'][epoch]['epoch_cumulative_diff'] * blockHeight))));
+                diff_path.add(new this.paper.Point(epochX + 14, middle_y - (cumulative_diff_scaling_factor * (this.data['epochs'][epoch]['epoch_cumulative_diff'] * blockHeight))));
+                diff_path.add(new this.paper.Point(epochX + 16, middle_y - (cumulative_diff_scaling_factor * (this.data['epochs'][epoch]['epoch_cumulative_diff'] * blockHeight))));
 
                 // make cumulative line prettier
                 diff_path.smooth({ type: 'catmull-rom', factor: 1.0 });
@@ -204,10 +204,10 @@ class StakePoolPerformanceChart {
             skip_text_count ++;
             if (height > 0 && skip_text_count == axis_text_count) {
                 skip_text_count = 0;
-                var right_axis_path = new paper.Path();
+                var right_axis_path = new this.paper.Path();
                 right_axis_path.strokeColor = 'yellow';
-                right_axis_path.add(new paper.Point(this.epoch_offset + canvasRequiredWidth, height));
-                right_axis_path.add(new paper.Point(this.epoch_offset + canvasRequiredWidth + 20, height));
+                right_axis_path.add(new this.paper.Point(this.epoch_offset + canvasRequiredWidth, height));
+                right_axis_path.add(new this.paper.Point(this.epoch_offset + canvasRequiredWidth + 20, height));
                 right_axis_path.strokeWidth = 5;
                 var axis_content = '';
                 if (height == (total_height / 2)) {
@@ -257,7 +257,7 @@ class StakePoolPerformanceChart {
         this.legend_red_path.position = new Point(legend_x + 40, legend_y + 120);
 
         if (this.legend_cumulative_path == null) {
-            this.legend_cumulative_path = new paper.Path();
+            this.legend_cumulative_path = new this.paper.Path();
             this.legend_cumulative_path.strokeColor = 'yellow';
             this.legend_cumulative_path.strokeWidth = 5;
             this.legend_cumulative_path.add(0, 0);

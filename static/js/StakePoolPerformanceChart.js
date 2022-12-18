@@ -199,8 +199,6 @@ class StakePoolPerformanceChart {
         }
         var skip_text_count = 0;
         for (var height = 0; height <= total_height; height += blockHeight) {
-            console.log('height: ' + height);
-            console.log('total_height: ' + total_height);
             skip_text_count ++;
             if (height > 0 && skip_text_count == axis_text_count) {
                 skip_text_count = 0;

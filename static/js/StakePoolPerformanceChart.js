@@ -275,7 +275,7 @@ class StakePoolPerformanceChart {
 
 
     draw(drawLegend) {
-        if (this.document) {
+        if (this.document && this.canvas) {
             if (this.canvas_required_width > this.document.documentElement.clientWidth) {
                 this.document.body.style.width = this.canvas_required_width + this.right_axis_legend_width + 'px';
                 this.document.documentElement.scrollLeft = this.canvas_required_width - this.document.documentElement.clientWidth + this.right_axis_legend_width;
@@ -284,8 +284,8 @@ class StakePoolPerformanceChart {
                 var epochs_to_offset = (document.documentElement.clientWidth - this.canvas_required_width) / this.epochWidth
                 this.epoch_offset = Math.ceil(epochs_to_offset) * this.blockWidth;
             }
+            this.paper.setup(this.canvas);
         }
-        this.paper.setup(this.canvas);
         var view_size = this.paper.view.size
         this.draw_background_solid_rectangle(0, 0, view_size.width, view_size.height, this.background_color);
         this.draw_matrix_lines(this.data["epochs"].length, view_size.height);
@@ -298,4 +298,4 @@ class StakePoolPerformanceChart {
     }
 }
 
-export {StakePoolPerformanceChart};
+module.exports = { StakePoolPerformanceChart }

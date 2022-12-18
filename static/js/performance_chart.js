@@ -1,4 +1,3 @@
-
 var chart = null;
 var global_data = null;
 var data_fetch_completed = false;
@@ -15,11 +14,9 @@ class StakePoolPerformanceChart {
     current_epoch_color = '#282828';
     actual_block_color = '#D3D3D3';
     expected_block_color = 'blue';
-    middleY = 300;
-    legend_y = 0;
     legend_width = 420;
     legend_height = 260;
-    block_rounding = 3;
+    blockRounding = 3;
     block_to_epoch_width_margin = 4;
     epochWidth = 30;
     blockWidth = 0;
@@ -53,7 +50,6 @@ class StakePoolPerformanceChart {
         this.paper = paper;
         this.data = data;
         this.document = document;
-        this.legend_y = this.middleY + 30;
         this.blockWidth = this.epochWidth - this.block_to_epoch_width_margin;
         this.block_height = (this.paper.view.size.height / 2) / (this.data.max_epoch_blocks + 1);
         this.canvas_required_width = data["epochs"].length * this.epochWidth;
@@ -89,25 +85,25 @@ class StakePoolPerformanceChart {
         rect.fillColor = color;
     }
 
-    draw_translucent_rectangle(x, y, width, height, strokeColor, fillColor, opacity, block_rounding) {
+    draw_translucent_rectangle(x, y, width, height, strokeColor, fillColor, opacity, blockRounding) {
         var rect = new paper.Rectangle([0, 0], [width, height]);
-        var path = new paper.Path.Rectangle(rect, block_rounding);
+        var path = new paper.Path.Rectangle(rect, blockRounding);
         path.strokeColor = strokeColor;
         path.fillColor = fillColor;
         path.opacity = opacity;
         return path;
     }
 
-    draw_solid_rectangle(x, y, width, height, color, block_rounding) {
+    draw_solid_rectangle(x, y, width, height, color, blockRounding) {
         var rect = new paper.Rectangle([x, y], [width, height]);
-        var path = new paper.Path.Rectangle(rect, block_rounding);
+        var path = new paper.Path.Rectangle(rect, blockRounding);
         path.fillColor = color;
         return path;
     }
 
-    draw_hollow_rectangle(x, y, width, height, color, block_rounding) {
+    draw_hollow_rectangle(x, y, width, height, color, blockRounding) {
         var rect = new paper.Rectangle([x, y], [width, height]);
-        var path = new paper.Path.Rectangle(rect, block_rounding);
+        var path = new paper.Path.Rectangle(rect, blockRounding);
         path.strokeColor = color;
         path.strokeWidth = 2
         return path;
@@ -158,7 +154,7 @@ class StakePoolPerformanceChart {
         }).rotate(rotation);
     }
 
-    draw_epochs(diff_path, block_offset, block_height, cumulative_diff_scaling_factor) {
+    draw_epochs(diff_path, block_offset, blockHeight, cumulative_diff_scaling_factor) {
         var middle_y = this.paper.view.size.height / 2;
         for (var epoch = 0; epoch < this.data["epochs"].length; epoch++) {
             var epochBlockCount = parseFloat(this.data["epochs"][epoch].actual);
@@ -166,13 +162,13 @@ class StakePoolPerformanceChart {
             var epochBlockDiff = epochBlockCount - epochBlockExpected;
 
             var epochX = this.epoch_offset + (epoch * this.epochWidth);
-            this.draw_text(epochX + epoch_text_offset, this.paper.view.size.height - epoch_text_vertical_offset, this.data["epochs"][epoch].epoch, 310, 16, 'white');
+            this.draw_text(epochX + this.epoch_text_offset, this.paper.view.size.height - this.epoch_text_vertical_offset, this.data["epochs"][epoch].epoch, 310, 16, 'white');
 
             // blocks - actual and expected
             for (var epochBlock = 0; epochBlock < epochBlockCount; epochBlock++) {
-                this.draw_solid_rectangle(epochX + block_offset, middle_y - ((epochBlock + 1) * block_height), this.blockWidth, block_height, this.actual_block_color, this.blockRounding)
+                this.draw_solid_rectangle(epochX + block_offset, middle_y - ((epochBlock + 1) * blockHeight), this.blockWidth, blockHeight, this.actual_block_color, this.blockRounding)
             }
-            this.draw_hollow_rectangle(epochX + block_offset, middle_y - (epochBlockExpected * block_height), this.blockWidth, epochBlockExpected * block_height, this.expected_block_color, this.blockRounding);
+            this.draw_hollow_rectangle(epochX + block_offset, middle_y - (epochBlockExpected * blockHeight), this.blockWidth, epochBlockExpected * blockHeight, this.expected_block_color, this.blockRounding);
 
             if (epoch < this.data["epochs"].length - 1) {
                 // performance diff lines
@@ -183,12 +179,12 @@ class StakePoolPerformanceChart {
                     diffPath.strokeColor = 'red';
                 }
                 diffPath.strokeWidth = 5;
-                diffPath.add(new paper.Point(epochX, middle_y - (epochBlockDiff * block_height)));
-                diffPath.add(new paper.Point(epochX + this.epochWidth, middle_y - (epochBlockDiff * block_height)));
+                diffPath.add(new paper.Point(epochX, middle_y - (epochBlockDiff * blockHeight)));
+                diffPath.add(new paper.Point(epochX + this.epochWidth, middle_y - (epochBlockDiff * blockHeight)));
 
                 // cumulative performance line
-                diff_path.add(new paper.Point(epochX + 14, middle_y - (cumulative_diff_scaling_factor * (this.data['epochs'][epoch]['epoch_cumulative_diff'] * block_height))));
-                diff_path.add(new paper.Point(epochX + 16, middle_y - (cumulative_diff_scaling_factor * (this.data['epochs'][epoch]['epoch_cumulative_diff'] * block_height))));
+                diff_path.add(new paper.Point(epochX + 14, middle_y - (cumulative_diff_scaling_factor * (this.data['epochs'][epoch]['epoch_cumulative_diff'] * blockHeight))));
+                diff_path.add(new paper.Point(epochX + 16, middle_y - (cumulative_diff_scaling_factor * (this.data['epochs'][epoch]['epoch_cumulative_diff'] * blockHeight))));
 
                 // make cumulative line prettier
                 diff_path.smooth({ type: 'catmull-rom', factor: 1.0 });
@@ -200,14 +196,14 @@ class StakePoolPerformanceChart {
     // Draws the axis on the right for the cumulative performance yellow line.
     // the values are scaled so that the cumulative performance line takes up the entire height so the values on the axis are
     // scaled accordingly.  Also, depending on how many blocks a pool produces, the height of a block also scales.
-    drawRightAxisLuckBar(max_epoch_blocks, total_height, block_height, max_cumulative_diff, total_expected_blocks, canvasRequiredWidth) {
+    drawRightAxisLuckBar(max_epoch_blocks, total_height, blockHeight, max_cumulative_diff, total_expected_blocks, canvasRequiredWidth) {
         var desired_number_of_axis_text = 6;
         var axis_text_count = 2;
         if (max_epoch_blocks > desired_number_of_axis_text) {
             axis_text_count = Math.ceil(max_epoch_blocks / desired_number_of_axis_text);
         }
         var skip_text_count = 0;
-        for (var height = 0; height <= total_height; height += this.block_height) {
+        for (var height = 0; height <= total_height; height += blockHeight) {
             console.log('height: ' + height);
             console.log('total_height: ' + total_height);
             skip_text_count ++;
@@ -222,10 +218,10 @@ class StakePoolPerformanceChart {
                 if (height == (total_height / 2)) {
                     axis_content = "100%";
                 } else if (height > (total_height / 2)) {
-                    var current_axis_diff = ((height - (total_height / 2)) / this.block_height)/((total_height / 2) / this.block_height) * (max_cumulative_diff / total_expected_blocks)
+                    var current_axis_diff = ((height - (total_height / 2)) / blockHeight)/((total_height / 2) / blockHeight) * (max_cumulative_diff / total_expected_blocks)
                     axis_content = ((1 - current_axis_diff) * 100).toFixed(2) + "%";
                 } else {
-                    var current_axis_diff = (((total_height / 2) - height) / this.block_height)/((total_height / 2) / this.block_height) * (max_cumulative_diff / total_expected_blocks)
+                    var current_axis_diff = (((total_height / 2) - height) / blockHeight)/((total_height / 2) / blockHeight) * (max_cumulative_diff / total_expected_blocks)
                     axis_content = ((1 + current_axis_diff) * 100).toFixed(2) + "%";
                 }
                 this.draw_text(this.epoch_offset + canvasRequiredWidth + 75, height + 3, axis_content, 0, 18, 'yellow')
@@ -283,17 +279,16 @@ class StakePoolPerformanceChart {
     }
 
 
-    draw(data) {
-        if (this.canvas_required_width > this.document.documentElement.clientWidth) {
-            console.log('too big');
-            this.document.body.style.width = this.canvas_required_width + this.right_axis_legend_width + 'px';
-            this.document.documentElement.scrollLeft = this.canvas_required_width - this.document.documentElement.clientWidth + this.right_axis_legend_width;
-        } else {
-            console.log('too small');
-            this.document.body.style.width = document.documentElement.clientWidth;
-            var epochs_to_offset = (document.documentElement.clientWidth - this.canvas_required_width) / this.epochWidth
-            this.epoch_offset = Math.ceil(epochs_to_offset) * this.blockWidth;
-            console.log('offsetting by ' + this.epoch_offset);
+    draw(data, drawLegend) {
+        if (this.document) {
+            if (this.canvas_required_width > this.document.documentElement.clientWidth) {
+                this.document.body.style.width = this.canvas_required_width + this.right_axis_legend_width + 'px';
+                this.document.documentElement.scrollLeft = this.canvas_required_width - this.document.documentElement.clientWidth + this.right_axis_legend_width;
+            } else {
+                this.document.body.style.width = document.documentElement.clientWidth;
+                var epochs_to_offset = (document.documentElement.clientWidth - this.canvas_required_width) / this.epochWidth
+                this.epoch_offset = Math.ceil(epochs_to_offset) * this.blockWidth;
+            }
         }
         this.paper.setup(this.canvas);
         var view_size = this.paper.view.size
@@ -301,15 +296,12 @@ class StakePoolPerformanceChart {
         this.draw_matrix_lines(this.data["epochs"].length, view_size.height);
         var max_cumulative_diff_adjustment_buffer = 0.1;
         this.draw_epochs(this.start_cumulative_path(), this.block_to_epoch_width_margin / 2, this.block_height, (view_size.height / 2) / ((this.data.max_cumulative_diff + max_cumulative_diff_adjustment_buffer) * this.block_height));
-        this.drawRightAxisLuckBar(this.data.max_epoch_blocks, view_size.height, this.blockHeight, this.data.max_cumulative_diff, this.data.cumulative_expected_blocks, this.canvas_required_width);
-        this.drawLegend(this.document.documentElement.scrollLeft, (view_size.height / 2) + 30, this.data['highest_lifetime_luck'], this.data['lowest_lifetime_luck'], this.data['current_lifetime_luck'], this.data["ticker"]);
+        this.drawRightAxisLuckBar(this.data.max_epoch_blocks, view_size.height, this.block_height, this.data.max_cumulative_diff, this.data.cumulative_expected_blocks, this.canvas_required_width);
+        if (drawLegend) {
+            this.drawLegend(this.document.documentElement.scrollLeft, (view_size.height / 2) + 30, this.data['highest_lifetime_luck'], this.data['lowest_lifetime_luck'], this.data['current_lifetime_luck'], this.data["ticker"]);
+        }
     }
 }
-
-var epoch_text_offset = 15;
-var epoch_text_vertical_offset = 30;
-var right_axis_legend_width = 120;
-
 
 console.log('fetching data from ' + data_url);
 fetch(data_url)
@@ -365,7 +357,7 @@ function draw_if_data_finished_loading() {
         var canvas = document.getElementById('myCanvas');
         paper.setup(canvas);
         chart = new StakePoolPerformanceChart(canvas, paper, global_data, document);
-        chart.draw(global_data);
+        chart.draw(global_data, true);
         first_drawing_complete = true;
     } else {
         setTimeout(draw_if_data_finished_loading, 100);

@@ -59,7 +59,7 @@ function draw_if_data_finished_loading() {
         var canvas = document.getElementById('myCanvas');
         paper.setup(canvas);
         chart = new StakePoolPerformanceChart(canvas, paper, global_data, document);
-        chart.draw(global_data, true);
+        chart.draw(true);
         first_drawing_complete = true;
     } else {
         setTimeout(draw_if_data_finished_loading, 100);

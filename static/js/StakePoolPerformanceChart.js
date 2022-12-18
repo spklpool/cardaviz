@@ -274,7 +274,7 @@ class StakePoolPerformanceChart {
     }
 
 
-    draw(data, drawLegend) {
+    draw(drawLegend) {
         if (this.document) {
             if (this.canvas_required_width > this.document.documentElement.clientWidth) {
                 this.document.body.style.width = this.canvas_required_width + this.right_axis_legend_width + 'px';

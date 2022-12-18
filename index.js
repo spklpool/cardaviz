@@ -1,10 +1,23 @@
 const { paper } = require('paper-jsdom-canvas');
 const fs = require('fs');
 const { StakePoolPerformanceChart } = require('./static/js/StakePoolPerformanceChart.js')
+const sharp = require("sharp")
 
-function saveCanvasToSVGFile() {
+function convertSVGToPng(pool) {
+  sharp('/var/www/html/test/' + pool + '.svg')
+  .png()
+  .toFile('/var/www/html/test/' + pool + '.png')
+  .then(function(info) {
+    console.log(info)
+  })
+  .catch(function(err) {
+    console.log(err)
+  })
+}
+
+function saveCanvasToSVGFile(pool) {
     var svg = paper.project.exportSVG({asString:true});
-    fs.writeFileSync('/var/www/html/test/test.svg', svg);
+    fs.writeFileSync('/var/www/html/test/' + pool + '.svg', svg);
 }
 
 function draw_solid_rectangle(x, y, width, height, color, blockRounding) {
@@ -14,8 +27,8 @@ function draw_solid_rectangle(x, y, width, height, color, blockRounding) {
     return path;
 }
 
-
-var data_url = 'http://cardaviz.spklpool.com/data/' + process.argv[2] + '.json';
+var pool = process.argv[2];
+var data_url = 'http://cardaviz.spklpool.com/data/' + pool + '.json';
 var chart = null;
 var global_data = null;
 var data_fetch_completed = false;
@@ -42,7 +55,8 @@ function draw_if_data_finished_loading() {
 		chart.draw(false);
 		first_drawing_complete = true;
 		console.log('drawing complete');
-                saveCanvasToSVGFile();
+                saveCanvasToSVGFile(pool);
+		convertSVGToPng(pool);
 	} else {
 		setTimeout(draw_if_data_finished_loading, 100);
 	}

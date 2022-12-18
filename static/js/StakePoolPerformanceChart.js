@@ -54,7 +54,7 @@ class StakePoolPerformanceChart {
     }
 
     setupPaper() {
-        var size = new this.paper.Size(this.canvas_required_width + this.right_axis_legend_width, 600)
+        var size = new this.paper.Size(this.canvas_required_width + this.right_axis_legend_width, 1200)
         this.paper.setup(size);
     }
 

@@ -46,8 +46,16 @@ class StakePoolPerformanceChart {
         this.data = data;
         this.document = document;
         this.blockWidth = this.epochWidth - this.block_to_epoch_width_margin;
-        this.block_height = (this.paper.view.size.height / 2) / (this.data.max_epoch_blocks + 1);
         this.canvas_required_width = data["epochs"].length * this.epochWidth;
+        if (!this.canvas) {
+            this.setupPaper();
+        }
+        this.block_height = (this.paper.view.size.height / 2) / (this.data.max_epoch_blocks + 1);
+    }
+
+    setupPaper() {
+        var size = new this.paper.Size(this.canvas_required_width + this.right_axis_legend_width, 600)
+        this.paper.setup(size);
     }
 
     resetLegend() {
@@ -274,6 +282,7 @@ class StakePoolPerformanceChart {
 
     draw(drawLegend) {
         if (this.document && this.canvas) {
+            console.log('setting up canvas');
             if (this.canvas_required_width > this.document.documentElement.clientWidth) {
                 this.document.body.style.width = this.canvas_required_width + this.right_axis_legend_width + 'px';
                 this.document.documentElement.scrollLeft = this.canvas_required_width - this.document.documentElement.clientWidth + this.right_axis_legend_width;

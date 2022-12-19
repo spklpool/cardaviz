@@ -60,6 +60,9 @@ except ValueError as e:
 def sparkler():
     return render_template('sparkler.html')
 
+@app.route("/thumbnail/<pool_ticker>")
+def thumbnail(pool_ticker):
+    return render_template('thumbnail.html', pool_ticker=pool_ticker.upper())
 
 @app.route("/pools/<pool_ticker>")
 def get_pool(pool_ticker):

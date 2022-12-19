@@ -1,0 +1,50 @@
+<DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Thumbnail Viewer</title>
+  </head>
+  <style>
+    body {
+      background-color: black;
+    }
+    a:link {
+      color: white;
+      background-color: transparent;
+      text-decoration: none;
+    }
+    a:visited {
+      color: white;
+      background-color: transparent;
+      text-decoration: none;
+    }
+    a:hover {
+      color: red;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+    a:active {
+      color: yellow;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+  </style>
+  <body>
+    <center>
+      <table>
+        <tr>
+          <td style="color:white;"><a href="http://cardaviz.spklpool.com/pools/{{pool_ticker}}">{{pool_ticker}}</a></td>
+            <td>
+              <table border="0" cellpadding="4" cellspacing="0">
+                <tr>
+                  <td bgcolor="#282828"><image src="http://cardaviz.spklpool.com/test/{{pool_ticker}}.png" style="float: right; width: 600;, height: 600;"/></td>
+                </tr>
+              </table>
+            </td>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>

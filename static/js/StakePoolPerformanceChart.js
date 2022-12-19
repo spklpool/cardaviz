@@ -293,7 +293,7 @@ class StakePoolPerformanceChart {
             }
             this.paper.setup(this.canvas);
         }
-        var view_size = this.paper.view.size
+        var view_size = this.paper.view.size;
         this.draw_background_solid_rectangle(0, 0, view_size.width, view_size.height, this.background_color);
         this.draw_matrix_lines(this.data["epochs"].length, view_size.height);
         var max_cumulative_diff_adjustment_buffer = 0.1;
@@ -305,4 +305,6 @@ class StakePoolPerformanceChart {
     }
 }
 
-module.exports = { StakePoolPerformanceChart }
+if (typeof module !== 'undefined') {
+    module.exports = { StakePoolPerformanceChart }
+}

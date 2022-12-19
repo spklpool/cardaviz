@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="../static/js/paper-full.min.js"></script>
+	<script type="text/javascript" src="../static/js/Sparkler.js"></script>
+	<style type="text/css">
+		html,
+		body {
+			margin: 0;
+			height: 100%;
+			width: 100%;
+		}
+
+		/* Scale canvas with resize attribute to full size */
+		canvas[resize] {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+<body class="fullscreen">
+	<canvas resize="true" id="sparklerCanvas" resize></canvas>
+	<script>
+		var sparkler = null;
+		window.onload = function() {
+            paper.install(window);
+            var canvas = document.getElementById('sparklerCanvas');
+            paper.setup(canvas);
+            sparkler = new Sparkler(canvas, paper, document);
+            sparkler.draw();
+			view.onFrame = function(event) {
+				sparkler.sparkle(5);
+			}
+		}
+
+	</script>
+</body>
+</html>

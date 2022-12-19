@@ -56,21 +56,16 @@ except ValueError as e:
     logging.error(f'{e}. Continuing execution...')
 
 
-#TODO: add a landing page here
-#@app.route("/")
-#def get_landing_page():
-#    return "cardaviz"
+@app.route("/sparkler")
+def sparkler():
+    return render_template('sparkler.html')
 
-
-@app.route("/")
-def get_landing_page():
-    return render_template('underapreciated_performers.html')
 
 @app.route("/pools/<pool_ticker>")
 def get_pool(pool_ticker):
     return render_template('perfchart.html', pool_ticker=pool_ticker.upper())
 
-@app.route("/performers")
+@app.route("/")
 def get_underappreciated_performers():
     pools = []
     tickers_json = json.load(open('static/tickers.json'))

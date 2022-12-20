@@ -1116,33 +1116,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 495.658,
             "cumulative_actual_blocks": 505,
-            "epoch_diff": 1.0645,
+            "epoch_diff": 1.06450,
             "epoch_cumulative_diff": 9.34160
         },
         {
             "epoch": 381,
             "expected": 14.7431,
-            "actual": 3,
+            "actual": 9,
             "pool_stake": 17125595775023,
             "total_stake": 25090595813788584,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 510.401,
-            "cumulative_actual_blocks": 508,
-            "epoch_diff": -11.7431,
-            "epoch_cumulative_diff": -2.40150
+            "cumulative_actual_blocks": 514,
+            "epoch_diff": -5.7431,
+            "epoch_cumulative_diff": 3.59850
+        },
+        {
+            "epoch": 382,
+            "expected": 14.8465,
+            "actual": 7,
+            "pool_stake": 17237811134822,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 525.248,
+            "cumulative_actual_blocks": 521,
+            "epoch_diff": -7.8465,
+            "epoch_cumulative_diff": -4.24800
         }
     ],
     "max_positive_diff": 11.1961,
     "max_negative_diff": 5.27040,
-    "cumulative_diff": -2.40150,
-    "cumulative_expected_blocks": 510.401,
-    "cumulative_actual_blocks": 508,
+    "cumulative_diff": -4.24800,
+    "cumulative_expected_blocks": 525.248,
+    "cumulative_actual_blocks": 521,
     "max_actual_blocks": 23,
     "max_expected_blocks": 15.2866,
-    "current_lifetime_luck": 99.5296,
+    "current_lifetime_luck": 99.1912,
     "max_epoch_blocks": 23,
     "max_cumulative_diff": 11.1961,
-    "highest_lifetime_luck": 102.194,
-    "lowest_lifetime_luck": 98.9674
+    "highest_lifetime_luck": 102.132,
+    "lowest_lifetime_luck": 98.9966
 }

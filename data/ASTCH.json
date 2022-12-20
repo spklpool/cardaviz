@@ -1,4 +1,4 @@
-{
+{ 
     "ticker": "ASTCH",
     "epochs": [
         {
@@ -1612,18 +1612,31 @@
             "cumulative_actual_blocks": 12,
             "epoch_diff": -0.0179832,
             "epoch_cumulative_diff": 4.61041
+        },
+        {
+            "epoch": 382,
+            "expected": 0.0179914,
+            "actual": 0,
+            "pool_stake": 20889262931,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 7.40758,
+            "cumulative_actual_blocks": 12,
+            "epoch_diff": -0.0179914,
+            "epoch_cumulative_diff": 4.59242
         }
     ],
     "max_positive_diff": 4.94885,
     "max_negative_diff": 0.0532511,
-    "cumulative_diff": 4.61041,
-    "cumulative_expected_blocks": 7.38959,
+    "cumulative_diff": 4.59242,
+    "cumulative_expected_blocks": 7.40758,
     "cumulative_actual_blocks": 12,
     "max_actual_blocks": 4,
     "max_expected_blocks": 1.77896,
-    "current_lifetime_luck": 162.391,
+    "current_lifetime_luck": 161.996,
     "max_epoch_blocks": 4,
     "max_cumulative_diff": 4.94885,
-    "highest_lifetime_luck": 166.971,
-    "lowest_lifetime_luck": 99.2794
+    "highest_lifetime_luck": 166.808,
+    "lowest_lifetime_luck": 99.2811
 }

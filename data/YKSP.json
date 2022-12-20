@@ -1558,33 +1558,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 368.431,
             "cumulative_actual_blocks": 384,
-            "epoch_diff": 0.16282,
+            "epoch_diff": 0.162820,
             "epoch_cumulative_diff": 15.5675
         },
         {
             "epoch": 381,
             "expected": 2.83746,
-            "actual": 1,
+            "actual": 3,
             "pool_stake": 3296004200118,
             "total_stake": 25090595813788584,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 371.268,
-            "cumulative_actual_blocks": 385,
-            "epoch_diff": -1.83746,
-            "epoch_cumulative_diff": 13.7300
+            "cumulative_actual_blocks": 387,
+            "epoch_diff": 0.16254,
+            "epoch_cumulative_diff": 15.7300
+        },
+        {
+            "epoch": 382,
+            "expected": 2.84185,
+            "actual": 2,
+            "pool_stake": 3299582187767,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 374.110,
+            "cumulative_actual_blocks": 389,
+            "epoch_diff": -0.84185,
+            "epoch_cumulative_diff": 14.8882
         }
     ],
     "max_positive_diff": 22.8020,
     "max_negative_diff": 0.901810,
-    "cumulative_diff": 13.7300,
-    "cumulative_expected_blocks": 371.268,
-    "cumulative_actual_blocks": 385,
+    "cumulative_diff": 14.8882,
+    "cumulative_expected_blocks": 374.110,
+    "cumulative_actual_blocks": 389,
     "max_actual_blocks": 10,
     "max_expected_blocks": 4.67997,
-    "current_lifetime_luck": 103.699,
+    "current_lifetime_luck": 103.980,
     "max_epoch_blocks": 10,
     "max_cumulative_diff": 22.8020,
-    "highest_lifetime_luck": 106.142,
-    "lowest_lifetime_luck": 99.7571
+    "highest_lifetime_luck": 106.095,
+    "lowest_lifetime_luck": 99.7589
 }

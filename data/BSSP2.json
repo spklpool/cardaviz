@@ -1870,33 +1870,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1959.01,
             "cumulative_actual_blocks": 2018,
-            "epoch_diff": 0.56041,
+            "epoch_diff": 0.560410,
             "epoch_cumulative_diff": 58.9932
         },
         {
             "epoch": 381,
             "expected": 2.43840,
-            "actual": 1,
+            "actual": 4,
             "pool_stake": 2832461744370,
             "total_stake": 25090595813788584,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1961.45,
-            "cumulative_actual_blocks": 2019,
-            "epoch_diff": -1.43840,
-            "epoch_cumulative_diff": 57.5548
+            "cumulative_actual_blocks": 2022,
+            "epoch_diff": 1.56160,
+            "epoch_cumulative_diff": 60.5548
+        },
+        {
+            "epoch": 382,
+            "expected": 2.44026,
+            "actual": 3,
+            "pool_stake": 2833317256886,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 1963.89,
+            "cumulative_actual_blocks": 2025,
+            "epoch_diff": 0.55974,
+            "epoch_cumulative_diff": 61.1145
         }
     ],
     "max_positive_diff": 75.9655,
     "max_negative_diff": 15.5834,
-    "cumulative_diff": 57.5548,
-    "cumulative_expected_blocks": 1961.45,
-    "cumulative_actual_blocks": 2019,
+    "cumulative_diff": 61.1145,
+    "cumulative_expected_blocks": 1963.89,
+    "cumulative_actual_blocks": 2025,
     "max_actual_blocks": 30,
     "max_expected_blocks": 25.9302,
-    "current_lifetime_luck": 102.934,
+    "current_lifetime_luck": 103.112,
     "max_epoch_blocks": 30,
     "max_cumulative_diff": 75.9655,
-    "highest_lifetime_luck": 103.873,
-    "lowest_lifetime_luck": 99.2055
+    "highest_lifetime_luck": 103.868,
+    "lowest_lifetime_luck": 99.2065
 }

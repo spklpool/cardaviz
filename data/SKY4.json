@@ -1043,7 +1043,7 @@
         },
         {
             "epoch": 380,
-            "expected": 60.2570,
+            "expected": 60.257,
             "actual": 73,
             "pool_stake": 69924004694941,
             "total_stake": 25065309972207037,
@@ -1057,27 +1057,40 @@
         {
             "epoch": 381,
             "expected": 60.7490,
-            "actual": 23,
+            "actual": 63,
             "pool_stake": 70566143362039,
             "total_stake": 25090595813788584,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4214.56,
-            "cumulative_actual_blocks": 4018,
-            "epoch_diff": -37.7490,
-            "epoch_cumulative_diff": -196.564
+            "cumulative_actual_blocks": 4058,
+            "epoch_diff": 2.2510,
+            "epoch_cumulative_diff": -156.564
+        },
+        {
+            "epoch": 382,
+            "expected": 60.6195,
+            "actual": 41,
+            "pool_stake": 70383442256063,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 4275.18,
+            "cumulative_actual_blocks": 4099,
+            "epoch_diff": -19.6195,
+            "epoch_cumulative_diff": -176.184
         }
     ],
     "max_positive_diff": 0,
-    "max_negative_diff": 196.564,
-    "cumulative_diff": -196.564,
-    "cumulative_expected_blocks": 4214.56,
-    "cumulative_actual_blocks": 4018,
+    "max_negative_diff": 193.830,
+    "cumulative_diff": -176.184,
+    "cumulative_expected_blocks": 4275.18,
+    "cumulative_actual_blocks": 4099,
     "max_actual_blocks": 76,
     "max_expected_blocks": 63.6005,
-    "current_lifetime_luck": 95.3362,
+    "current_lifetime_luck": 95.8790,
     "max_epoch_blocks": 76,
-    "max_cumulative_diff": 196.564,
+    "max_cumulative_diff": 193.830,
     "highest_lifetime_luck": 100,
-    "lowest_lifetime_luck": 95.3361
+    "lowest_lifetime_luck": 95.4662
 }

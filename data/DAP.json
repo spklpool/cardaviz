@@ -1,4 +1,4 @@
-{
+{ 
     "ticker": "DAP",
     "epochs": [
         {
@@ -2028,18 +2028,31 @@
             "cumulative_actual_blocks": 235,
             "epoch_diff": -0.0266503,
             "epoch_cumulative_diff": 9.09494
+        },
+        {
+            "epoch": 382,
+            "expected": 0.0258062,
+            "actual": 0,
+            "pool_stake": 29962853284,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 225.932,
+            "cumulative_actual_blocks": 235,
+            "epoch_diff": -0.0258062,
+            "epoch_cumulative_diff": 9.06913
         }
     ],
     "max_positive_diff": 14.3702,
     "max_negative_diff": 6.83347,
-    "cumulative_diff": 9.09494,
-    "cumulative_expected_blocks": 225.906,
+    "cumulative_diff": 9.06913,
+    "cumulative_expected_blocks": 225.932,
     "cumulative_actual_blocks": 235,
     "max_actual_blocks": 25,
     "max_expected_blocks": 14.6232,
-    "current_lifetime_luck": 104.026,
+    "current_lifetime_luck": 104.014,
     "max_epoch_blocks": 25,
     "max_cumulative_diff": 14.3702,
-    "highest_lifetime_luck": 106.361,
-    "lowest_lifetime_luck": 96.9751
+    "highest_lifetime_luck": 106.360,
+    "lowest_lifetime_luck": 96.9754
 }

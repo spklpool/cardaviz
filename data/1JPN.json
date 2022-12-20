@@ -2182,33 +2182,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3958.16,
             "cumulative_actual_blocks": 3894,
-            "epoch_diff": 6.1448,
+            "epoch_diff": 6.14480,
             "epoch_cumulative_diff": -64.1492
         },
         {
             "epoch": 381,
             "expected": 23.2602,
-            "actual": 16,
+            "actual": 28,
             "pool_stake": 27019166264473,
             "total_stake": 25090595813788584,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3981.42,
-            "cumulative_actual_blocks": 3910,
-            "epoch_diff": -7.2602,
-            "epoch_cumulative_diff": -71.4094
+            "cumulative_actual_blocks": 3922,
+            "epoch_diff": 4.7398,
+            "epoch_cumulative_diff": -59.4094
+        },
+        {
+            "epoch": 382,
+            "expected": 23.2829,
+            "actual": 14,
+            "pool_stake": 27032915863172,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 4004.70,
+            "cumulative_actual_blocks": 3936,
+            "epoch_diff": -9.2829,
+            "epoch_cumulative_diff": -68.6923
         }
     ],
     "max_positive_diff": 21.1345,
     "max_negative_diff": 72.4434,
-    "cumulative_diff": -71.4094,
-    "cumulative_expected_blocks": 3981.42,
-    "cumulative_actual_blocks": 3910,
+    "cumulative_diff": -68.6923,
+    "cumulative_expected_blocks": 4004.70,
+    "cumulative_actual_blocks": 3936,
     "max_actual_blocks": 52,
     "max_expected_blocks": 54.5605,
-    "current_lifetime_luck": 98.2062,
+    "current_lifetime_luck": 98.2845,
     "max_epoch_blocks": 54.5605,
     "max_cumulative_diff": 72.4434,
-    "highest_lifetime_luck": 100.531,
-    "lowest_lifetime_luck": 98.1805
+    "highest_lifetime_luck": 100.528,
+    "lowest_lifetime_luck": 98.1910
 }

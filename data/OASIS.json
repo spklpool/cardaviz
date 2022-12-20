@@ -2117,33 +2117,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2747.78,
             "cumulative_actual_blocks": 2645,
-            "epoch_diff": 3.1514,
+            "epoch_diff": 3.15140,
             "epoch_cumulative_diff": -102.803
         },
         {
             "epoch": 381,
             "expected": 29.3333,
-            "actual": 15,
+            "actual": 26,
             "pool_stake": 34073630756859,
             "total_stake": 25090595813788584,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2777.11,
-            "cumulative_actual_blocks": 2660,
-            "epoch_diff": -14.3333,
-            "epoch_cumulative_diff": -117.136
+            "cumulative_actual_blocks": 2671,
+            "epoch_diff": -3.3333,
+            "epoch_cumulative_diff": -106.136
+        },
+        {
+            "epoch": 382,
+            "expected": 29.6421,
+            "actual": 20,
+            "pool_stake": 34416600049958,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 2806.75,
+            "cumulative_actual_blocks": 2691,
+            "epoch_diff": -9.6421,
+            "epoch_cumulative_diff": -115.778
         }
     ],
     "max_positive_diff": 23.3444,
     "max_negative_diff": 117.388,
-    "cumulative_diff": -117.136,
-    "cumulative_expected_blocks": 2777.11,
-    "cumulative_actual_blocks": 2660,
+    "cumulative_diff": -115.778,
+    "cumulative_expected_blocks": 2806.75,
+    "cumulative_actual_blocks": 2691,
     "max_actual_blocks": 46,
     "max_expected_blocks": 49.6951,
-    "current_lifetime_luck": 95.7830,
+    "current_lifetime_luck": 95.8760,
     "max_epoch_blocks": 49.6951,
     "max_cumulative_diff": 117.388,
-    "highest_lifetime_luck": 100.841,
-    "lowest_lifetime_luck": 95.7730
+    "highest_lifetime_luck": 100.832,
+    "lowest_lifetime_luck": 95.8176
 }

@@ -372,35 +372,22 @@ def get_pool_metadata_url(pool_id):
     return ret
 
 
-def refresh_most_stale_pool_for_epoch(epoch):
+def refresh_all_pools_for_epoch(epoch, sleep_seconds):
+    current_count = 0
     all_files = os.listdir(data_folder)
     all_files = [os.path.join(data_folder, f) for f in all_files]
     all_files.sort(key=lambda x: os.path.getmtime(x))
-    filename = all_files[0]
-    print("updating " + filename)
-    tickers_json = json.load(open('static/tickers.json'))
-    pool_json = json.load(open(filename))
-    pool_ticker = pool_json['ticker']
-    if pool_ticker in tickers_json:
-        pool_id = tickers_json[pool_ticker]
-        refresh_epoch(pool_json, pool_id, epoch)
-    return "done"
-
-
-def refresh_all_pools_for_epoch(epoch):
-    current_count = 0
-    all_files = os.listdir(data_folder)
     for filename in all_files:
         current_count += 1
-        pool_file = os.path.join(data_folder, filename)
-        if os.path.isfile(pool_file):
-            print("updating " + str(current_count) + " of " + str(len(all_files)) + " - " + pool_file)
+        if os.path.isfile(filename):
+            print("updating " + str(current_count) + " of " + str(len(all_files)) + " - " + filename)
             tickers_json = json.load(open('static/tickers.json'))
-            pool_json = json.load(open(pool_file))
+            pool_json = json.load(open(filename))
             pool_ticker = pool_json['ticker']
             if pool_ticker in tickers_json:
                 pool_id = tickers_json[pool_ticker]
                 refresh_epoch(pool_json, pool_id, epoch)
+                sleep(sleep_seconds)
     return "done"
 
 

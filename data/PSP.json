@@ -1,4 +1,4 @@
-{
+{ 
     "ticker": "PSP",
     "epochs": [
         {
@@ -2223,18 +2223,31 @@
             "cumulative_actual_blocks": 22,
             "epoch_diff": -0.00870795,
             "epoch_cumulative_diff": 2.89775
+        },
+        {
+            "epoch": 382,
+            "expected": 0.00873780,
+            "actual": 0,
+            "pool_stake": 10145182750,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 19.1110,
+            "cumulative_actual_blocks": 22,
+            "epoch_diff": -0.00873780,
+            "epoch_cumulative_diff": 2.88901
         }
     ],
     "max_positive_diff": 5.10846,
     "max_negative_diff": 3.41554,
-    "cumulative_diff": 2.89775,
-    "cumulative_expected_blocks": 19.1023,
+    "cumulative_diff": 2.88901,
+    "cumulative_expected_blocks": 19.1110,
     "cumulative_actual_blocks": 22,
     "max_actual_blocks": 4,
     "max_expected_blocks": 1.28443,
-    "current_lifetime_luck": 115.169,
+    "current_lifetime_luck": 115.117,
     "max_epoch_blocks": 4,
     "max_cumulative_diff": 5.10846,
-    "highest_lifetime_luck": 126.743,
-    "lowest_lifetime_luck": 82.1197
+    "highest_lifetime_luck": 126.730,
+    "lowest_lifetime_luck": 82.1279
 }

@@ -765,33 +765,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 832.065,
             "cumulative_actual_blocks": 828,
-            "epoch_diff": 0.1376,
+            "epoch_diff": 0.137600,
             "epoch_cumulative_diff": -4.06610
         },
         {
             "epoch": 381,
             "expected": 35.4316,
-            "actual": 14,
+            "actual": 32,
             "pool_stake": 41157296158247,
             "total_stake": 25090595813788584,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 867.497,
-            "cumulative_actual_blocks": 842,
-            "epoch_diff": -21.4316,
-            "epoch_cumulative_diff": -25.4977
+            "cumulative_actual_blocks": 860,
+            "epoch_diff": -3.4316,
+            "epoch_cumulative_diff": -7.49770
+        },
+        {
+            "epoch": 382,
+            "expected": 36.1271,
+            "actual": 25,
+            "pool_stake": 41945960309802,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 903.624,
+            "cumulative_actual_blocks": 885,
+            "epoch_diff": -11.1271,
+            "epoch_cumulative_diff": -18.6248
         }
     ],
     "max_positive_diff": 0,
     "max_negative_diff": 31.7699,
-    "cumulative_diff": -25.4977,
-    "cumulative_expected_blocks": 867.497,
-    "cumulative_actual_blocks": 842,
+    "cumulative_diff": -18.6248,
+    "cumulative_expected_blocks": 903.624,
+    "cumulative_actual_blocks": 885,
     "max_actual_blocks": 39,
-    "max_expected_blocks": 35.4316,
-    "current_lifetime_luck": 97.0609,
+    "max_expected_blocks": 36.1271,
+    "current_lifetime_luck": 97.9390,
     "max_epoch_blocks": 39,
     "max_cumulative_diff": 31.7699,
     "highest_lifetime_luck": 100,
-    "lowest_lifetime_luck": 96.3378
+    "lowest_lifetime_luck": 96.4842
 }

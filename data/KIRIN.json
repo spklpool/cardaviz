@@ -1,4 +1,4 @@
-{
+{ 
     "ticker": "KIRIN",
     "epochs": [
         {
@@ -1248,18 +1248,31 @@
             "cumulative_actual_blocks": 25,
             "epoch_diff": -0.0138073,
             "epoch_cumulative_diff": 10.1868
+        },
+        {
+            "epoch": 382,
+            "expected": 0.0138136,
+            "actual": 0,
+            "pool_stake": 16038532173,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 14.8267,
+            "cumulative_actual_blocks": 25,
+            "epoch_diff": -0.0138136,
+            "epoch_cumulative_diff": 10.1730
         }
     ],
     "max_positive_diff": 10.7438,
     "max_negative_diff": 0.157142,
-    "cumulative_diff": 10.1868,
-    "cumulative_expected_blocks": 14.8129,
+    "cumulative_diff": 10.1730,
+    "cumulative_expected_blocks": 14.8267,
     "cumulative_actual_blocks": 25,
     "max_actual_blocks": 2,
     "max_expected_blocks": 0.60758,
-    "current_lifetime_luck": 168.772,
+    "current_lifetime_luck": 168.615,
     "max_epoch_blocks": 2,
     "max_cumulative_diff": 10.7438,
-    "highest_lifetime_luck": 172.530,
-    "lowest_lifetime_luck": 98.9392
+    "highest_lifetime_luck": 172.462,
+    "lowest_lifetime_luck": 98.9401
 }

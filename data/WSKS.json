@@ -141,33 +141,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 38.6226,
             "cumulative_actual_blocks": 30,
-            "epoch_diff": -0.47795,
+            "epoch_diff": -0.477950,
             "epoch_cumulative_diff": -8.62264
         },
         {
             "epoch": 381,
             "expected": 3.47497,
-            "actual": 3,
+            "actual": 4,
             "pool_stake": 4036518712389,
             "total_stake": 25090595813788584,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 42.0976,
-            "cumulative_actual_blocks": 33,
-            "epoch_diff": -0.47497,
-            "epoch_cumulative_diff": -9.09761
+            "cumulative_actual_blocks": 34,
+            "epoch_diff": 0.52503,
+            "epoch_cumulative_diff": -8.09761
+        },
+        {
+            "epoch": 382,
+            "expected": 3.47810,
+            "actual": 5,
+            "pool_stake": 4038307331824,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 45.5757,
+            "cumulative_actual_blocks": 39,
+            "epoch_diff": 1.52190,
+            "epoch_cumulative_diff": -6.57571
         }
     ],
     "max_positive_diff": 0,
-    "max_negative_diff": 9.09761,
-    "cumulative_diff": -9.09761,
-    "cumulative_expected_blocks": 42.0976,
-    "cumulative_actual_blocks": 33,
+    "max_negative_diff": 8.62264,
+    "cumulative_diff": -6.57571,
+    "cumulative_expected_blocks": 45.5757,
+    "cumulative_actual_blocks": 39,
     "max_actual_blocks": 8,
     "max_expected_blocks": 3.57973,
-    "current_lifetime_luck": 78.3893,
+    "current_lifetime_luck": 85.5719,
     "max_epoch_blocks": 8,
-    "max_cumulative_diff": 9.09761,
+    "max_cumulative_diff": 8.62264,
     "highest_lifetime_luck": 100,
-    "lowest_lifetime_luck": 78.3892
+    "lowest_lifetime_luck": 81.0806
 }

@@ -2221,33 +2221,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 890.568,
             "cumulative_actual_blocks": 901,
-            "epoch_diff": 0.06045,
+            "epoch_diff": 0.0604500,
             "epoch_cumulative_diff": 10.4372
         },
         {
             "epoch": 381,
             "expected": 2.93726,
-            "actual": 1,
+            "actual": 3,
             "pool_stake": 3411931645518,
             "total_stake": 25090595813788584,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 893.505,
-            "cumulative_actual_blocks": 902,
-            "epoch_diff": -1.93726,
-            "epoch_cumulative_diff": 8.49994
+            "cumulative_actual_blocks": 904,
+            "epoch_diff": 0.06274,
+            "epoch_cumulative_diff": 10.4999
+        },
+        {
+            "epoch": 382,
+            "expected": 2.93994,
+            "actual": 2,
+            "pool_stake": 3413462385992,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 896.445,
+            "cumulative_actual_blocks": 906,
+            "epoch_diff": -0.93994,
+            "epoch_cumulative_diff": 9.55996
         }
     ],
     "max_positive_diff": 25.2371,
     "max_negative_diff": 9.94773,
-    "cumulative_diff": 8.49994,
-    "cumulative_expected_blocks": 893.505,
-    "cumulative_actual_blocks": 902,
+    "cumulative_diff": 9.55996,
+    "cumulative_expected_blocks": 896.445,
+    "cumulative_actual_blocks": 906,
     "max_actual_blocks": 45,
     "max_expected_blocks": 40.1184,
-    "current_lifetime_luck": 100.951,
+    "current_lifetime_luck": 101.066,
     "max_epoch_blocks": 45,
     "max_cumulative_diff": 25.2371,
-    "highest_lifetime_luck": 102.825,
-    "lowest_lifetime_luck": 98.8867
+    "highest_lifetime_luck": 102.815,
+    "lowest_lifetime_luck": 98.8903
 }

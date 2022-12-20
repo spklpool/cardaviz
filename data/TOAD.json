@@ -1246,33 +1246,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 258.491,
             "cumulative_actual_blocks": 247,
-            "epoch_diff": -0.70199,
+            "epoch_diff": -0.701990,
             "epoch_cumulative_diff": -11.4904
         },
         {
             "epoch": 381,
             "expected": 2.70030,
-            "actual": 1,
+            "actual": 3,
             "pool_stake": 3136664333714,
             "total_stake": 25090595813788584,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 261.191,
-            "cumulative_actual_blocks": 248,
-            "epoch_diff": -1.70030,
-            "epoch_cumulative_diff": -13.1907
+            "cumulative_actual_blocks": 250,
+            "epoch_diff": 0.29970,
+            "epoch_cumulative_diff": -11.1907
+        },
+        {
+            "epoch": 382,
+            "expected": 2.70255,
+            "actual": 2,
+            "pool_stake": 3137856748698,
+            "total_stake": 25079111896910089,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 263.894,
+            "cumulative_actual_blocks": 252,
+            "epoch_diff": -0.70255,
+            "epoch_cumulative_diff": -11.8932
         }
     ],
     "max_positive_diff": 6.68444,
     "max_negative_diff": 13.7134,
-    "cumulative_diff": -13.1907,
-    "cumulative_expected_blocks": 261.191,
-    "cumulative_actual_blocks": 248,
+    "cumulative_diff": -11.8932,
+    "cumulative_expected_blocks": 263.894,
+    "cumulative_actual_blocks": 252,
     "max_actual_blocks": 7,
     "max_expected_blocks": 2.95406,
-    "current_lifetime_luck": 94.9497,
+    "current_lifetime_luck": 95.4929,
     "max_epoch_blocks": 7,
     "max_cumulative_diff": 13.7134,
-    "highest_lifetime_luck": 102.559,
-    "lowest_lifetime_luck": 94.7497
+    "highest_lifetime_luck": 102.533,
+    "lowest_lifetime_luck": 94.8034
 }

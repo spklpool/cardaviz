@@ -27,12 +27,10 @@
             var canvas = document.getElementById('sparklerCanvas');
             paper.setup(canvas);
             sparkler = new Sparkler(canvas, paper, document);
-            sparkler.draw();
 			view.onFrame = function(event) {
 				sparkler.sparkle(5);
 			}
 		}
-
 	</script>
 </body>
 </html>

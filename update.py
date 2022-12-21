@@ -1,3 +1,5 @@
+import sys
+import subprocess
 import traceback
 from time import sleep
 import simplejson as json
@@ -372,6 +374,10 @@ def get_pool_metadata_url(pool_id):
     return ret
 
 
+def refresh_all_pools_for_next_epoch():
+    latest_epoch = get_latest_epoch()
+    print(latest_epoch)
+
 def refresh_all_pools_for_epoch(epoch, sleep_seconds):
     current_count = 0
     all_files = os.listdir(data_folder)
@@ -451,6 +457,7 @@ def update():
                 pool_json = json.load(open(pool_json_path))
                 refresh_epoch(pool_json, row['view'], latest_epoch - 1)
                 refresh_epoch(pool_json, row['view'], latest_epoch)
+                update_thumbnail(row['ticker'].upper())
 
             except (Exception) as metadata_error:
                 print(metadata_error)
@@ -462,7 +469,14 @@ def update():
             conn.close()
 
 
-#refresh_all_pools_for_epoch(380)
-while True:
-    update()
-    sleep(10)
+def update_thumbnail(pool_ticker):
+    p = subprocess.Popen('node generate.js ' + pool_ticker.upper(), 120)
+    p.wait()
+
+
+if (len(sys.argv) > 0):
+    refresh_all_pools_for_next_epoch()
+else:
+    while True:
+        update()
+        sleep(10)

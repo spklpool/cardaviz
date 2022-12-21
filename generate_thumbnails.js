@@ -53,7 +53,7 @@ if (process.argv.length > 2) {
       console.log('json: ' + jsonmtime);
       console.log('png: ' + pngmtime);
       console.log('stale: ' + pool);
-      exec_sync('node generate.js ' + pool);
+      exec_sync('node generate_thumbnails.js ' + pool);
     }
   }
   dir.closeSync();

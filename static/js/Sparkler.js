@@ -44,7 +44,7 @@ class SparklerLine {
     draw_sparkle_segment(start_x, start_y, end_x, end_y) {
         var linePath = new this.paper.Path();
         linePath.strokeColor = { gradient: {
-            stops: [['white', 0.2], ['red', 0.25], ['yellow', 0.3], ['red', 0.35], ['white', 0.4]],
+            stops: [['white', 0.7], ['#fc6d6d', 1 - (Math.random() * 0.3)], ['white', 1 - (Math.random() * 0.3)]],
             radial: true
             },
             origin: new Point(start_x, start_y),
@@ -52,7 +52,7 @@ class SparklerLine {
         };
         linePath.add(new this.paper.Point(start_x, start_y));
         linePath.add(new this.paper.Point(end_x, end_y));
-        linePath.strokeWidth = 3;
+        linePath.strokeWidth = Math.floor(Math.random() * 3) + 1;
         return linePath;
     }
 

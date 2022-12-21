@@ -457,7 +457,6 @@ def update():
                 pool_json = json.load(open(pool_json_path))
                 refresh_epoch(pool_json, row['view'], latest_epoch - 1)
                 refresh_epoch(pool_json, row['view'], latest_epoch)
-                update_thumbnail(row['ticker'].upper())
 
             except (Exception) as metadata_error:
                 print(metadata_error)
@@ -469,12 +468,7 @@ def update():
             conn.close()
 
 
-def update_thumbnail(pool_ticker):
-    p = subprocess.Popen('node generate.js ' + pool_ticker.upper(), 120)
-    p.wait()
-
-
-if (len(sys.argv) > 0):
+if (len(sys.argv) > 1):
     refresh_all_pools_for_next_epoch()
 else:
     while True:

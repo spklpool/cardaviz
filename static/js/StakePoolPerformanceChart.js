@@ -125,9 +125,9 @@ class StakePoolPerformanceChart {
         var watermark_current_x = this.paper.view.size.width;
         var watermark_current_y = this.paper.view.size.height;
         while (watermark_current_x > 0) {
-            var watermark_text = this.draw_text(watermark_current_x, watermark_current_y, 'cardaviz.app', 310, 36, '#181818');
-            watermark_current_x -= watermark_text.bounds.width / 2;
-            watermark_current_y -= watermark_text.bounds.height / 2;
+            var watermark_text = this.draw_text(watermark_current_x, watermark_current_y, 'cardaviz.app', 310, 48, '#181818');
+            watermark_current_x -= watermark_text.bounds.width * 0.6;
+            watermark_current_y -= watermark_text.bounds.height * 0.8;
             if (watermark_current_y <= 0) {
                 watermark_current_y = this.paper.view.size.height;
             }

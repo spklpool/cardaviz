@@ -41,11 +41,11 @@
 {% for pool in pools %}
         <tr>
           <td style="color:white;">{{pool['rank']}}</td>
-          <td style="color:white;"><a href="http://cardaviz.spklpool.com/pools/{{pool['ticker']}}">{{pool['ticker']}}</a></td>
+          <td style="color:white;"><a href="../pools/{{pool['ticker']}}">{{pool['ticker']}}</a></td>
             <td>
               <table border="0" cellpadding="4" cellspacing="0">
                 <tr>
-                  <td bgcolor="#282828"><image src="http://cardaviz.spklpool.com/test/{{pool['ticker']}}.png" style="float: right; width: 600;, height: 600;"/></td>
+                  <td bgcolor="#282828"><image src="../images/{{pool['ticker']}}.png" style="float: right; width: 600;, height: 600;"/></td>
                 </tr>
               </table>
             </td>

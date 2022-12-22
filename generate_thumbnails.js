@@ -24,6 +24,7 @@ function process_pool(file_path) {
     chart.draw(false);
     saveCanvasToSVGFile(destination_directory + pool + '.svg');
     convertSVGToPng(destination_directory + pool + '.svg', destination_directory + pool + '.png');
+    console.log('done saving files for ' + pool);
     paper.project.clear();
 
     try {
@@ -39,46 +40,57 @@ function sleep(ms) {
   });
 }
 
-async function process_stale_pools() {
-  var processes_running = 0;
-  var skipped_for_running = 0;
+async function process_pools() {
   var pool_json_folder_path = '/var/www/html/data/';
-  const dir = fs.opendirSync(pool_json_folder_path)
-  let dirent
-  while ((dirent = dir.readSync()) !== null) {
-    if (skipped_for_running < processes_running) {
-      skipped_for_running += 1;
+  var processes_running = 0;
+  while(true) {
+    if (processes_running > 0) {
+      console.log('processes running - sleeping for 10 seconds');
+      await sleep(10000);
     } else {
-      var pool_thumbnail_needs_updating = false;
-      var pool = path.parse(dirent.name).name;
-      var jsonstats = fs.statSync('/var/www/html/data/' + pool + '.json');
-      var jsonmtime = jsonstats.mtime;
-      var jsondate = Date.parse(jsonmtime);
-      if (!fs.existsSync('/var/www/html/images/' + pool + '.png')) {
-        console.log('png file does not exist for ' + pool);
-        pool_thumbnail_needs_updating = true;
-      } else {
-        var pngstats = fs.statSync('/var/www/html/images/' + pool + '.png');
-        var pngmtime = pngstats.mtime;
-        var pngdate = Date.parse(pngmtime);
-        if ((jsondate - pngdate) > 0) {
+      console.log('no processes running - starting to process all files in ' + pool_json_folder_path);
+      var skipped_for_running = 0;
+      const dir = fs.opendirSync(pool_json_folder_path)
+      let dirent
+      while ((dirent = dir.readSync()) !== null) {
+        var pool_thumbnail_needs_updating = false;
+        var pool = path.parse(dirent.name).name;
+        var jsonstats = fs.statSync('/var/www/html/data/' + pool + '.json');
+        var jsonmtime = jsonstats.mtime;
+        var jsondate = Date.parse(jsonmtime);
+        if (!fs.existsSync('/var/www/html/images/' + pool + '.png')) {
           pool_thumbnail_needs_updating = true;
+        } else {
+          var pngstats = fs.statSync('/var/www/html/images/' + pool + '.png');
+          var pngmtime = pngstats.mtime;
+          var pngdate = Date.parse(pngmtime);
+          if ((jsondate - pngdate) > 0) {
+            pool_thumbnail_needs_updating = true;
+          }
         }
-      }
-      if (pool_thumbnail_needs_updating) {
-        if (processes_running > 10) {
-          console.log('sleeping for 10 seconds to give processes time to complete');
-          await sleep(20000);
+        if (pool_thumbnail_needs_updating) {
+          if (processes_running > 10) {
+            console.log('sleeping for 20 seconds to give processes time to complete');
+            await sleep(20000);
+          }
+          console.log('json: ' + jsonmtime);
+          console.log('png: ' + pngmtime);
+          console.log('stale: ' + pool);
+          processes_running += 1;
+          var process_command = 'node ' + process.cwd() + '/generate_thumbnails.js ' + pool;
+          console.log('running in separate process: ' + process_command);
+          spawned_process = child_process.spawn('node', [process.cwd() + '/generate_thumbnails.js', pool]);
+          spawned_process.stdout.on('data', function (data) {
+            console.log('stdout: ' + data.toString());
+          });
+          spawned_process.stderr.on('data', function (data) {
+            console.log('stderr: ' + data.toString());
+          });
+          spawned_process.on('exit', function (code) {
+            console.log('child process exited with code ' + code.toString());
+            processes_running -= 1;
+          });
         }
-        console.log('json: ' + jsonmtime);
-        console.log('png: ' + pngmtime);
-        console.log('stale: ' + pool);
-        processes_running += 1;
-        var process_command = 'node ' + process.cwd() + '/generate_thumbnails.js ' + pool;
-        console.log('running in separate process: ' + process_command);
-        child_process.exec(process_command, (error, stdout, stderr) => {
-          processes_running -= 1;
-        });
       }
     }
   }
@@ -87,6 +99,6 @@ async function process_stale_pools() {
 if (process.argv.length > 2) {
   process_pool('/var/www/html/data/' + process.argv[2] + '.json');
 } else {
-  process_stale_pools();
+    process_pools();
 }
 

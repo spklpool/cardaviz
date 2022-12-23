@@ -60,7 +60,7 @@ class StakePoolPerformanceChart {
         } else {
             console.log('thumbnail mode: false');
             this.epochWidth = 30;
-            this.watermark_enabled = true;
+            this.watermark_enabled = false;
             this.stroke_width = 5;
         }
 

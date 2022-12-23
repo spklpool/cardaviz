@@ -2,6 +2,10 @@ class StakePoolPerformanceChart {
     canvas = null;
     paper = null;
     data = null;
+    watermark_enabled = true;
+    drawing_epoch_numbers = true;
+    drawing_ticker = false;
+    drawing_legend = true;
     document = null;
     legend_initialized = false;
     background_color = 'black'
@@ -40,17 +44,35 @@ class StakePoolPerformanceChart {
     legend_green_path = null;
     legend_red_path = null;
 
-    constructor(canvas, paper, data, document) {
+    constructor(canvas, paper, data, document, thumbnail_mode) {
         this.canvas = canvas;
         this.paper = paper;
         this.data = data;
         this.document = document;
-        this.blockWidth = this.epochWidth - this.block_to_epoch_width_margin;
+        if (thumbnail_mode) {
+            console.log('thumbnail mode: true');
+            this.watermark_enabled = false;
+            this.drawing_epoch_numbers = false;
+            this.drawing_ticker = true;
+            this.drawing_legend = false;
+            this.epochWidth = this.paper.view.size.width / this.data['epochs'].length
+            this.stroke_width = 1;
+        } else {
+            console.log('thumbnail mode: false');
+            this.epochWidth = 30;
+            this.watermark_enabled = true;
+            this.stroke_width = 5;
+        }
+
         this.canvas_required_width = data["epochs"].length * this.epochWidth;
         if (!this.canvas) {
             this.setupPaper();
         }
         this.block_height = (this.paper.view.size.height / 2) / (this.data.max_epoch_blocks + 1);
+        this.blockWidth = this.epochWidth - this.block_to_epoch_width_margin;
+        console.log('constructing chart [' + this.paper.view.size.width + ',' + this.paper.view.size.height + ']')
+        console.log('epochWidth: ' + this.epochWidth);
+        console.log('epochs: ' + this.data['epochs'].length);
     }
 
     setupPaper() {
@@ -88,7 +110,7 @@ class StakePoolPerformanceChart {
         rect.fillColor = color;
     }
 
-    draw_translucent_rectangle(x, y, width, height, strokeColor, fillColor, opacity, blockRounding) {
+    draw_translucent_rectangle(width, height, strokeColor, fillColor, opacity, blockRounding) {
         var rect = new this.paper.Rectangle([0, 0], [width, height]);
         var path = new this.paper.Path.Rectangle(rect, blockRounding);
         path.strokeColor = strokeColor;
@@ -108,7 +130,7 @@ class StakePoolPerformanceChart {
         var rect = new this.paper.Rectangle([x, y], [width, height]);
         var path = new this.paper.Path.Rectangle(rect, blockRounding);
         path.strokeColor = color;
-        path.strokeWidth = 2
+        path.strokeWidth = 1
         return path;
     }
 
@@ -122,14 +144,16 @@ class StakePoolPerformanceChart {
     }
 
     draw_matrix_lines(number_of_epochs, height) {
-        var watermark_current_x = this.paper.view.size.width;
-        var watermark_current_y = this.paper.view.size.height;
-        while (watermark_current_x > 0) {
-            var watermark_text = this.draw_text(watermark_current_x, watermark_current_y, 'cardaviz.app', 310, 48, '#181818');
-            watermark_current_x -= watermark_text.bounds.width * 0.6;
-            watermark_current_y -= watermark_text.bounds.height * 0.8;
-            if (watermark_current_y <= 0) {
-                watermark_current_y = this.paper.view.size.height;
+        if (this.watermark_enabled) {
+            var watermark_current_x = this.paper.view.size.width;
+            var watermark_current_y = this.paper.view.size.height;
+            while (watermark_current_x > 0) {
+                var watermark_text = this.draw_text(watermark_current_x, watermark_current_y, 'cardaviz.app', 310, 48, '#181818');
+                watermark_current_x -= watermark_text.bounds.width * 0.6;
+                watermark_current_y -= watermark_text.bounds.height * 0.8;
+                if (watermark_current_y <= 0) {
+                    watermark_current_y = this.paper.view.size.height;
+                }
             }
         }
         for (var epoch = 0; epoch < number_of_epochs; epoch ++) {
@@ -149,7 +173,7 @@ class StakePoolPerformanceChart {
     start_cumulative_path() {
         var cumulativeDiffPath = new this.paper.Path();
         cumulativeDiffPath.strokeColor = 'yellow';
-        cumulativeDiffPath.strokeWidth = 5;
+        cumulativeDiffPath.strokeWidth = this.stroke_width;
         return cumulativeDiffPath;
     }
 
@@ -175,8 +199,10 @@ class StakePoolPerformanceChart {
             var epochBlockDiff = epochBlockCount - epochBlockExpected;
 
             var epochX = this.epoch_offset + (epoch * this.epochWidth);
-            this.draw_text(epochX + this.epoch_text_offset, this.paper.view.size.height - this.epoch_text_vertical_offset, this.data["epochs"][epoch].epoch, 310, 16, 'white');
 
+            if (this.drawing_epoch_numbers) {
+                this.draw_text(epochX + this.epoch_text_offset, this.paper.view.size.height - this.epoch_text_vertical_offset, this.data["epochs"][epoch].epoch, 310, 16, 'white');
+            }
             // blocks - actual and expected
             for (var epochBlock = 0; epochBlock < epochBlockCount; epochBlock++) {
                 this.draw_solid_rectangle(epochX + block_offset, middle_y - ((epochBlock + 1) * blockHeight), this.blockWidth, blockHeight, this.actual_block_color, this.blockRounding)
@@ -191,7 +217,7 @@ class StakePoolPerformanceChart {
                 } else {
                     diffPath.strokeColor = 'red';
                 }
-                diffPath.strokeWidth = 5;
+                diffPath.strokeWidth = this.stroke_width;
                 diffPath.add(new this.paper.Point(epochX, middle_y - (epochBlockDiff * blockHeight)));
                 diffPath.add(new this.paper.Point(epochX + this.epochWidth, middle_y - (epochBlockDiff * blockHeight)));
 
@@ -246,14 +272,14 @@ class StakePoolPerformanceChart {
     drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_luck, current_lifetime_luck, ticker) {
         console.log('drawing legend [' + legend_x + ',' + legend_y + ']');
         if (!this.legend_initialized) {
-            this.legend_path = this.draw_translucent_rectangle(0, 0, this.legend_width, this.legend_height, '#D3D3D3', 'black', 0.9, 20);
+            this.legend_path = this.draw_translucent_rectangle(this.legend_width, this.legend_height, '#D3D3D3', 'black', 0.9, 20);
             this.ticker_text = this.draw_text(0, 0, "ticker: " + ticker, 0, 18, '#D3D3D3');
             this.legend_expected_block_text = this.draw_text(0, 0, ': expected blocks', 0, 18, 'blue');
             this.legend_expected_path = this.draw_hollow_rectangle(0, 0, this.blockWidth, 13, 'blue', this.blockRounding);
             this.legend_actual_block_text = this.draw_text(0, 0, ': actual blocks ', 0, 18, '#D3D3D3');
             this.legend_actual_path = this.draw_solid_rectangle(0, 0, this.blockWidth, 13, '#D3D3D3', this.blockRounding);
-            this.legend_green_path = this.draw_line(0, 0, 29, 0, 'green', 5);
-            this.legend_red_path = this.draw_line(0, 0, 29, 0, 'red', 5);
+            this.legend_green_path = this.draw_line(0, 0, 29, 0, 'green', this.stroke_width);
+            this.legend_red_path = this.draw_line(0, 0, 29, 0, 'red', this.stroke_width);
             this.legend_performance_text = this.draw_text(0, 0, ': epoch performance', 0, 18, 'yellow');
             this.legend_green_text = this.draw_text(0, 0, ' over', 0, 18, 'green');
             this.legend_red_text = this.draw_text(0, 0, ' under', 0, 18, 'red');
@@ -289,9 +315,9 @@ class StakePoolPerformanceChart {
         this.legend_current_lifetime_luck_text.position = new Point(legend_x + 84 + (this.legend_current_lifetime_luck_text.bounds.width / 2), legend_y + 236.5);
     }
 
-
-    draw(drawLegend) {
-        if (this.document && this.canvas) {
+    draw(drawLegend, resize_enabled) {
+        console.log('drawing chart [' + this.paper.view.size.width + ',' + this.paper.view.size.height + ']')
+        if (this.document && this.canvas && resize_enabled) {
             console.log('setting up canvas');
             if (this.canvas_required_width > this.document.documentElement.clientWidth) {
                 this.document.body.style.width = this.canvas_required_width + this.right_axis_legend_width + 'px';
@@ -308,9 +334,20 @@ class StakePoolPerformanceChart {
         this.draw_matrix_lines(this.data["epochs"].length, view_size.height);
         var max_cumulative_diff_adjustment_buffer = 0.1;
         this.draw_epochs(this.start_cumulative_path(), this.block_to_epoch_width_margin / 2, this.block_height, (view_size.height / 2) / ((this.data.max_cumulative_diff + max_cumulative_diff_adjustment_buffer) * this.block_height));
-        this.drawRightAxisLuckBar(this.data.max_epoch_blocks, view_size.height, this.block_height, this.data.max_cumulative_diff, this.data.cumulative_expected_blocks, this.canvas_required_width);
-        if (drawLegend) {
+        if (this.drawing_legend) {
+            this.drawRightAxisLuckBar(this.data.max_epoch_blocks, view_size.height, this.block_height, this.data.max_cumulative_diff, this.data.cumulative_expected_blocks, this.canvas_required_width);
             this.drawLegend(this.document.documentElement.scrollLeft, (view_size.height / 2) + 30, this.data['highest_lifetime_luck'], this.data['lowest_lifetime_luck'], this.data['current_lifetime_luck'], this.data["ticker"]);
+        }
+        if (this.drawing_ticker) {
+            var gap = (view_size.height - (this.legend_height / 2)) / 2;
+            var translucent_background = this.draw_translucent_rectangle(this.legend_width / 2, this.legend_height / 2, '#D3D3D3', 'black', 0.7, 20);
+            translucent_background.position = new Point(gap + (this.legend_width / 2 /2), gap + (this.legend_height / 2 /2));
+            var ticker_text = this.draw_text(0, 0, this.data['ticker'], 0, 18, 'white');
+            ticker_text.position = new Point((gap * 4) + (ticker_text.bounds.width / 2), 40);
+            var epochs_text = this.draw_text(0, 0, this.data['epochs'].length + ' epochs', 0, 18, 'white');
+            epochs_text.position = new Point((gap * 4) + (epochs_text.bounds.width / 2), 70);
+            var luck_text = this.draw_text(0, 0, '🍀 ' + this.data['current_lifetime_luck'], 0, 18, 'white');
+            luck_text.position = new Point((gap * 4) + (luck_text.bounds.width / 2), 100);
         }
     }
 }

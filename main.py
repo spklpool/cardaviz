@@ -69,6 +69,10 @@ def get_pool(pool_ticker):
     return render_template('perfchart.html', pool_ticker=pool_ticker.upper())
 
 @app.route("/")
+def get_pool_search():
+    return render_template('pool_search.html')
+
+@app.route("/performers")
 def get_underappreciated_performers():
     pools = []
     tickers_json = json.load(open('static/tickers.json'))

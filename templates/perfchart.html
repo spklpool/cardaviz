@@ -69,7 +69,6 @@
 			}
 		});
 
-
 		function scroll_if_first_drawing_complete() {
 			if (first_drawing_complete) {
 				console.log("scrolling to current epoch");
@@ -83,8 +82,8 @@
 				paper.install(window);
 				var canvas = document.getElementById('myCanvas');
 				paper.setup(canvas);
-				chart = new StakePoolPerformanceChart(canvas, paper, global_data, document);
-				chart.draw(true);
+				chart = new StakePoolPerformanceChart(canvas, paper, global_data, document, false);
+				chart.draw(true, true);
 				first_drawing_complete = true;
 			} else {
 				setTimeout(draw_if_data_finished_loading, 100);

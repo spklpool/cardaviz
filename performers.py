@@ -27,24 +27,24 @@ for (pool_ticker, pool_id) in tickers_json.items():
     pool['live_stake'] = 0
     pool['ticker'] = pool_ticker
     pool_file = "data/" + pool_ticker.upper() + ".json"
-    if True:
-        try:
-            pool_json = json.load(open(pool_file))
-            for epoch in pool_json['epochs']:
-                epoch_diff = epoch['actual'] - epoch['expected']
-                pool['cumulative_diff'] += epoch_diff
-                pool['cumulative_epochs'] += 1
-                pool['cumulative_blocks'] += epoch['actual']
-                pool['live_stake'] = epoch['pool_stake']
-                pool['total_stake'] = epoch['total_stake']
+    try:
+        pool_json = json.load(open(pool_file))
+        for epoch in pool_json['epochs']:
+            epoch_diff = epoch['actual'] - epoch['expected']
+            pool['cumulative_diff'] += epoch_diff
+            pool['cumulative_epochs'] += 1
+            pool['cumulative_blocks'] += epoch['actual']
+            pool['live_stake'] = epoch['pool_stake']
+            pool['total_stake'] = epoch['total_stake']
+        if pool['live_stake'] > 0:
             pool['block_performance'] = pool['cumulative_diff'] * pool['cumulative_blocks']
             pool['epochs_performance'] = pool['cumulative_diff'] * pool['cumulative_epochs']
             pool['total_performance'] = pool['cumulative_diff'] * pool['cumulative_blocks'] * pool['cumulative_epochs']
             pool['underapreciated'] = pool['cumulative_diff'] * pool['cumulative_epochs'] / (pool['live_stake'] / pool['total_stake'])
             pools.append(pool)
-        except (Exception) as error:
-            print("Unable to load " + pool_ticker)
-            print(repr(error))
+    except (Exception) as error:
+        print("Unable to load " + pool_ticker)
+        print(repr(error))
 
 performers = []
 print("underapreciated")

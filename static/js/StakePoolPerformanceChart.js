@@ -165,7 +165,7 @@ class StakePoolPerformanceChart {
                 this.draw_solid_rectangle(line_x, 1, this.epochWidth, height, this.current_epoch_color, 0);
             }
         }
-        for (var current_height = 0; current_height < height; current_height += this.block_height) {
+        for (var current_height = this.paper.view.size.height / 2; current_height > 0; current_height -= this.block_height) {
             this.draw_line(this.epoch_offset, current_height, this.epoch_offset + this.canvas_required_width, current_height, this.separator_line_color, 2);
         }
     }

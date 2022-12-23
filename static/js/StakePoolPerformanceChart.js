@@ -346,7 +346,7 @@ class StakePoolPerformanceChart {
             ticker_text.position = new Point((gap * 4) + (ticker_text.bounds.width / 2), 40);
             var epochs_text = this.draw_text(0, 0, this.data['epochs'].length + ' epochs', 0, 18, 'white');
             epochs_text.position = new Point((gap * 4) + (epochs_text.bounds.width / 2), 70);
-            var luck_text = this.draw_text(0, 0, '🍀 ' + this.data['current_lifetime_luck'], 0, 18, 'white');
+            var luck_text = this.draw_text(0, 0, '💪 ' + this.data['current_lifetime_luck'].toFixed(2) + '%', 0, 18, 'white');
             luck_text.position = new Point((gap * 4) + (luck_text.bounds.width / 2), 100);
         }
     }

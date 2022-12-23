@@ -44,6 +44,7 @@ var tickers_json = null;
 var data_fetch_completed = false;
 var ready_to_render = false;
 var pool_json_client_cache = {};
+var is_rendering_count = 0;
 
 console.log('fetching tickers json from ' + tickers_json_url);
 fetch(tickers_json_url)
@@ -127,8 +128,15 @@ function render_pool_thumbnail(data) {
 
 var filter_pools = debounce(function() {
   if (is_rendering) {
-    console.log('already rendering')
-    filter_pools();
+    console.log('already rendering - ' + is_rendering_count)
+    is_rendering_count += 1;
+    if (is_rendering_count < 2) {
+      filter_pools();
+    } else {
+      is_rendering = false;
+      is_rendering_count = 0;
+      render_count = 0;
+    }
   } else {
     console.log('starting render')
 

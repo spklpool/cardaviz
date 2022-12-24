@@ -5,6 +5,7 @@ import logging
 import simplejson as json
 from flask import Flask, render_template
 from thread_safe_objects import ThreadSafeDictOfPoolJson
+from ranking_evaluator import evaluate_ranking
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
@@ -27,8 +28,8 @@ app = Flask(__name__)
 
 map_of_pool_jsons = ThreadSafeDictOfPoolJson()
 
-#directory = 'data/'
-directory = '/var/www/html/data/'
+directory = 'data/'
+#directory = '/var/www/html/data/'
 logging.info('starting initial load of datadirectory [' + directory + '] for changes')
 all_files = os.listdir(directory)
 for filename in all_files:
@@ -72,45 +73,10 @@ def get_pool(pool_ticker):
 def get_pool_search():
     return render_template('pool_search.html')
 
-@app.route("/ranking")
-def get_ranking():
-    pools = []
-    iter_count = 0
-    for ticker in map_of_pool_jsons.keys():
-        pool_json = map_of_pool_jsons[ticker]
-        pool = {}
-        iter_count += 1
-        print('processing ' + ticker + ' - ' + str(iter_count) + ' of ' + str(len(map_of_pool_jsons.keys())))
-        try:
-            pool['ticker'] = ticker
-            pool['live_stake'] = pool_json['epochs'][len(pool_json['epochs']) - 1]['pool_stake']
-            pool['total_stake'] = pool_json['epochs'][len(pool_json['epochs']) - 1]['total_stake']
-            pool['cumulative_actual_blocks'] = pool_json['cumulative_actual_blocks']
-            if pool['live_stake'] > 0:
-                pool['underappreciated'] = pool_json['cumulative_diff'] * len(pool_json['epochs']) / (pool['live_stake'] / pool['total_stake'])
-                pools.append(pool)
-        except Exception as e: print(e)
-
-    performers = []
-    print('sorting list')
-    sorted_by_underappreciated_performance = sorted(pools, key=lambda d: d['underappreciated'], reverse=True)
-    print('done sorting list')
-    rank = 0
-    for pool in sorted_by_underappreciated_performance:
-        if rank < 50:
-            if pool['live_stake'] > (100000 * 1000000):
-                if pool['cumulative_actual_blocks'] > 5:
-                    current_performer = {}
-                    rank += 1
-                    current_performer['rank'] = rank
-                    current_performer['ticker'] = pool['ticker']
-                    performers.append(current_performer)
-
-
-    print('returning list of performers:')
-    print(performers)
-
-    return render_template('ranking.html', pools=performers)
+@app.route("/ranking/<ranking_name>")
+def get_ranking(ranking_name):
+    ranking = evaluate_ranking(map_of_pool_jsons, ranking_name, 20)
+    return render_template('ranking.html', ranking=ranking)
 
 @app.route("/data/<pool_ticker>.json")
 def get_pool_epochs(pool_ticker):

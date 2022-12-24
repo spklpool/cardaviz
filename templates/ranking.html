@@ -10,15 +10,37 @@
         width: 95%;
     }
 
+    .arrow:hover {
+      cursor: pointer;
+    }
+
+    .arrow {
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      display: inline-block;
+      padding: 3px;
+    }
+
+    .up {
+      transform: rotate(-135deg);
+      -webkit-transform: rotate(-135deg);
+    }
+
+    .down {
+      transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+    }
+
     .tableClass {
       margin: 10px;
       height: 100%;
       width: 100%;
-      border: 2px solid;
+      border: 0px solid;
       border-collapse: collapse;
       border-spacing: 0;
+      border-radius: 25px;
     }
-    h1 {
+    h1,h2,h3,h4 {
       color: white;
     }
     a:link {
@@ -32,7 +54,6 @@
       text-decoration: none;
     }
     a:hover {
-      color: red;
       background-color: transparent;
       text-decoration: underline;
     }
@@ -44,6 +65,7 @@
     table {
       color: white;
       border-spacing: 20px;
+      border-radius: 25px;
     }
   </style>
 </style>
@@ -53,7 +75,7 @@
 <script type="text/javascript" src="../static/js/StakePoolPerformanceChart.js"></script>
 <script>
 var pools_to_render = [];
-{% for pool in pools %}
+{% for pool in ranking['results'] %}
 pools_to_render.push('{{pool['ticker']}}');
 {% endfor %}
 var ready_to_render = false;
@@ -112,7 +134,7 @@ function draw_if_page_finished_loading() {
 }
 
 function render_pool_thumbnail(data) {
-    var canvasCellHTML = '<td><a href="pools/' + data['ticker'] + '"><canvas id="' + data['ticker'] + '" resize></canvas></a></td>'
+    var canvasCellHTML = '<td><a href="../pools/' + data['ticker'] + '"><canvas id="' + data['ticker'] + '" resize></canvas></a></td>'
     var tableRef = document.getElementById('canvas_table').getElementsByTagName('tbody')[0];
     var newRow = tableRef.insertRow(tableRef.rows.length);
     newRow.innerHTML = canvasCellHTML;
@@ -123,25 +145,59 @@ function render_pool_thumbnail(data) {
     chart = new StakePoolPerformanceChart(canvas, paper, data, document, true);
     chart.draw(false, false);
 }
+
+var expandable_details_visibility = false;
+function toggle_expandable_details() {
+  var div = document.getElementById('expandable_details');
+  var button = document.getElementById('clickable_expand_div');
+  if (expandable_details_visibility) {
+    expandable_details_visibility = false;
+    div.style.display = 'none';
+    div.style.visibility = 'hidden';
+    button.innerHTML = "<p><center><i class=\"arrow down\"></i></center></p>";
+  } else {
+    expandable_details_visibility = true;
+    div.style.display = 'block';
+    div.style.visibility = 'visible';
+    button.innerHTML = "<p><center><i class=\"arrow up\"></i></center></p>";
+  }
+}
 </script>
-<h1><center>Underappreciated Performers</center></h1>
-  <table>
+<h1><center>{{ranking['pretty_name']}}</center></h1>
+<h2><center>{{ranking['summary']}}</center></h2>
+<div id="expandable_details" style="display: none;">
+  <center>
+  <table bgcolor="#303030">
     <tr>
       <td><b>Ranking Description:</b></td>
-      <td>These pools have demonstrated that they can consistently produce their assigned blocks but have not been noticed by delegators.  If they would get more stake, they would have a good chance at generating some of the highest return on stake if their future performance remains similar to their past performance.</td>
+      <td>{{ranking['description']}}</td>
     </tr>
     <tr>
-      <td><b>Ranking Calculation:</b></td>
-      <td>[cumulative diff of actual vs expected blocks for all epochs] X [number of epochs since registered] / [pool's live stake] / [total stake across all pools]</td>
+      <td><b>Ranking Expression:</b></td>
+      <td>{{ranking['expression']}}</td>
     </tr>
     <tr>
-      <td><b>Ranking Calculation Explanation:</b></td>
-      <td>The first part on the left of the equation identifies pools that have had the best performance over the longest period of time in operation.  Dividing that by the pool's live_stake divided by the total of all stake favors the ones that have lower stake currently, therefore being underapreciated.</td>
+      <td><b>Ranking Expression Explanation:</b></td>
+      <td>{{ranking['expression_explanation']}}</td>
     </tr>
+    <tr>
+      <td><b>Filters:</b></td>
+      <td>Below is a list of additional filters that are applied to the resulting pools</td>
+    </tr>
+{% for filter in ranking['filters'] %}
+    <tr>
+      <td><b>{{filter['name']}}</b></td>
+      <td>{{filter['expression']}}</td>
+    </tr>
+{% endfor %}
   </table>
-<table class="tableClass" id="canvas_table" width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tbody><tbody>
-</table>
-
+  </center>
+</div>
+<div>
+  <div id="clickable_expand_div" onclick="toggle_expandable_details()"><p><center><i class="arrow down"></i></center></p></div>
+  <table class="tableClass" id="canvas_table" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tbody><tbody>
+  </table>
+</div>
 </body>
 </html>

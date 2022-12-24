@@ -1,0 +1,25 @@
+[
+    {
+    "name": "underappreciated_performers",
+    "pretty_name": "Underappreciated Performers",
+    "summary": "Pools with strong performance but low stake currently.",
+    "description": "These pools have demonstrated that they can consistently produce their assigned blocks but have not been noticed by delegators.  If they would get more stake, they would have a good chance at generating some of the highest return on stake if their future performance remains similar to their past performance.",
+    "expression": "pool['cumulative_diff'] * pool['lifetime_epochs'] / pool['latest_epoch_live_stake'] / pool['latest_epoch_total_stake']",
+    "expression_explanation": "The first part on the left of the equation identifies pools that have had the best performance over the longest period of time in operation.  Dividing that by the pool's live_stake divided by the total of all stake favors the ones that have lower stake currently, therefore being underapreciated.",
+    "filters": [
+      {
+        "name": "not too small",
+        "expression": "pool['latest_epoch_live_stake'] > (100000 * 1000000)"
+      }
+    ]
+  },
+    {
+    "name": "running_dead",
+    "pretty_name": "Running Dead",
+    "summary": "Pools that have horrible performance, yet have a surprising amount of stake.",
+    "description": "",
+    "expression": "pool['cumulative_diff']",
+    "expression_explanation": "",
+    "filters": []
+  }
+]

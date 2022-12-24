@@ -30,7 +30,38 @@
       border-collapse: collapse;
       border-spacing: 0;
     }
-
+    a:link {
+      color: #D0D0D0;
+      background-color: transparent;
+      text-decoration: none;
+    }
+    a:visited {
+      color: #D0D0D0;
+      background-color: transparent;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #D0D0D0;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+    a:active {
+      color: #D0D0D0;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+    h1 {
+      color: #888888;
+    }
+    h2 {
+      color: #888888;
+    }
+    h3 {
+      color: #888888;
+    }
+    h4 {
+      color: #888888;
+    }
   </style>
 </style>
 </head>
@@ -126,6 +157,37 @@ function render_pool_thumbnail(data) {
     }
 }
 
+function set_instructions_visibility(visibility) {
+  var instructions_div = document.getElementById('instructions_div')
+  if (visibility) {
+    instructions_div.style.display = 'block';
+  } else {
+    instructions_div.style.display = 'none';
+  }
+}
+
+function set_results_instructions_visibility(visibility) {
+  var div = document.getElementById('results_instructions_div')
+  if (visibility) {
+    div.style.display = 'block';
+    div.style.visibility = 'visible';
+  } else {
+    div.style.display = 'none';
+    div.style.visibility = 'hidden';
+  }
+}
+
+function set_no_results_visibility(visibility) {
+  var div = document.getElementById('no_results_div')
+  if (visibility) {
+    div.style.display = 'block';
+    div.style.visibility = 'visible';
+  } else {
+    div.style.display = 'none';
+    div.style.visibility = 'hidden';
+  }
+}
+
 var filter_pools = debounce(function() {
   if (is_rendering) {
     console.log('already rendering - ' + is_rendering_count)
@@ -146,9 +208,16 @@ var filter_pools = debounce(function() {
     console.log('used table');
     var inputBox = document.getElementById('poolSearch');
     if (inputBox != null && inputBox.value != '') {
-      is_rendering = true;
+      set_instructions_visibility(false);
+      set_results_instructions_visibility(false);
+      set_no_results_visibility(false);
       var filtered_pools = poolsThatStartWith(tickers_json, inputBox.value.toUpperCase());
-      if (Object.keys(filtered_pools).length < 10) {
+      if (Object.keys(filtered_pools).length == 0) {
+         console.log('0 results');
+         set_no_results_visibility(true);
+      } else if (Object.keys(filtered_pools).length < 10) {
+        is_rendering = true;
+        set_results_instructions_visibility(false);
         console.log('down to 10 element - rendering');
         render_count = filtered_pools.length;
         for (var i=0; i<filtered_pools.length; i++) {
@@ -175,14 +244,33 @@ var filter_pools = debounce(function() {
           }
         }
       } else {
+         set_results_instructions_visibility(true);
          console.log('list too big to render');
          is_rendering = false;
       }
+    } else {
+      set_instructions_visibility(true);
+      set_results_instructions_visibility(false);
+      set_no_results_visibility(false);
     }
   }
 }, 200);
 </script>
+<div><br><br><br></div>
 <center><input type="text" id="poolSearch" onkeyup="filter_pools()" placeholder="Type a pool ticker" title="Type in a ticker"></center>
+
+<div id="instructions_div">
+  <center><h4>start typing a pool ticker above</h4></center>
+  <center><h4>or</h4></center>
+  <center><h4>pick one of the predefined rankings below to see pool performance charts</h4></center>
+  <center><h3><a href="ranking/underappreciated_performers">Underappreciated Performers</a></h3></center>
+</div>
+<div id="results_instructions_div" style="display: none;">
+  <center><h4>Too many results to display.  Keep typing.</h4></center>
+</div>
+<div id="no_results_div" style="display: none;">
+  <center><h4>No matches.  Try something else.</h4></center>
+</div>
 
 <table class="tableClass" id="canvas_table" width="100%" cellpadding="0" cellspacing="0" border="0">
   <tbody><tbody>

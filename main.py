@@ -27,8 +27,8 @@ app = Flask(__name__)
 
 map_of_pool_jsons = ThreadSafeDictOfPoolJson()
 
-directory = 'data/'
-#directory = '/var/www/html/data/'
+#directory = 'data/'
+directory = '/var/www/html/data/'
 logging.info('starting initial load of datadirectory [' + directory + '] for changes')
 all_files = os.listdir(directory)
 for filename in all_files:
@@ -75,19 +75,29 @@ def get_pool_search():
 @app.route("/ranking")
 def get_ranking():
     pools = []
+    iter_count = 0
     for ticker in map_of_pool_jsons.keys():
-        print('processing ' + ticker)
-        map_of_pool_jsons[ticker]['live_stake'] = pool_json['epochs'][len(pool_json['epochs']) - 1]['pool_stake']
-        map_of_pool_jsons[ticker]['total_stake'] = pool_json['epochs'][len(pool_json['epochs']) - 1]['total_stake']
-        if map_of_pool_jsons[ticker]['live_stake'] > 0:
-            map_of_pool_jsons[ticker]['underappreciated'] = map_of_pool_jsons[ticker]['cumulative_diff'] * len(map_of_pool_jsons[ticker]['epochs']) / (map_of_pool_jsons[ticker]['live_stake'] / map_of_pool_jsons[ticker]['total_stake'])
-            pools.append(map_of_pool_jsons[ticker])
+        pool_json = map_of_pool_jsons[ticker]
+        pool = {}
+        iter_count += 1
+        print('processing ' + ticker + ' - ' + str(iter_count) + ' of ' + str(len(map_of_pool_jsons.keys())))
+        try:
+            pool['ticker'] = ticker
+            pool['live_stake'] = pool_json['epochs'][len(pool_json['epochs']) - 1]['pool_stake']
+            pool['total_stake'] = pool_json['epochs'][len(pool_json['epochs']) - 1]['total_stake']
+            pool['cumulative_actual_blocks'] = pool_json['cumulative_actual_blocks']
+            if pool['live_stake'] > 0:
+                pool['underappreciated'] = pool_json['cumulative_diff'] * len(pool_json['epochs']) / (pool['live_stake'] / pool['total_stake'])
+                pools.append(pool)
+        except Exception as e: print(e)
 
     performers = []
+    print('sorting list')
     sorted_by_underappreciated_performance = sorted(pools, key=lambda d: d['underappreciated'], reverse=True)
+    print('done sorting list')
     rank = 0
     for pool in sorted_by_underappreciated_performance:
-        if rank < 10:
+        if rank < 50:
             if pool['live_stake'] > (100000 * 1000000):
                 if pool['cumulative_actual_blocks'] > 5:
                     current_performer = {}
@@ -95,6 +105,10 @@ def get_ranking():
                     current_performer['rank'] = rank
                     current_performer['ticker'] = pool['ticker']
                     performers.append(current_performer)
+
+
+    print('returning list of performers:')
+    print(performers)
 
     return render_template('ranking.html', pools=performers)
 

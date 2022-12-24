@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  <style>
+    html,
+    body {
+        margin: 0;
+        height: 100%;
+        width: 95%;
+    }
+
+    .tableClass {
+      margin: 10px;
+      height: 100%;
+      width: 100%;
+      border: 2px solid;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    h1 {
+      color: white;
+    }
+    a:link {
+      color: white;
+      background-color: transparent;
+      text-decoration: none;
+    }
+    a:visited {
+      color: white;
+      background-color: transparent;
+      text-decoration: none;
+    }
+    a:hover {
+      color: red;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+    a:active {
+      color: yellow;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+    table {
+      color: white;
+      border-spacing: 20px;
+    }
+  </style>
+</style>
+</head>
+<body  style="background-color: black;">
+<script type="text/javascript" src="../static/js/paper-full.js"></script>
+<script type="text/javascript" src="../static/js/StakePoolPerformanceChart.js"></script>
+<script>
+var pools_to_render = [];
+{% for pool in pools %}
+pools_to_render.push('{{pool['ticker']}}');
+{% endfor %}
+var ready_to_render = false;
+var pool_json_client_cache = {};
+
+draw_if_page_finished_loading();
+
+window.addEventListener("resize", (event) => {
+    if (ready_to_render) {
+        console.log('resize');
+        draw_if_page_finished_loading();
+    }
+});
+
+window.addEventListener("pageshow", () => {
+    console.log('pageshow');
+    if (ready_to_render) {
+        draw_if_page_finished_loading();
+    }
+});
+
+document.addEventListener('readystatechange', (event) => {
+    if (document.readyState === "complete") {
+        ready_to_render = true;
+    }
+});
+
+function draw_if_page_finished_loading() {
+    if (ready_to_render) {
+        var Table = document.getElementById("canvas_table");
+        Table.innerHTML = "<tbody><tbody>";
+        for (var i=0; i<pools_to_render.length; i++) {
+            if (pools_to_render[i].toUpperCase() in pool_json_client_cache) {
+                console.log('rendering from client cache');
+                render_pool_thumbnail(pool_json_client_cache[pools_to_render[i].toUpperCase()]);
+            } else {
+                var data_url = '/data/' + pools_to_render[i].toUpperCase() + '.json';
+                console.log('fetching data from ' + data_url);
+                fetch(data_url)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log('data fetch completed for ' + data['ticker']);
+                    pool_json_client_cache[data['ticker'].toUpperCase()] = data;
+                    render_pool_thumbnail(data);
+                })
+                .catch(function (err) {
+                    console.log('error: ' + err);
+                });
+            }
+        }
+    } else {
+        setTimeout(draw_if_page_finished_loading, 100);
+    }
+}
+
+function render_pool_thumbnail(data) {
+    var canvasCellHTML = '<td><a href="pools/' + data['ticker'] + '"><canvas id="' + data['ticker'] + '" resize></canvas></a></td>'
+    var tableRef = document.getElementById('canvas_table').getElementsByTagName('tbody')[0];
+    var newRow = tableRef.insertRow(tableRef.rows.length);
+    newRow.innerHTML = canvasCellHTML;
+    paper.install(window);
+    var canvas = document.getElementById(data['ticker'])
+    canvas.width = window.innerWidth - 50
+    paper.setup(canvas);
+    chart = new StakePoolPerformanceChart(canvas, paper, data, document, true);
+    chart.draw(false, false);
+}
+</script>
+<h1><center>Underappreciated Performers</center></h1>
+  <table>
+    <tr>
+      <td><b>Ranking Description:</b></td>
+      <td>These pools have demonstrated that they can consistently produce their assigned blocks but have not been noticed by delegators.  If they would get more stake, they would have a good chance at generating some of the highest return on stake if their future performance remains similar to their past performance.</td>
+    </tr>
+    <tr>
+      <td><b>Ranking Calculation:</b></td>
+      <td>[cumulative diff of actual vs expected blocks for all epochs] X [number of epochs since registered] / [pool's live stake] / [total stake across all pools]</td>
+    </tr>
+    <tr>
+      <td><b>Ranking Calculation Explanation:</b></td>
+      <td>The first part on the left of the equation identifies pools that have had the best performance over the longest period of time in operation.  Dividing that by the pool's live_stake divided by the total of all stake favors the ones that have lower stake currently, therefore being underapreciated.</td>
+    </tr>
+  </table>
+<table class="tableClass" id="canvas_table" width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tbody><tbody>
+</table>
+
+</body>
+</html>

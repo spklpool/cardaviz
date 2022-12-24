@@ -6,11 +6,12 @@ class ThreadSafeDictOfPoolJson():
         with self.inner_lock:
             self.inner_dict = {}
 
+    def keys(self):
+        return self.inner_dict.keys()
 
     def update(self, ticker, json):
         with self.inner_lock:
             self.inner_dict[ticker] = json
-
 
     def __getitem__(self, ticker):
         with self.inner_lock:

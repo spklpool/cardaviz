@@ -340,14 +340,18 @@ class StakePoolPerformanceChart {
         }
         if (this.drawing_ticker) {
             var gap = (view_size.height - (this.legend_height / 2)) / 2;
-            var translucent_background = this.draw_translucent_rectangle(this.legend_width / 2, this.legend_height / 2, '#D3D3D3', 'black', 0.7, 20);
+            var translucent_background = this.draw_translucent_rectangle(this.legend_width / 2, (this.legend_height / 2) + 15, '#D3D3D3', 'black', 0.7, 20);
             translucent_background.position = new Point(gap + (this.legend_width / 2 /2), gap + (this.legend_height / 2 /2));
             var ticker_text = this.draw_text(0, 0, this.data['ticker'], 0, 18, 'white');
-            ticker_text.position = new Point((gap * 4) + (ticker_text.bounds.width / 2), 40);
+            ticker_text.position = new Point((gap * 4) + (ticker_text.bounds.width / 2), 25);
             var epochs_text = this.draw_text(0, 0, this.data['epochs'].length + ' epochs', 0, 18, 'white');
-            epochs_text.position = new Point((gap * 4) + (epochs_text.bounds.width / 2), 70);
+            epochs_text.position = new Point((gap * 4) + (epochs_text.bounds.width / 2), 50);
             var luck_text = this.draw_text(0, 0, '💪 ' + this.data['current_lifetime_luck'].toFixed(2) + '%', 0, 18, 'white');
-            luck_text.position = new Point((gap * 4) + (luck_text.bounds.width / 2), 100);
+            luck_text.position = new Point((gap * 4) + (luck_text.bounds.width / 2), 75);
+            //var luck_text2 = this.draw_text(0, 0, 'diff ' + this.data['cumulative_diff'].toFixed(2), 0, 18, 'white');
+            //luck_text2.position = new Point((gap * 4) + (luck_text2.bounds.width / 2), 100);
+            //var luck_text3 = this.draw_text(0, 0, 'stake ' + (this.data['epochs'][this.data['epochs'].length - 1]['pool_stake'] / 1000000000).toFixed(2) + 'k', 0, 18, 'white');
+            //luck_text3.position = new Point((gap * 4) + (luck_text3.bounds.width / 2), 125);
         }
     }
 }

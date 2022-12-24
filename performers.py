@@ -53,14 +53,14 @@ rank = 0
 for pool in sorted_by_underapreciated_performance:
     if rank < 70:
         if (pool['live_stake'] > 100000000000):
-            if is_ticker_in_spa(pool['ticker']):
+            #if is_ticker_in_spa(pool['ticker']):
                 current_performer = {}
                 rank += 1
                 current_performer['rank'] = rank
                 current_performer['ticker'] = pool['ticker']
-                current_performer['twitter'] = getTwitterHandleForTicker(pool['ticker'])
+                #current_performer['twitter'] = getTwitterHandleForTicker(pool['ticker'])
                 performers.append(current_performer)
-                print(str(rank) + " " + pool['ticker'] + " - " + current_performer['twitter'] + " - " + str(pool['live_stake']/1000000) + " - " + str(pool['underapreciated']))
+                print(str(rank) + " " + pool['ticker'] + " - " + str(pool['live_stake']/1000000) + " - " + str(pool['underapreciated']))
 with open('static/performers.json', 'w') as outfile:
     json.dump(performers, outfile, indent=4, use_decimal=True)
 

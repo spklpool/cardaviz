@@ -164,9 +164,9 @@ document.addEventListener('readystatechange', (event) => {
         var canvas = document.getElementById('navigate_menu_canvas')
         paper.setup(canvas);
         var home = draw_home();
-        home.position = new Point(40, 50);
+        home.position = new Point(20, 20);
         var back = draw_back_arrow();
-        back.position = new Point(40, 95);
+        back.position = new Point(20, 60);
     }
 });
 
@@ -231,7 +231,7 @@ function toggle_expandable_details() {
 }
 </script>
 <center>
-<table style="width: 100%;">
+<table style="width: 100%; border: none;">
   <tr style="height: 100px;">
     <td style="width: 100px;">
       <canvas style="height: 130px;" id="navigate_menu_canvas"></canvas>

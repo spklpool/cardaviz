@@ -123,7 +123,7 @@ class StakePoolPerformanceChart {
         path.closed = true;
         path.smooth({ type: 'catmull-rom', factor: 0.6 });
         path.fillColor = 'white';
-        path.scale(0.5);
+        path.scale(0.3);
         path.onMouseEnter = function (event) {
             path.fillColor = '#A9A9A9';
         }
@@ -151,7 +151,7 @@ class StakePoolPerformanceChart {
         path.closed = true;
         path.smooth({ type: 'catmull-rom', factor: 0.6 });
         path.fillColor = 'white'
-        path.scale(0.5);
+        path.scale(0.3);
         path.onMouseEnter = function (event) {
             path.fillColor = '#A9A9A9';
         }
@@ -363,8 +363,8 @@ class StakePoolPerformanceChart {
         this.legend_actual_path.position = new Point(legend_x + 40.5, legend_y + 85);
         this.legend_green_path.position = new Point(legend_x + 40, legend_y + 110);
         this.legend_red_path.position = new Point(legend_x + 40, legend_y + 120);
-        this.legend_home.position = new Point(legend_x + (this.legend_home.bounds.width / 2) + 20, 50);
-        this.legend_back_arrow.position = new Point(legend_x + (this.legend_back_arrow.bounds.width / 2) + 30, 110);
+        this.legend_home.position = new Point(legend_x + (this.legend_home.bounds.width / 2) + 28, 48.5);
+        this.legend_back_arrow.position = new Point(legend_x + (this.legend_back_arrow.bounds.width / 2) + 33, 88.5);
 
         if (this.legend_cumulative_path == null) {
             this.legend_cumulative_path = new this.paper.Path();

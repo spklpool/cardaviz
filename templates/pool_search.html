@@ -108,6 +108,12 @@ window.addEventListener("pageshow", () => {
 document.addEventListener('readystatechange', (event) => {
     if (document.readyState === "complete") {
         ready_to_render = true;
+        paper.install(window);
+        var canvas = document.getElementById('cardaviz_logo')
+        paper.setup(canvas);
+        var logo = draw_cardaviz_logo();
+        logo.scale(0.5);
+        logo.position = new Point(75, 60);
     }
 });
 
@@ -215,10 +221,10 @@ var filter_pools = debounce(function() {
       if (Object.keys(filtered_pools).length == 0) {
          console.log('0 results');
          set_no_results_visibility(true);
-      } else if (Object.keys(filtered_pools).length < 10) {
+      } else if (Object.keys(filtered_pools).length < 20) {
         is_rendering = true;
         set_results_instructions_visibility(false);
-        console.log('down to 10 element - rendering');
+        console.log('down to 20 element - rendering');
         render_count = filtered_pools.length;
         for (var i=0; i<filtered_pools.length; i++) {
             var ticker_item = document.createElement("li");
@@ -255,8 +261,30 @@ var filter_pools = debounce(function() {
     }
   }
 }, 200);
+
+function draw_cardaviz_logo() {
+    var p1 = new Point(150, 210);
+    var p2 = new Point(120, 230);
+    var p3 = new Point(80, 230);
+    var p4 = new Point(50, 200);
+    var p5 = new Point(50, 90);
+    var p6 = new Point(65, 70);
+    var p7 = new Point(75, 63);
+    var p8 = new Point(107, 55);
+    var p9 = new Point(135, 65);
+    var p10 = new Point(220, 230);
+    var p11 = new Point(290, 50);
+
+    var path = new paper.Path(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+
+    path.smooth({ type: 'catmull-rom', factor: 0.8 });
+    path.strokeColor = 'yellow';
+    path.strokeWidth = 18;
+    return path;
+}
 </script>
 <div><br><br><br></div>
+<center><canvas id="cardaviz_logo" width="150" height="150"></canvas></center>
 <center><input type="text" id="poolSearch" onkeyup="filter_pools()" placeholder="Type a pool ticker" title="Type in a ticker"></center>
 
 <div id="instructions_div">

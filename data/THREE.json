@@ -2117,33 +2117,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 622.800,
             "cumulative_actual_blocks": 600,
-            "epoch_diff": 0.35947,
+            "epoch_diff": 0.359470,
             "epoch_cumulative_diff": -22.8018
         },
         {
             "epoch": 382,
             "expected": 3.64168,
-            "actual": 6,
+            "actual": 7,
             "pool_stake": 4228229270651,
             "total_stake": 25079111896910089,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 626.442,
-            "cumulative_actual_blocks": 606,
-            "epoch_diff": 2.35832,
-            "epoch_cumulative_diff": -20.4435
+            "cumulative_actual_blocks": 607,
+            "epoch_diff": 3.35832,
+            "epoch_cumulative_diff": -19.4435
+        },
+        {
+            "epoch": 383,
+            "expected": 3.66971,
+            "actual": 5,
+            "pool_stake": 4285763613233,
+            "total_stake": 25226159003727233,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 630.112,
+            "cumulative_actual_blocks": 612,
+            "epoch_diff": 1.33029,
+            "epoch_cumulative_diff": -18.1132
         }
     ],
     "max_positive_diff": 3.86317,
     "max_negative_diff": 43.4468,
-    "cumulative_diff": -20.4435,
-    "cumulative_expected_blocks": 626.442,
-    "cumulative_actual_blocks": 606,
+    "cumulative_diff": -18.1132,
+    "cumulative_expected_blocks": 630.112,
+    "cumulative_actual_blocks": 612,
     "max_actual_blocks": 12,
     "max_expected_blocks": 5.25135,
-    "current_lifetime_luck": 96.7368,
+    "current_lifetime_luck": 97.1256,
     "max_epoch_blocks": 12,
     "max_cumulative_diff": 43.4468,
-    "highest_lifetime_luck": 100.617,
-    "lowest_lifetime_luck": 93.0645
+    "highest_lifetime_luck": 100.613,
+    "lowest_lifetime_luck": 93.1049
 }

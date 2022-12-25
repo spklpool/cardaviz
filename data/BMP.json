@@ -1,4 +1,4 @@
-{ 
+{
     "ticker": "BMP",
     "epochs": [
         {
@@ -1430,18 +1430,31 @@
             "cumulative_actual_blocks": 97,
             "epoch_diff": -0.0131429,
             "epoch_cumulative_diff": 4.07539
+        },
+        {
+            "epoch": 383,
+            "expected": 0.0104386,
+            "actual": 0,
+            "pool_stake": 12190994807,
+            "total_stake": 25226159003727233,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 92.9347,
+            "cumulative_actual_blocks": 97,
+            "epoch_diff": -0.0104386,
+            "epoch_cumulative_diff": 4.06495
         }
     ],
     "max_positive_diff": 9.58466,
     "max_negative_diff": 1.79710,
-    "cumulative_diff": 4.07539,
-    "cumulative_expected_blocks": 92.9243,
+    "cumulative_diff": 4.06495,
+    "cumulative_expected_blocks": 92.9347,
     "cumulative_actual_blocks": 97,
     "max_actual_blocks": 5,
     "max_expected_blocks": 2.08192,
-    "current_lifetime_luck": 104.386,
+    "current_lifetime_luck": 104.374,
     "max_epoch_blocks": 5,
     "max_cumulative_diff": 9.58466,
-    "highest_lifetime_luck": 110.314,
-    "lowest_lifetime_luck": 98.0661
+    "highest_lifetime_luck": 110.313,
+    "lowest_lifetime_luck": 98.0663
 }

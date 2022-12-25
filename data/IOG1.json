@@ -2234,33 +2234,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 10127.0,
             "cumulative_actual_blocks": 9588,
-            "epoch_diff": 2.9865,
+            "epoch_diff": 2.98650,
             "epoch_cumulative_diff": -539.000
         },
         {
             "epoch": 382,
             "expected": 52.1705,
-            "actual": 38,
+            "actual": 54,
             "pool_stake": 60573399963147,
             "total_stake": 25079111896910089,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 10179.2,
-            "cumulative_actual_blocks": 9626,
-            "epoch_diff": -14.1705,
-            "epoch_cumulative_diff": -553.170
+            "cumulative_actual_blocks": 9642,
+            "epoch_diff": 1.8295,
+            "epoch_cumulative_diff": -537.170
+        },
+        {
+            "epoch": 383,
+            "expected": 51.8840,
+            "actual": 44,
+            "pool_stake": 60594151623382,
+            "total_stake": 25226159003727233,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 10231.1,
+            "cumulative_actual_blocks": 9686,
+            "epoch_diff": -7.8840,
+            "epoch_cumulative_diff": -545.054
         }
     ],
     "max_positive_diff": 0,
-    "max_negative_diff": 553.170,
-    "cumulative_diff": -553.170,
-    "cumulative_expected_blocks": 10179.2,
-    "cumulative_actual_blocks": 9626,
+    "max_negative_diff": 545.054,
+    "cumulative_diff": -545.054,
+    "cumulative_expected_blocks": 10231.1,
+    "cumulative_actual_blocks": 9686,
     "max_actual_blocks": 150,
     "max_expected_blocks": 162.466,
-    "current_lifetime_luck": 94.5654,
+    "current_lifetime_luck": 94.6721,
     "max_epoch_blocks": 162.466,
-    "max_cumulative_diff": 553.170,
+    "max_cumulative_diff": 545.054,
     "highest_lifetime_luck": 100,
-    "lowest_lifetime_luck": 94.5657
+    "lowest_lifetime_luck": 94.6726
 }

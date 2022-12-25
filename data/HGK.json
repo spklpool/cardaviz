@@ -895,33 +895,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 717.119,
             "cumulative_actual_blocks": 713,
-            "epoch_diff": -1.2943,
+            "epoch_diff": -1.29430,
             "epoch_cumulative_diff": -4.12300
         },
         {
             "epoch": 382,
             "expected": 12.2706,
-            "actual": 14,
+            "actual": 17,
             "pool_stake": 14246967900021,
             "total_stake": 25079111896910089,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 729.390,
-            "cumulative_actual_blocks": 727,
-            "epoch_diff": 1.7294,
-            "epoch_cumulative_diff": -2.39360
+            "cumulative_actual_blocks": 730,
+            "epoch_diff": 4.7294,
+            "epoch_cumulative_diff": 0.60640
+        },
+        {
+            "epoch": 383,
+            "expected": 12.2021,
+            "actual": 12,
+            "pool_stake": 14250559094720,
+            "total_stake": 25226159003727233,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 741.592,
+            "cumulative_actual_blocks": 742,
+            "epoch_diff": -0.2021,
+            "epoch_cumulative_diff": 0.40430
         }
     ],
     "max_positive_diff": 1.48846,
     "max_negative_diff": 26.0266,
-    "cumulative_diff": -2.39360,
-    "cumulative_expected_blocks": 729.390,
-    "cumulative_actual_blocks": 727,
+    "cumulative_diff": 0.40430,
+    "cumulative_expected_blocks": 741.592,
+    "cumulative_actual_blocks": 742,
     "max_actual_blocks": 20,
     "max_expected_blocks": 12.6932,
-    "current_lifetime_luck": 99.6723,
+    "current_lifetime_luck": 100.055,
     "max_epoch_blocks": 20,
     "max_cumulative_diff": 26.0266,
-    "highest_lifetime_luck": 100.204,
-    "lowest_lifetime_luck": 96.4317
+    "highest_lifetime_luck": 100.201,
+    "lowest_lifetime_luck": 96.4904
 }

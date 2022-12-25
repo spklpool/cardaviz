@@ -2234,33 +2234,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4619.67,
             "cumulative_actual_blocks": 4607,
-            "epoch_diff": 3.3971,
+            "epoch_diff": 3.39710,
             "epoch_cumulative_diff": -12.6272
         },
         {
             "epoch": 382,
             "expected": 11.5771,
-            "actual": 7,
+            "actual": 11,
             "pool_stake": 13441759946532,
             "total_stake": 25079111896910089,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4631.25,
-            "cumulative_actual_blocks": 4614,
-            "epoch_diff": -4.5771,
-            "epoch_cumulative_diff": -17.2043
+            "cumulative_actual_blocks": 4618,
+            "epoch_diff": -0.5771,
+            "epoch_cumulative_diff": -13.2043
+        },
+        {
+            "epoch": 383,
+            "expected": 11.5164,
+            "actual": 9,
+            "pool_stake": 13449750653988,
+            "total_stake": 25226159003727233,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 4642.77,
+            "cumulative_actual_blocks": 4627,
+            "epoch_diff": -2.5164,
+            "epoch_cumulative_diff": -15.7207
         }
     ],
     "max_positive_diff": 34.8062,
     "max_negative_diff": 49.1614,
-    "cumulative_diff": -17.2043,
-    "cumulative_expected_blocks": 4631.25,
-    "cumulative_actual_blocks": 4614,
+    "cumulative_diff": -15.7207,
+    "cumulative_expected_blocks": 4642.77,
+    "cumulative_actual_blocks": 4627,
     "max_actual_blocks": 70,
     "max_expected_blocks": 67.1735,
-    "current_lifetime_luck": 99.6275,
+    "current_lifetime_luck": 99.6603,
     "max_epoch_blocks": 70,
     "max_cumulative_diff": 49.1614,
-    "highest_lifetime_luck": 100.752,
-    "lowest_lifetime_luck": 98.9385
+    "highest_lifetime_luck": 100.750,
+    "lowest_lifetime_luck": 98.9411
 }

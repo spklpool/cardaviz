@@ -2234,33 +2234,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 6614.68,
             "cumulative_actual_blocks": 6433,
-            "epoch_diff": 1.7053,
+            "epoch_diff": 1.70530,
             "epoch_cumulative_diff": -181.726
         },
         {
             "epoch": 382,
             "expected": 43.8437,
-            "actual": 40,
+            "actual": 50,
             "pool_stake": 50905457985662,
             "total_stake": 25079111896910089,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 6658.52,
-            "cumulative_actual_blocks": 6473,
-            "epoch_diff": -3.8437,
-            "epoch_cumulative_diff": -185.570
+            "cumulative_actual_blocks": 6483,
+            "epoch_diff": 6.1563,
+            "epoch_cumulative_diff": -175.570
+        },
+        {
+            "epoch": 383,
+            "expected": 48.3700,
+            "actual": 31,
+            "pool_stake": 56490172599798,
+            "total_stake": 25226159003727233,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 6706.89,
+            "cumulative_actual_blocks": 6514,
+            "epoch_diff": -17.3700,
+            "epoch_cumulative_diff": -192.940
         }
     ],
     "max_positive_diff": 28.9989,
     "max_negative_diff": 231.836,
-    "cumulative_diff": -185.570,
-    "cumulative_expected_blocks": 6658.52,
-    "cumulative_actual_blocks": 6473,
+    "cumulative_diff": -192.940,
+    "cumulative_expected_blocks": 6706.89,
+    "cumulative_actual_blocks": 6514,
     "max_actual_blocks": 68,
     "max_expected_blocks": 63.5305,
-    "current_lifetime_luck": 97.2138,
+    "current_lifetime_luck": 97.1240,
     "max_epoch_blocks": 68,
     "max_cumulative_diff": 231.836,
-    "highest_lifetime_luck": 100.436,
-    "lowest_lifetime_luck": 96.5182
+    "highest_lifetime_luck": 100.432,
+    "lowest_lifetime_luck": 96.5433
 }

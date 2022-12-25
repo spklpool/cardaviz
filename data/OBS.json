@@ -2065,33 +2065,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1479.68,
             "cumulative_actual_blocks": 1486,
-            "epoch_diff": 2.7076,
+            "epoch_diff": 2.70760,
             "epoch_cumulative_diff": 6.36080
         },
         {
             "epoch": 382,
             "expected": 11.3060,
-            "actual": 8,
+            "actual": 11,
             "pool_stake": 13127007049501,
             "total_stake": 25079111896910089,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1490.99,
-            "cumulative_actual_blocks": 1494,
-            "epoch_diff": -3.3060,
-            "epoch_cumulative_diff": 3.05480
+            "cumulative_actual_blocks": 1497,
+            "epoch_diff": -0.3060,
+            "epoch_cumulative_diff": 6.05480
+        },
+        {
+            "epoch": 383,
+            "expected": 11.2503,
+            "actual": 9,
+            "pool_stake": 13138950666700,
+            "total_stake": 25226159003727233,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 1502.24,
+            "cumulative_actual_blocks": 1506,
+            "epoch_diff": -2.2503,
+            "epoch_cumulative_diff": 3.80450
         }
     ],
     "max_positive_diff": 2.34354,
     "max_negative_diff": 38.5396,
-    "cumulative_diff": 3.05480,
-    "cumulative_expected_blocks": 1490.99,
-    "cumulative_actual_blocks": 1494,
+    "cumulative_diff": 3.80450,
+    "cumulative_expected_blocks": 1502.24,
+    "cumulative_actual_blocks": 1506,
     "max_actual_blocks": 19,
     "max_expected_blocks": 14.1115,
-    "current_lifetime_luck": 100.202,
+    "current_lifetime_luck": 100.250,
     "max_epoch_blocks": 19,
     "max_cumulative_diff": 38.5396,
-    "highest_lifetime_luck": 100.157,
-    "lowest_lifetime_luck": 97.4152
+    "highest_lifetime_luck": 100.156,
+    "lowest_lifetime_luck": 97.4345
 }

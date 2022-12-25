@@ -1987,33 +1987,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 5425.06,
             "cumulative_actual_blocks": 5229,
-            "epoch_diff": 6.3502,
+            "epoch_diff": 6.35020,
             "epoch_cumulative_diff": -196.047
         },
         {
             "epoch": 382,
             "expected": 27.8241,
-            "actual": 29,
+            "actual": 37,
             "pool_stake": 32305764637967,
             "total_stake": 25079111896910089,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 5452.88,
-            "cumulative_actual_blocks": 5258,
-            "epoch_diff": 1.1759,
-            "epoch_cumulative_diff": -194.871
+            "cumulative_actual_blocks": 5266,
+            "epoch_diff": 9.1759,
+            "epoch_cumulative_diff": -186.871
+        },
+        {
+            "epoch": 383,
+            "expected": 27.5450,
+            "actual": 19,
+            "pool_stake": 32169133892939,
+            "total_stake": 25226159003727233,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 5480.42,
+            "cumulative_actual_blocks": 5285,
+            "epoch_diff": -8.5450,
+            "epoch_cumulative_diff": -195.416
         }
     ],
     "max_positive_diff": 7.73494,
     "max_negative_diff": 202.397,
-    "cumulative_diff": -194.871,
-    "cumulative_expected_blocks": 5452.88,
-    "cumulative_actual_blocks": 5258,
+    "cumulative_diff": -195.416,
+    "cumulative_expected_blocks": 5480.42,
+    "cumulative_actual_blocks": 5285,
     "max_actual_blocks": 66,
     "max_expected_blocks": 51.211,
-    "current_lifetime_luck": 96.4261,
+    "current_lifetime_luck": 96.4342,
     "max_epoch_blocks": 66,
     "max_cumulative_diff": 202.397,
-    "highest_lifetime_luck": 100.142,
-    "lowest_lifetime_luck": 96.2883
+    "highest_lifetime_luck": 100.141,
+    "lowest_lifetime_luck": 96.3069
 }

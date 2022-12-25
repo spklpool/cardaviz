@@ -1714,33 +1714,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4054.79,
             "cumulative_actual_blocks": 4079,
-            "epoch_diff": -8.1123,
+            "epoch_diff": -8.11230,
             "epoch_cumulative_diff": 24.2016
         },
         {
             "epoch": 382,
             "expected": 17.1192,
-            "actual": 11,
+            "actual": 13,
             "pool_stake": 19876587201412,
             "total_stake": 25079111896910089,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4071.91,
-            "cumulative_actual_blocks": 4090,
-            "epoch_diff": -6.1192,
-            "epoch_cumulative_diff": 18.0824
+            "cumulative_actual_blocks": 4092,
+            "epoch_diff": -4.1192,
+            "epoch_cumulative_diff": 20.0824
+        },
+        {
+            "epoch": 383,
+            "expected": 17.2927,
+            "actual": 9,
+            "pool_stake": 20195756105110,
+            "total_stake": 25226159003727233,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 4089.20,
+            "cumulative_actual_blocks": 4101,
+            "epoch_diff": -8.2927,
+            "epoch_cumulative_diff": 11.7897
         }
     ],
     "max_positive_diff": 49.8840,
     "max_negative_diff": 4.37008,
-    "cumulative_diff": 18.0824,
-    "cumulative_expected_blocks": 4071.91,
-    "cumulative_actual_blocks": 4090,
+    "cumulative_diff": 11.7897,
+    "cumulative_expected_blocks": 4089.20,
+    "cumulative_actual_blocks": 4101,
     "max_actual_blocks": 63,
     "max_expected_blocks": 56.878,
-    "current_lifetime_luck": 100.444,
+    "current_lifetime_luck": 100.289,
     "max_epoch_blocks": 63,
     "max_cumulative_diff": 49.8840,
-    "highest_lifetime_luck": 101.225,
-    "lowest_lifetime_luck": 99.8927
+    "highest_lifetime_luck": 101.220,
+    "lowest_lifetime_luck": 99.8931
 }

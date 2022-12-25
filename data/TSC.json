@@ -1181,33 +1181,46 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 359.484,
             "cumulative_actual_blocks": 366,
-            "epoch_diff": -0.72385,
+            "epoch_diff": -0.723850,
             "epoch_cumulative_diff": 6.51510
         },
         {
             "epoch": 382,
             "expected": 7.75610,
-            "actual": 5,
+            "actual": 6,
             "pool_stake": 9005361742092,
             "total_stake": 25079111896910089,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 367.240,
-            "cumulative_actual_blocks": 371,
-            "epoch_diff": -2.75610,
-            "epoch_cumulative_diff": 3.75900
+            "cumulative_actual_blocks": 372,
+            "epoch_diff": -1.75610,
+            "epoch_cumulative_diff": 4.75900
+        },
+        {
+            "epoch": 383,
+            "expected": 7.70360,
+            "actual": 5,
+            "pool_stake": 8996862400797,
+            "total_stake": 25226159003727233,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 374.944,
+            "cumulative_actual_blocks": 377,
+            "epoch_diff": -2.70360,
+            "epoch_cumulative_diff": 2.05540
         }
     ],
     "max_positive_diff": 10.6257,
     "max_negative_diff": 3.29176,
-    "cumulative_diff": 3.75900,
-    "cumulative_expected_blocks": 367.240,
-    "cumulative_actual_blocks": 371,
+    "cumulative_diff": 2.05540,
+    "cumulative_expected_blocks": 374.944,
+    "cumulative_actual_blocks": 377,
     "max_actual_blocks": 13,
     "max_expected_blocks": 8.93745,
-    "current_lifetime_luck": 101.024,
+    "current_lifetime_luck": 100.548,
     "max_epoch_blocks": 13,
     "max_cumulative_diff": 10.6257,
-    "highest_lifetime_luck": 102.893,
-    "lowest_lifetime_luck": 99.1036
+    "highest_lifetime_luck": 102.834,
+    "lowest_lifetime_luck": 99.1221
 }

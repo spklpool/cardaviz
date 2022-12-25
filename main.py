@@ -75,7 +75,7 @@ def get_pool_search():
 
 @app.route("/ranking/<ranking_name>")
 def get_ranking(ranking_name):
-    ranking = evaluate_ranking(map_of_pool_jsons, ranking_name, 20)
+    ranking = evaluate_ranking(map_of_pool_jsons, ranking_name, 1)
     return render_template('ranking.html', ranking=ranking)
 
 @app.route("/data/<pool_ticker>.json")

@@ -106,12 +106,17 @@ def update():
         processing_count = 0
         for row in valid_pools_needing_updates:
             processing_count += 1
-            print('processing ' + str(processing_count) + ' of ' + str(len(valid_pools_needing_updates)))
+            print('processing ' + str(processing_count) + ' of ' + str(len(valid_pools_needing_updates)) + ' - ' + row['ticker'].upper())
             try:
                 pool_json_path = data_folder + "/" + row['ticker'].upper() + ".json"
                 pool_json = json.load(open(pool_json_path))
                 refresh_epoch(pool_json, row['view'], latest_epoch - 1)
                 refresh_epoch(pool_json, row['view'], latest_epoch)
+
+                recalculate_pool(pool_json)
+
+                with open(data_folder + '/' + ticker.upper() + '.json', 'w') as outfile:
+                    json.dump(pool_json, outfile, indent=4, use_decimal=True)
 
             except (Exception) as metadata_error:
                 print(metadata_error)

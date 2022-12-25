@@ -252,13 +252,3 @@ def recalculate_pool(pool_json):
         pool_json['highest_lifetime_luck'] = 0
         pool_json['lowest_lifetime_luck'] = 0
 
-    ticker_json_file_name = data_folder + '/' + pool_ticker.upper() + '.json'
-    print("dumping pool to json file: " + ticker_json_file_name)
-    try:
-        with open(ticker_json_file_name, 'w') as outfile:
-            json.dump(pool_json, outfile, indent=4, use_decimal=True)
-        print("done writing to json file: " + ticker_json_file_name)
-    except (Exception, psycopg2.DatabaseError) as error:
-        print("Error: " + str(error))
-
-    return json.dumps(pool_json, indent=4, use_decimal=True)

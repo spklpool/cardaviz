@@ -136,7 +136,7 @@ function draw_home(canvas) {
         canvas.style.cursor = "pointer";
     }
     path.onClick = function (event) {
-        window.location.href = 'http://127.0.0.1:5000/';
+        window.location.href = 'http://cardaviz.spklpool.com/';
     }
     return path
 }
@@ -273,7 +273,7 @@ function toggle_expandable_details() {
     </tr>
     <tr>
       <td style="width: 20%;"><b>Filters:</b></td>
-      <td style="width: 80%;">Below is a list of additional filters that are applied to the resulting pools</td>
+      <td style="width: 80%;">Below is a list of additional filters that are applied to the list of pools</td>
     </tr>
 {% for filter in ranking['filters'] %}
     <tr>

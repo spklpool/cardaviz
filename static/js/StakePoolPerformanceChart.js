@@ -134,7 +134,7 @@ class StakePoolPerformanceChart {
             localcanvas.style.cursor = "default";
         }
         path.onClick = function (event) {
-            window.location.href = 'http://127.0.0.1:5000/';
+            window.location.href = 'http://cardaviz.spklpool.com';
         }
         return path
     }

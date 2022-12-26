@@ -136,7 +136,7 @@ function draw_home(canvas) {
         canvas.style.cursor = "pointer";
     }
     path.onClick = function (event) {
-        window.location.href = 'http://cardaviz.spklpool.com/';
+        window.location.href = 'https://cardaviz.app/';
     }
     return path
 }
@@ -233,7 +233,7 @@ function toggle_expandable_details() {
     expandable_details_visibility = false;
     div.style.display = 'none';
     div.style.visibility = 'hidden';
-    button.innerHTML = "<center><i class=\"arrow down\"></i><span class=\"clickable_text\"> expand for more details </span><i class=\"arrow down\"></center>";
+    button.innerHTML = "<center><i class=\"arrow down\"></i><span class=\"clickable_text\"> click here to see ranking methodology </span><i class=\"arrow down\"></center>";
   } else {
     expandable_details_visibility = true;
     div.style.display = 'block';
@@ -285,7 +285,7 @@ function toggle_expandable_details() {
   </center>
 </div>
 <div>
-  <center><div id="clickable_expand_div" onclick="toggle_expandable_details()"><i class="arrow down"></i><span class="clickable_text"> expand for more details </span><i class="arrow down"></i></div></center>
+  <center><div id="clickable_expand_div" onclick="toggle_expandable_details()"><i class="arrow down"></i><span class="clickable_text"> click here to see ranking methodology </span><i class="arrow down"></i></div></center>
   <table class="tableClass" id="canvas_table" width="100%" cellpadding="0" cellspacing="0" border="0">
     <tbody><tbody>
   </table>

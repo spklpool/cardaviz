@@ -1,13 +1,13 @@
+import traceback
+
 import simplejson as json
+import urllib.request
+
+SPA_JSON_URL = 'https://raw.githubusercontent.com/SinglePoolAlliance/Registration/master/registry.json'
 
 
-def add_pool_to_ranking_array(ranking_array, ticker):
-    current_pool = {'rank': len(ranking_array) + 1, 'ticker': ticker}
-    ranking_array.append(current_pool)
-
-
-def safe_eval(expression, pool):
-    allowed_names = {'pool': pool}
+def safe_eval(expression, pool, spa_tickers):
+    allowed_names = {'pool': pool, 'spa_tickers': spa_tickers}
     code = compile(expression, "<string>", "eval")
     for name in code.co_names:
         if name not in allowed_names:
@@ -16,11 +16,36 @@ def safe_eval(expression, pool):
     return eval(code, {"__builtins__": {}}, allowed_names)
 
 
+def get_spa_tickers():
+    ret = []
+    spa_json = json.load(urllib.request.urlopen(SPA_JSON_URL))
+    for pool in spa_json:
+        ret.append(pool['ticker'])
+    return ret;
+
+
+def set_dict_value_with_highest_lowest(dict, absolute, key, value):
+    dict[key] = value
+    if key + '__highest' not in absolute:
+        absolute[key + '__highest'] = float('-inf')
+    if key + '__lowest' not in absolute:
+        absolute[key + '__lowest'] = float('inf')
+    if value > absolute[key + '__highest']:
+        absolute[key + '__highest'] = value
+    if value < absolute[key + '__lowest']:
+        absolute[key + '__lowest'] = value
+
+
+def set_normalized_value(dict, absolute, key):
+    dict[key + '__normalized'] = dict[key] / (absolute[key + '__highest'] - absolute[key + '__lowest'])
+
+
 def evaluate_ranking(map_of_pool_jsons, ranking_name, number_of_pools_to_return):
+    spa_tickers = get_spa_tickers()
     rankings_file = 'static/rankings.json'
     rankings_json = json.load(open(rankings_file))
 
-    ranked_pools = []
+    filtered_pools = []
 
     for ranking in rankings_json:
         if ranking['name'] == ranking_name:
@@ -30,51 +55,80 @@ def evaluate_ranking(map_of_pool_jsons, ranking_name, number_of_pools_to_return)
             print(ranking['name'])
             print(ranking['description'])
             pools = []
+            absolute = {}
             iter_count = 0
+
+            # first pass, set all values with highest and lowest
             for ticker in map_of_pool_jsons.keys():
                 pool_json = map_of_pool_jsons[ticker]
                 pool = {}
                 iter_count += 1
                 try:
                     pool['ticker'] = ticker
-                    pool['latest_epoch_live_stake'] = pool_json['epochs'][len(pool_json['epochs']) - 1][
-                        'pool_stake']
-                    pool['latest_epoch_total_stake'] = pool_json['epochs'][len(pool_json['epochs']) - 1][
-                        'total_stake']
-                    pool['lifetime_epochs'] = len(pool_json['epochs'])
-                    pool['max_positive_diff'] = pool_json['max_positive_diff']
-                    pool['max_negative_diff'] = pool_json['max_negative_diff']
-                    pool['cumulative_diff'] = pool_json['cumulative_diff']
-                    pool['cumulative_expected_blocks'] = pool_json['cumulative_expected_blocks']
-                    pool['cumulative_actual_blocks'] = pool_json['cumulative_actual_blocks']
-                    pool['max_actual_blocks'] = pool_json['max_actual_blocks']
-                    pool['max_expected_blocks'] = pool_json['max_expected_blocks']
-                    pool['current_lifetime_luck'] = pool_json['current_lifetime_luck']
-                    pool['max_epoch_blocks'] = pool_json['max_epoch_blocks']
-                    pool['max_cumulative_diff'] = pool_json['max_cumulative_diff']
-                    pool['highest_lifetime_luck'] = pool_json['highest_lifetime_luck']
-                    pool['lowest_lifetime_luck'] = pool_json['lowest_lifetime_luck']
-                    if pool['latest_epoch_live_stake'] > 0:
-                        pool['ranking_field'] = safe_eval(ranking['expression'], pool)
-                        pools.append(pool)
+                    if len(pool_json['epochs']) > 0:
+                        set_dict_value_with_highest_lowest(pool, absolute, 'latest_epoch_pool_stake', pool_json['epochs'][len(pool_json['epochs']) - 1]['pool_stake'])
+                    else:
+                        set_dict_value_with_highest_lowest(pool, absolute, 'latest_epoch_pool_stake', 0)
+                    set_dict_value_with_highest_lowest(pool, absolute, 'lifetime_epochs', len(pool_json['epochs']))
+                    set_dict_value_with_highest_lowest(pool, absolute, 'max_positive_diff', pool_json['max_positive_diff'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'max_negative_diff', pool_json['max_negative_diff'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'cumulative_diff', pool_json['cumulative_diff'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'cumulative_expected_blocks', pool_json['cumulative_expected_blocks'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'cumulative_actual_blocks', pool_json['cumulative_actual_blocks'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'max_actual_blocks', pool_json['max_actual_blocks'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'max_expected_blocks', pool_json['max_expected_blocks'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'current_lifetime_luck', pool_json['current_lifetime_luck'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'max_epoch_blocks', pool_json['max_epoch_blocks'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'max_cumulative_diff', pool_json['max_cumulative_diff'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'highest_lifetime_luck', pool_json['highest_lifetime_luck'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'lowest_lifetime_luck', pool_json['lowest_lifetime_luck'])
+                    pools.append(pool)
                 except Exception as e:
                     print(e)
+                    print(pool['ticker'])
+                    traceback.print_exc()
 
-            sorted_by_underappreciated_performance = sorted(pools, key=lambda d: d['ranking_field'], reverse=True)
+            # second pass, set normalized values
+            for pool in pools:
+                set_normalized_value(pool, absolute, 'latest_epoch_pool_stake')
+                set_normalized_value(pool, absolute, 'lifetime_epochs')
+                set_normalized_value(pool, absolute, 'max_positive_diff')
+                set_normalized_value(pool, absolute, 'max_negative_diff')
+                set_normalized_value(pool, absolute, 'cumulative_diff')
+                set_normalized_value(pool, absolute, 'cumulative_expected_blocks')
+                set_normalized_value(pool, absolute, 'cumulative_actual_blocks')
+                set_normalized_value(pool, absolute, 'max_actual_blocks')
+                set_normalized_value(pool, absolute, 'max_expected_blocks')
+                set_normalized_value(pool, absolute, 'current_lifetime_luck')
+                set_normalized_value(pool, absolute, 'max_epoch_blocks')
+                set_normalized_value(pool, absolute, 'max_cumulative_diff')
+                set_normalized_value(pool, absolute, 'highest_lifetime_luck')
+                set_normalized_value(pool, absolute, 'lowest_lifetime_luck')
 
-            for pool in sorted_by_underappreciated_performance:
+            for pool in pools:
                 if len(ranking['filters']) == 0:
-                    add_pool_to_ranking_array(ranked_pools, pool['ticker'])
+                    filtered_pools.append(pool)
                 else:
+                    passes_all_filters = True
                     for current_filter in ranking['filters']:
-                        if safe_eval(current_filter['expression'], pool):
-                            add_pool_to_ranking_array(ranked_pools, pool['ticker'])
+                        if not safe_eval(current_filter['expression'], pool, spa_tickers):
+                            passes_all_filters = False
+                            break
+                    if passes_all_filters:
+                        filtered_pools.append(pool)
+
+            for pool in filtered_pools:
+                pool['ranking_field'] = safe_eval(ranking['expression'], pool, spa_tickers)
+
+    sorted_by_ranking_field = sorted(filtered_pools, key=lambda d: d['ranking_field'], reverse=True)
 
     return_pools = []
-    for ranked_pool in ranked_pools:
-        if ranked_pool['rank'] <= number_of_pools_to_return:
-            return_pools.append(ranked_pool)
-            print(str(ranked_pool['rank']) + ' - ' + ranked_pool['ticker'])
+
+    if number_of_pools_to_return > len(sorted_by_ranking_field):
+        number_of_pools_to_return = len(sorted_by_ranking_field)
+    for rank in range(0, number_of_pools_to_return):
+        sorted_by_ranking_field[rank]['rank'] = rank
+        return_pools.append(sorted_by_ranking_field[rank])
 
     selected_ranking['results'] = return_pools
 

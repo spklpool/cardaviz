@@ -4,12 +4,28 @@
     "pretty_name": "Underappreciated Performers",
     "summary": "Pools with strong performance but low stake currently.",
     "description": "These pools have demonstrated that they can consistently produce their assigned blocks but have not been noticed by delegators.  If they would get more stake, they would have a good chance at generating some of the highest return on stake if their future performance remains similar to their past performance.",
-    "expression": "pool['cumulative_diff'] * pool['lifetime_epochs'] / pool['latest_epoch_live_stake'] / pool['latest_epoch_total_stake']",
+    "expression": "pool['current_lifetime_luck__normalized'] * pool['lifetime_epochs__normalized'] - pool['latest_epoch_pool_stake__normalized']",
     "expression_explanation": "The first part on the left of the equation identifies pools that have had the best performance over the longest period of time in operation.  Dividing that by the pool's live_stake divided by the total of all stake favors the ones that have lower stake currently, therefore being underapreciated.",
     "filters": [
       {
         "name": "not too small",
-        "expression": "pool['latest_epoch_live_stake'] > (100000 * 1000000)"
+        "expression": "pool['latest_epoch_pool_stake'] > (1000 * 1000000)"
+      },
+      {
+        "name": "positive cumulative diff",
+        "expression": "pool['cumulative_diff'] > 0"
+      },
+      {
+        "name": "at least a year in operation",
+        "expression": "pool['lifetime_epochs'] > 73"
+      },
+      {
+        "name": "at least a few blocks",
+        "expression": "pool['cumulative_actual_blocks'] > 5"
+      },
+      {
+        "name": "in single pool alliance",
+        "expression": "pool['ticker'] in spa_tickers"
       }
     ]
   },

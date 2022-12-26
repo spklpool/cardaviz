@@ -124,16 +124,17 @@ class StakePoolPerformanceChart {
         path.smooth({ type: 'catmull-rom', factor: 0.6 });
         path.fillColor = 'white';
         path.scale(0.3);
+        var localcanvas = this.canvas;
         path.onMouseEnter = function (event) {
             path.fillColor = '#A9A9A9';
+            localcanvas.style.cursor = "pointer";
         }
         path.onMouseLeave = function (event) {
             path.fillColor = 'white';
+            localcanvas.style.cursor = "default";
         }
         path.onClick = function (event) {
             window.location.href = 'http://127.0.0.1:5000/';
-            //window.location.href = 'https://cardaviz.app/';
-            //history.back();
         }
         return path
     }
@@ -152,11 +153,14 @@ class StakePoolPerformanceChart {
         path.smooth({ type: 'catmull-rom', factor: 0.6 });
         path.fillColor = 'white'
         path.scale(0.3);
+        var localcanvas = this.canvas;
         path.onMouseEnter = function (event) {
             path.fillColor = '#A9A9A9';
+            localcanvas.style.cursor = "pointer";
         }
         path.onMouseLeave = function (event) {
             path.fillColor = 'white';
+            localcanvas.style.cursor = "default";
         }
         path.onClick = function (event) {
             history.back();

@@ -107,7 +107,7 @@ window.addEventListener("pageshow", () => {
     }
 });
 
-function draw_home() {
+function draw_home(canvas) {
     var p1 = new Point(20, 200);
     var p2 = new Point(53.333, 200);
     var p3 = new Point(53.333, 140);
@@ -129,9 +129,11 @@ function draw_home() {
     path.scale(0.3);
     path.onMouseEnter = function (event) {
         path.fillColor = '#A9A9A9';
+        canvas.style.cursor = "pointer";
     }
     path.onMouseLeave = function (event) {
         path.fillColor = 'white';
+        canvas.style.cursor = "pointer";
     }
     path.onClick = function (event) {
         window.location.href = 'http://127.0.0.1:5000/';
@@ -139,7 +141,7 @@ function draw_home() {
     return path
 }
 
-function draw_back_arrow() {
+function draw_back_arrow(canvas) {
     var p1 = new Point(0, 100);
     var p2 = new Point(40, 50);
     var p3 = new Point(40, 80);
@@ -155,9 +157,11 @@ function draw_back_arrow() {
     path.scale(0.3);
     path.onMouseEnter = function (event) {
         path.fillColor = '#A9A9A9';
+        canvas.style.cursor = "pointer";
     }
     path.onMouseLeave = function (event) {
         path.fillColor = 'white';
+        canvas.style.cursor = "default";
     }
     path.onClick = function (event) {
         history.back();
@@ -171,9 +175,9 @@ document.addEventListener('readystatechange', (event) => {
         paper.install(window);
         var canvas = document.getElementById('navigate_menu_canvas')
         paper.setup(canvas);
-        var home = draw_home();
+        var home = draw_home(canvas);
         home.position = new Point(20, 20);
-        var back = draw_back_arrow();
+        var back = draw_back_arrow(canvas);
         back.position = new Point(20, 60);
     }
 });

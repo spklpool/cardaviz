@@ -115,7 +115,7 @@ def update():
 
                 recalculate_pool(pool_json)
 
-                with open(data_folder + '/' + ticker.upper() + '.json', 'w') as outfile:
+                with open(data_folder + '/' + row['ticker'].upper() + '.json', 'w') as outfile:
                     json.dump(pool_json, outfile, indent=4, use_decimal=True)
 
             except (Exception) as metadata_error:

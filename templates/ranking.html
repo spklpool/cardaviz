@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="icon" href="/static/favicon.svg" sizes="any" type="image/svg+xml" />
 <style>
   <style>
     html,
@@ -42,7 +43,7 @@
     .tableClass {
       margin: 10px;
       height: 100%;
-      width: 100%;
+      width: 60%;
       border: 0px solid;
       border-collapse: collapse;
       border-spacing: 0;
@@ -72,7 +73,7 @@
     }
     table {
       color: white;
-      width: 100%;
+      width: 60%;
       table-layout: fixed;
       border-spacing: 20px;
       border-radius: 25px;
@@ -83,19 +84,24 @@
 <body  style="background-color: black;">
 <script type="text/javascript" src="../static/js/paper-full.js"></script>
 <script type="text/javascript" src="../static/js/StakePoolPerformanceChart.js"></script>
+<script type="text/javascript" src="../static/js/cardaviz_navigation.js"></script>
 <script>
+var is_client_fast_enough = false;
 var pools_to_render = [];
 {% for pool in ranking['results'] %}
-pools_to_render.push('{{pool['ticker']}}');
+var pool_entry = {};
+pool_entry['rank'] = '{{pool['rank']}}';
+pool_entry['ticker'] = '{{pool['ticker']}}';
+pools_to_render.push(pool_entry);
 {% endfor %}
 var ready_to_render = false;
 var pool_json_client_cache = {};
 
-draw_if_page_finished_loading();
-
 window.addEventListener("resize", (event) => {
+    console.log('resize');
     if (ready_to_render) {
-        console.log('resize');
+        build_header_table();
+        draw_navigation();
         draw_if_page_finished_loading();
     }
 });
@@ -103,108 +109,103 @@ window.addEventListener("resize", (event) => {
 window.addEventListener("pageshow", () => {
     console.log('pageshow');
     if (ready_to_render) {
+        //draw_if_page_finished_loading();
+    }
+});
+
+document.addEventListener('readystatechange', (event) => {
+    if (document.readyState === "complete") {
+        console.log('readystatechange - ' + document.readyState);
+        ready_to_render = true;
+        build_header_table();
+        draw_navigation();
         draw_if_page_finished_loading();
     }
 });
 
-function draw_home(canvas) {
-    var p1 = new Point(20, 200);
-    var p2 = new Point(53.333, 200);
-    var p3 = new Point(53.333, 140);
-    var p4 = new Point(86.666, 140);
-    var p5 = new Point(86.666, 200);
-    var p6 = new Point(120, 200);
-    var p7 = new Point(120, 123);
-    var p8 = new Point(125, 125);
-    var p9 = new Point(140, 125);
-    var p10 = new Point(70, 80);
-    var p11 = new Point(0, 125);
-    var p12 = new Point(15, 125);
-    var p13 = new Point(20, 123);
-
-    var path = new paper.Path(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13);
-    path.closed = true;
-    path.smooth({ type: 'catmull-rom', factor: 0.6 });
-    path.fillColor = 'white';
-    path.scale(0.3);
-    path.onMouseEnter = function (event) {
-        path.fillColor = '#A9A9A9';
-        canvas.style.cursor = "pointer";
-    }
-    path.onMouseLeave = function (event) {
-        path.fillColor = 'white';
-        canvas.style.cursor = "pointer";
-    }
-    path.onClick = function (event) {
-        window.location.href = 'http://cardaviz.spklpool.com/';
-    }
-    return path
+function draw_navigation() {
+    var start = performance.now();
+    paper.install(window);
+    var canvas = document.getElementById('navigate_menu_canvas')
+    paper.setup(canvas);
+    var home = draw_home(canvas);
+    home.position = new Point(20 * this.paper.view.pixelRatio, 20 * this.paper.view.pixelRatio);
+    var back = draw_back_arrow(canvas);
+    back.position = new Point(home.position.x, home.position.y + (home.bounds.height / 2) + (20 * this.paper.view.pixelRatio));
+    var end = performance.now();
+    var timeTaken = end - start;
+    is_client_fast_enough = (timeTaken < 30)
+    console.log('time to draw navigation menu: ' + timeTaken);
 }
 
-function draw_back_arrow(canvas) {
-    var p1 = new Point(0, 100);
-    var p2 = new Point(40, 50);
-    var p3 = new Point(40, 80);
-    var p4 = new Point(100, 80);
-    var p5 = new Point(100, 120);
-    var p6 = new Point(40, 120);
-    var p7 = new Point(40, 150);
-
-    var path = new paper.Path(p1, p2, p3, p4, p5, p6, p7);
-    path.closed = true;
-    path.smooth({ type: 'catmull-rom', factor: 0.6 });
-    path.fillColor = 'white'
-    path.scale(0.3);
-    path.onMouseEnter = function (event) {
-        path.fillColor = '#A9A9A9';
-        canvas.style.cursor = "pointer";
+function build_header_table() {
+    const one_row_header = `
+  <tr style="height: 100px;">
+    <td style="width: 100px;">
+      <canvas style="height: 200px;" id="navigate_menu_canvas"></canvas>
+    </td>
+    <td style="width: auto;">
+      <h1><center>{{ranking['pretty_name']}}</center></h1>
+      <h2><center>{{ranking['summary']}}</center></h2>
+    </td>
+    <td style="width: 100px;">&nbsp;</td>
+  </tr>
+    `
+    const two_row_header = `
+  <tr style="height: 80px;">
+    <td style="width: 100px;">
+      <canvas style="height: 80px;" id="navigate_menu_canvas"></canvas>
+    </td>
+    <td style="width: auto;">
+    </td>
+    <td style="width: 100px;">&nbsp;</td>
+  </tr>
+  <tr style="height: 100px;">
+    <td colspan="3" style="width: auto;">
+      <h1><center>{{ranking['pretty_name']}}</center></h1>
+      <h2><center>{{ranking['summary']}}</center></h2>
+    </td>
+  </tr>
+    `
+    var tableRef = document.getElementById('header_table').getElementsByTagName('tbody')[0];
+    if (window.innerWidth > 600) {
+      tableRef.innerHTML = one_row_header;
+    } else {
+      tableRef.innerHTML = two_row_header;
     }
-    path.onMouseLeave = function (event) {
-        path.fillColor = 'white';
-        canvas.style.cursor = "default";
-    }
-    path.onClick = function (event) {
-        history.back();
-    }
-    return path
 }
-
-document.addEventListener('readystatechange', (event) => {
-    if (document.readyState === "complete") {
-        ready_to_render = true;
-        paper.install(window);
-        var canvas = document.getElementById('navigate_menu_canvas')
-        paper.setup(canvas);
-        var home = draw_home(canvas);
-        home.position = new Point(20, 20);
-        var back = draw_back_arrow(canvas);
-        back.position = new Point(20, 60);
-    }
-});
 
 function draw_if_page_finished_loading() {
     if (ready_to_render) {
         var Table = document.getElementById("canvas_table");
         Table.innerHTML = "<tbody><tbody>";
+        console.log('rendering ' + pools_to_render.length + 'pools');
         for (var i=0; i<pools_to_render.length; i++) {
-            if (pools_to_render[i].toUpperCase() in pool_json_client_cache) {
-                console.log('rendering from client cache');
-                render_pool_thumbnail(pool_json_client_cache[pools_to_render[i].toUpperCase()]);
-            } else {
-                var data_url = '/data/' + pools_to_render[i].toUpperCase() + '.json';
-                console.log('fetching data from ' + data_url);
-                fetch(data_url)
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (data) {
-                    console.log('data fetch completed for ' + data['ticker']);
-                    pool_json_client_cache[data['ticker'].toUpperCase()] = data;
-                    render_pool_thumbnail(data);
-                })
-                .catch(function (err) {
-                    console.log('error: ' + err);
-                });
+            //console.log('inserting new row - ' + pools_to_render[i]['ticker'].toUpperCase());
+            var canvasCellHTML = '<td><a href="../pools/' + pools_to_render[i]['ticker'].toUpperCase() + '">' + pools_to_render[i]['rank'] + ' - ' + pools_to_render[i]['ticker'].toUpperCase() + '</a></td>'
+            if (is_client_fast_enough) {
+                canvasCellHTML = '<td><a href="../pools/' + pools_to_render[i]['ticker'].toUpperCase() + '"><canvas id="' + pools_to_render[i]['ticker'] + '"></canvas></a></td>'
+            }
+            var tableRef = document.getElementById('canvas_table').getElementsByTagName('tbody')[0];
+            var newRow = tableRef.insertRow(tableRef.rows.length);
+            newRow.innerHTML = canvasCellHTML;
+            if (is_client_fast_enough) {
+                if (pools_to_render[i]['ticker'].toUpperCase() in pool_json_client_cache) {
+                    render_pool_thumbnail(pool_json_client_cache[pools_to_render[i]['ticker'].toUpperCase()]);
+                } else {
+                    var data_url = '/data/' + pools_to_render[i]["ticker"].toUpperCase() + '.json';
+                    fetch(data_url)
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        pool_json_client_cache[data['ticker'].toUpperCase()] = data;
+                        render_pool_thumbnail(data);
+                    })
+                    .catch(function (err) {
+                        console.log('error: ' + err);
+                    });
+                }
             }
         }
     } else {
@@ -213,13 +214,9 @@ function draw_if_page_finished_loading() {
 }
 
 function render_pool_thumbnail(data) {
-    var canvasCellHTML = '<td><a href="../pools/' + data['ticker'] + '"><canvas id="' + data['ticker'] + '" resize></canvas></a></td>'
-    var tableRef = document.getElementById('canvas_table').getElementsByTagName('tbody')[0];
-    var newRow = tableRef.insertRow(tableRef.rows.length);
-    newRow.innerHTML = canvasCellHTML;
     paper.install(window);
     var canvas = document.getElementById(data['ticker'])
-    canvas.width = window.innerWidth - 50
+    canvas.width = window.innerWidth * 0.6
     paper.setup(canvas);
     chart = new StakePoolPerformanceChart(canvas, paper, data, document, true);
     chart.draw(false, false);
@@ -233,7 +230,7 @@ function toggle_expandable_details() {
     expandable_details_visibility = false;
     div.style.display = 'none';
     div.style.visibility = 'hidden';
-    button.innerHTML = "<center><i class=\"arrow down\"></i><span class=\"clickable_text\"> expand for more details </span><i class=\"arrow down\"></center>";
+    button.innerHTML = "<center><i class=\"arrow down\"></i><span class=\"clickable_text\"> click here to see ranking methodology </span><i class=\"arrow down\"></center>";
   } else {
     expandable_details_visibility = true;
     div.style.display = 'block';
@@ -243,17 +240,8 @@ function toggle_expandable_details() {
 }
 </script>
 <center>
-<table style="width: 100%; border: none;">
-  <tr style="height: 100px;">
-    <td style="width: 100px;">
-      <canvas style="height: 130px;" id="navigate_menu_canvas"></canvas>
-    </td>
-    <td style="width: auto;">
-      <h1><center>{{ranking['pretty_name']}}</center></h1>
-      <h2><center>{{ranking['summary']}}</center></h2>
-    </td>
-    <td style="width: 100px;">&nbsp;</td>
-  </tr>
+<table id="header_table" style="width: 100%; border: none;">
+  <tbody><tbody>
 </table>
 </center>
 <div id="expandable_details" style="display: none;">
@@ -285,10 +273,12 @@ function toggle_expandable_details() {
   </center>
 </div>
 <div>
-  <center><div id="clickable_expand_div" onclick="toggle_expandable_details()"><i class="arrow down"></i><span class="clickable_text"> expand for more details </span><i class="arrow down"></i></div></center>
-  <table class="tableClass" id="canvas_table" width="100%" cellpadding="0" cellspacing="0" border="0">
-    <tbody><tbody>
-  </table>
+  <center><div id="clickable_expand_div" onclick="toggle_expandable_details()"><i class="arrow down"></i><span class="clickable_text"> click here to see ranking methodology </span><i class="arrow down"></i></div></center>
+  <center>
+    <table class="tableClass" id="canvas_table" width="60%" cellpadding="0" cellspacing="0" border="0">
+      <tbody><tbody>
+    </table>
+  </center>
 </div>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="icon" href="/static/favicon.svg" sizes="any" type="image/svg+xml" />
 	<script>
 		var data_url = '/data/{{pool_ticker}}.json';
 	</script>
@@ -48,12 +49,25 @@
 			setTimeout(draw_if_data_finished_loading, 100);
 		}
 
-		document.addEventListener('scroll', function(event) {
-			console.log('scroll, scroll, scroll...');
+		const debounce = (func, delay) => {
+			let debounceTimer
+			return function() {
+				const context = this
+				const args = arguments
+				clearTimeout(debounceTimer)
+				console.log('debounced');
+				debounceTimer = setTimeout(() => func.apply(context, args), delay)
+			}
+		}
+
+        var debounced_scroll = debounce(function(event) {
 			if (first_drawing_complete) {
+				console.log('scroll, scroll, scroll...');
 				chart.drawLegend(document.documentElement.scrollLeft, (paper.view.size.height / 2) + 30, global_data['highest_lifetime_luck'], global_data['lowest_lifetime_luck'], global_data['current_lifetime_luck'], global_data["ticker"]);
 			}
-		});
+		}, 500);
+
+		document.addEventListener('scroll', debounced_scroll);
 
 		window.addEventListener("resize", (event) => {
 			console.log('resize, resize, resize...');

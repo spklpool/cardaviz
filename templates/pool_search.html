@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="icon" href="/static/favicon.svg" sizes="any" type="image/svg+xml" />
 <style>
   <style>
     html,
@@ -25,7 +26,7 @@
     .tableClass {
       margin: 10px;
       height: 100%;
-      width: 100%;
+      width: 60%;
       border: 2px solid;
       border-collapse: collapse;
       border-spacing: 0;
@@ -145,13 +146,13 @@ const debounce = (func, delay) => {
 }
 
 function render_pool_thumbnail(data) {
-    var canvasCellHTML = '<td><a href="pools/' + data['ticker'] + '"><canvas id="' + data['ticker'] + '" resize></canvas></a></td>'
+    var canvasCellHTML = '<td><a href="pools/' + data['ticker'] + '"><canvas id="' + data['ticker'] + '"></canvas></a></td>'
     var tableRef = document.getElementById('canvas_table').getElementsByTagName('tbody')[0];
     var newRow = tableRef.insertRow(tableRef.rows.length);
     newRow.innerHTML = canvasCellHTML;
     paper.install(window);
     var canvas = document.getElementById(data['ticker'])
-    canvas.width = window.innerWidth - 50
+    canvas.width = window.innerWidth * 0.6
     paper.setup(canvas);
     chart = new StakePoolPerformanceChart(canvas, paper, data, document, true);
     chart.draw(false, false);
@@ -301,9 +302,11 @@ function draw_cardaviz_logo() {
   <center><h4>No matches.  Try something else.</h4></center>
 </div>
 
-<table class="tableClass" id="canvas_table" width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tbody><tbody>
-</table>
+<center>
+  <table class="tableClass" id="canvas_table" width="60%" cellpadding="0" cellspacing="0" border="0">
+    <tbody><tbody>
+  </table>
+</center>
 
 </body>
 </html>

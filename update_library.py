@@ -239,15 +239,15 @@ def recalculate_pool(pool_json):
     pool_json['max_negative_diff'] = round(max_negative_cumulative_diff, 2)
     pool_json['max_cumulative_diff'] = round(max_cumulative_diff, 2)
     pool_json['cumulative_diff'] = round(cumulative_diff, 2)
-    pool_json['cumulative_expected_blocks'] = round(cumulative_expected_blocks, 2)
-    pool_json['cumulative_actual_blocks'] = round(cumulative_actual_blocks, 2)
-    pool_json['max_actual_blocks'] = round(max_actual_blocks, 2)
-    pool_json['max_expected_blocks'] = round(max_expected_blocks, 2)
-    pool_json['max_epoch_blocks'] = round(max_epoch_blocks, 2)
+    pool_json['cumulative_expected_blocks'] = cumulative_expected_blocks
+    pool_json['cumulative_actual_blocks'] = cumulative_actual_blocks
+    pool_json['max_actual_blocks'] = max_actual_blocks
+    pool_json['max_expected_blocks'] = max_expected_blocks
+    pool_json['max_epoch_blocks'] = max_epoch_blocks
     if pool_json['cumulative_expected_blocks'] > 0:
-        pool_json['current_lifetime_luck'] = round((pool_json['cumulative_actual_blocks'] / pool_json['cumulative_expected_blocks']) * 100, 2)
-        pool_json['highest_lifetime_luck'] = round((1 + (pool_json['max_positive_diff'] / pool_json['cumulative_expected_blocks'])) * 100, 2)
-        pool_json['lowest_lifetime_luck'] = round((1 - (pool_json['max_negative_diff'] / pool_json['cumulative_expected_blocks'])) * 100, 2)
+        pool_json['current_lifetime_luck'] = (pool_json['cumulative_actual_blocks'] / pool_json['cumulative_expected_blocks']) * 100
+        pool_json['highest_lifetime_luck'] = (1 + (pool_json['max_positive_diff'] / pool_json['cumulative_expected_blocks'])) * 100
+        pool_json['lowest_lifetime_luck'] = (1 - (pool_json['max_negative_diff'] / pool_json['cumulative_expected_blocks'])) * 100
     else:
         pool_json['current_lifetime_luck'] = round(0, 2)
         pool_json['highest_lifetime_luck'] = round(0, 2)

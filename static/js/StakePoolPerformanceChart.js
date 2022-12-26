@@ -8,7 +8,7 @@ class StakePoolPerformanceChart {
     drawing_legend = true;
     document = null;
     legend_initialized = false;
-    background_color = 'black'
+    background_color = '#101010'
     separator_line_color = '#282828';
     current_epoch_color = '#282828';
     actual_block_color = '#D3D3D3';
@@ -52,7 +52,6 @@ class StakePoolPerformanceChart {
         this.data = data;
         this.document = document;
         if (thumbnail_mode) {
-            console.log('thumbnail mode: true');
             this.watermark_enabled = false;
             this.drawing_epoch_numbers = false;
             this.drawing_ticker = true;
@@ -60,7 +59,6 @@ class StakePoolPerformanceChart {
             this.epochWidth = this.paper.view.size.width / this.data['epochs'].length
             this.stroke_width = 1;
         } else {
-            console.log('thumbnail mode: false');
             this.epochWidth = 30;
             this.watermark_enabled = false;
             this.stroke_width = 5;
@@ -72,9 +70,6 @@ class StakePoolPerformanceChart {
         }
         this.block_height = (this.paper.view.size.height / 2) / (this.data.max_epoch_blocks + 1);
         this.blockWidth = this.epochWidth - this.block_to_epoch_width_margin;
-        console.log('constructing chart [' + this.paper.view.size.width + ',' + this.paper.view.size.height + ']')
-        console.log('epochWidth: ' + this.epochWidth);
-        console.log('epochs: ' + this.data['epochs'].length);
     }
 
     setupPaper() {
@@ -123,7 +118,7 @@ class StakePoolPerformanceChart {
         path.closed = true;
         path.smooth({ type: 'catmull-rom', factor: 0.6 });
         path.fillColor = 'white';
-        path.scale(0.3);
+        path.scale(0.3 * this.paper.view.pixelRatio);
         var localcanvas = this.canvas;
         path.onMouseEnter = function (event) {
             path.fillColor = '#A9A9A9';
@@ -134,7 +129,7 @@ class StakePoolPerformanceChart {
             localcanvas.style.cursor = "default";
         }
         path.onClick = function (event) {
-            window.location.href = 'http://cardaviz.spklpool.com';
+            window.location.href = 'https://cardaviz.app';
         }
         return path
     }
@@ -152,7 +147,7 @@ class StakePoolPerformanceChart {
         path.closed = true;
         path.smooth({ type: 'catmull-rom', factor: 0.6 });
         path.fillColor = 'white'
-        path.scale(0.3);
+        path.scale(0.3 * this.paper.view.pixelRatio);
         var localcanvas = this.canvas;
         path.onMouseEnter = function (event) {
             path.fillColor = '#A9A9A9';
@@ -224,17 +219,19 @@ class StakePoolPerformanceChart {
                 }
             }
         }
-        for (var epoch = 0; epoch < number_of_epochs; epoch ++) {
-            var line_x = this.epoch_offset + (this.epochWidth * epoch);
-            this.draw_line(line_x, 0, line_x, height, this.separator_line_color, 2);
-            if (epoch == (number_of_epochs - 1)) {
-                var extra_line_x = this.epoch_offset + (this.epochWidth * (epoch + 1));
-                this.draw_line(extra_line_x, 0, extra_line_x, height, this.separator_line_color, 2);
-                this.draw_solid_rectangle(line_x, 1, this.epochWidth, height, this.current_epoch_color, 0);
+        if (this.drawing_legend) {
+            for (var epoch = 0; epoch < number_of_epochs; epoch ++) {
+                var line_x = this.epoch_offset + (this.epochWidth * epoch);
+                this.draw_line(line_x, 0, line_x, height, this.separator_line_color, 2);
+                if (epoch == (number_of_epochs - 1)) {
+                    var extra_line_x = this.epoch_offset + (this.epochWidth * (epoch + 1));
+                    this.draw_line(extra_line_x, 0, extra_line_x, height, this.separator_line_color, 2);
+                    this.draw_solid_rectangle(line_x, 1, this.epochWidth, height, this.current_epoch_color, 0);
+                }
             }
-        }
-        for (var current_height = this.paper.view.size.height / 2; current_height > 0; current_height -= this.block_height) {
-            this.draw_line(this.epoch_offset, current_height, this.epoch_offset + this.canvas_required_width, current_height, this.separator_line_color, 2);
+            for (var current_height = this.paper.view.size.height / 2; current_height > 0; current_height -= this.block_height) {
+                this.draw_line(this.epoch_offset, current_height, this.epoch_offset + this.canvas_required_width, current_height, this.separator_line_color, 2);
+            }
         }
     }
 
@@ -268,14 +265,16 @@ class StakePoolPerformanceChart {
 
             var epochX = this.epoch_offset + (epoch * this.epochWidth);
 
-            if (this.drawing_epoch_numbers) {
-                this.draw_text(epochX + this.epoch_text_offset, this.paper.view.size.height - this.epoch_text_vertical_offset, this.data["epochs"][epoch].epoch, 310, 16, 'white');
+            if (this.drawing_legend) {
+                if (this.drawing_epoch_numbers) {
+                    this.draw_text(epochX + this.epoch_text_offset, this.paper.view.size.height - this.epoch_text_vertical_offset, this.data["epochs"][epoch].epoch, 310, 16, 'white');
+                }
+                // blocks - actual and expected
+                for (var epochBlock = 0; epochBlock < epochBlockCount; epochBlock++) {
+                    this.draw_solid_rectangle(epochX + block_offset, middle_y - ((epochBlock + 1) * blockHeight), this.blockWidth, blockHeight, this.actual_block_color, this.blockRounding)
+                }
+                this.draw_hollow_rectangle(epochX + block_offset, middle_y - (epochBlockExpected * blockHeight), this.blockWidth, epochBlockExpected * blockHeight, this.expected_block_color, this.blockRounding);
             }
-            // blocks - actual and expected
-            for (var epochBlock = 0; epochBlock < epochBlockCount; epochBlock++) {
-                this.draw_solid_rectangle(epochX + block_offset, middle_y - ((epochBlock + 1) * blockHeight), this.blockWidth, blockHeight, this.actual_block_color, this.blockRounding)
-            }
-            this.draw_hollow_rectangle(epochX + block_offset, middle_y - (epochBlockExpected * blockHeight), this.blockWidth, epochBlockExpected * blockHeight, this.expected_block_color, this.blockRounding);
 
             if (epoch < this.data["epochs"].length - 1) {
                 // performance diff lines
@@ -338,7 +337,6 @@ class StakePoolPerformanceChart {
     // all objects are originally drawn at 0,0 and then repositioned to where they should be
     // this is to make them fall in the same position later when we reposition them again when scrolling
     drawLegend(legend_x, legend_y, highest_lifetime_luck, lowest_lifetime_luck, current_lifetime_luck, ticker) {
-        console.log('drawing legend [' + legend_x + ',' + legend_y + ']');
         if (!this.legend_initialized) {
             this.legend_path = this.draw_translucent_rectangle(this.legend_width, this.legend_height, '#D3D3D3', 'black', 0.9, 20);
             this.ticker_text = this.draw_text(0, 0, "ticker: " + ticker, 0, 18, '#D3D3D3');
@@ -367,8 +365,8 @@ class StakePoolPerformanceChart {
         this.legend_actual_path.position = new Point(legend_x + 40.5, legend_y + 85);
         this.legend_green_path.position = new Point(legend_x + 40, legend_y + 110);
         this.legend_red_path.position = new Point(legend_x + 40, legend_y + 120);
-        this.legend_home.position = new Point(legend_x + (this.legend_home.bounds.width / 2) + 28, 48.5);
-        this.legend_back_arrow.position = new Point(legend_x + (this.legend_back_arrow.bounds.width / 2) + 33, 88.5);
+        this.legend_home.position = new Point(legend_x + (this.legend_home.bounds.width / 2) + 28, 48.5 * this.paper.view.pixelRatio);
+        this.legend_back_arrow.position = new Point(this.legend_home.position.x, this.legend_home.position.y + (this.legend_home.bounds.height / 2) + (20 * this.paper.view.pixelRatio));
 
         if (this.legend_cumulative_path == null) {
             this.legend_cumulative_path = new this.paper.Path();
@@ -388,9 +386,7 @@ class StakePoolPerformanceChart {
     }
 
     draw(drawLegend, resize_enabled) {
-        console.log('drawing chart [' + this.paper.view.size.width + ',' + this.paper.view.size.height + ']')
         if (this.document && this.canvas && resize_enabled) {
-            console.log('setting up canvas');
             if (this.canvas_required_width > this.document.documentElement.clientWidth) {
                 this.document.body.style.width = this.canvas_required_width + this.right_axis_legend_width + 'px';
                 this.document.documentElement.scrollLeft = this.canvas_required_width - this.document.documentElement.clientWidth + this.right_axis_legend_width;
@@ -420,10 +416,10 @@ class StakePoolPerformanceChart {
             epochs_text.position = new Point((gap * 4) + (epochs_text.bounds.width / 2), 50);
             var luck_text = this.draw_text(0, 0, '💪 ' + this.data['current_lifetime_luck'].toFixed(2) + '%', 0, 18, 'white');
             luck_text.position = new Point((gap * 4) + (luck_text.bounds.width / 2), 75);
-            //var luck_text2 = this.draw_text(0, 0, 'diff ' + this.data['cumulative_diff'].toFixed(2), 0, 18, 'white');
-            //luck_text2.position = new Point((gap * 4) + (luck_text2.bounds.width / 2), 100);
-            //var luck_text3 = this.draw_text(0, 0, 'stake ' + (this.data['epochs'][this.data['epochs'].length - 1]['pool_stake'] / 1000000000).toFixed(2) + 'k', 0, 18, 'white');
-            //luck_text3.position = new Point((gap * 4) + (luck_text3.bounds.width / 2), 125);
+            var luck_text2 = this.draw_text(0, 0, 'diff ' + this.data['cumulative_diff'].toFixed(2), 0, 18, 'white');
+            luck_text2.position = new Point((gap * 4) + (luck_text2.bounds.width / 2), 100);
+            var luck_text3 = this.draw_text(0, 0, 'stake ' + (this.data['epochs'][this.data['epochs'].length - 1]['pool_stake'] / 1000000000).toFixed(2) + 'k', 0, 18, 'white');
+            luck_text3.position = new Point((gap * 4) + (luck_text3.bounds.width / 2), 125);
         }
     }
 }

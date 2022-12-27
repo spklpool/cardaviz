@@ -54,16 +54,19 @@
 				const context = this
 				const args = arguments
 				clearTimeout(debounceTimer)
+				console.log('debounced');
 				debounceTimer = setTimeout(() => func.apply(context, args), delay)
 			}
 		}
 
-		document.addEventListener('scroll', debounce(function(event) {
-			console.log('scroll, scroll, scroll...');
+        var debounced_scroll = debounce(function(event) {
 			if (first_drawing_complete) {
+				console.log('scroll, scroll, scroll...');
 				chart.drawLegend(document.documentElement.scrollLeft, (paper.view.size.height / 2) + 30, global_data['highest_lifetime_luck'], global_data['lowest_lifetime_luck'], global_data['current_lifetime_luck'], global_data["ticker"]);
 			}
-		}), 300);
+		}, 500);
+
+		document.addEventListener('scroll', debounced_scroll);
 
 		window.addEventListener("resize", (event) => {
 			console.log('resize, resize, resize...');

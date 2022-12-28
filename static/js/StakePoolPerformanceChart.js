@@ -366,7 +366,7 @@ class StakePoolPerformanceChart {
         this.legend_green_path.position = new Point(legend_x + 40, legend_y + 110);
         this.legend_red_path.position = new Point(legend_x + 40, legend_y + 120);
         this.legend_home.position = new Point(legend_x + (this.legend_home.bounds.width / 2) + 28, 48.5 * this.paper.view.pixelRatio);
-        this.legend_back_arrow.position = new Point(legend_x + (this.legend_back_arrow.bounds.width / 2) + 30 * this.paper.view.pixelRatio, this.legend_home.position.y + (this.legend_home.bounds.height / 2) + (20 * this.paper.view.pixelRatio));
+        this.legend_back_arrow.position = new Point(this.legend_home.position + ((this.legend_home.bounds.width - this.legend_back_arrow.bounds.width) / 2), this.legend_home.position.y + (this.legend_home.bounds.height / 2) + (20 * this.paper.view.pixelRatio));
 
         if (this.legend_cumulative_path == null) {
             this.legend_cumulative_path = new this.paper.Path();

@@ -97,10 +97,6 @@ pools_to_render.push(pool_entry);
 var ready_to_render = false;
 var pool_json_client_cache = {};
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 window.addEventListener("resize", (event) => {
     console.log('resize');
     if (ready_to_render) {
@@ -111,11 +107,7 @@ window.addEventListener("resize", (event) => {
 window.addEventListener("pageshow", () => {
     console.log('pageshow');
     if (ready_to_render) {
-<<<<<<< Updated upstream
         //draw_if_page_finished_loading();
-=======
-//        draw_if_page_finished_loading();
->>>>>>> Stashed changes
     }
 });
 
@@ -131,13 +123,10 @@ document.addEventListener('readystatechange', (event) => {
         home.position = new Point(20, 20);
         var back = draw_back_arrow(canvas);
         back.position = new Point(20, 60);
-<<<<<<< Updated upstream
         var end = performance.now();
         var timeTaken = end - start;
         is_client_fast_enough = (timeTaken < 10)
         console.log('time to draw navigation menu: ' + timeTaken);
-=======
->>>>>>> Stashed changes
         draw_if_page_finished_loading();
     }
 });
@@ -180,13 +169,10 @@ function draw_if_page_finished_loading() {
 }
 
 function render_pool_thumbnail(data) {
-<<<<<<< Updated upstream
-=======
     var canvasCellHTML = '<td><a href="../pools/' + data['ticker'] + '"><canvas id="' + data['ticker'] + '"></canvas></a></td>'
     var tableRef = document.getElementById('canvas_table').getElementsByTagName('tbody')[0];
     var newRow = tableRef.insertRow(tableRef.rows.length);
     newRow.innerHTML = canvasCellHTML;
->>>>>>> Stashed changes
     paper.install(window);
     var canvas = document.getElementById(data['ticker'])
     canvas.width = window.innerWidth - 50

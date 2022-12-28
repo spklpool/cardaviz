@@ -120,12 +120,12 @@ document.addEventListener('readystatechange', (event) => {
         var canvas = document.getElementById('navigate_menu_canvas')
         paper.setup(canvas);
         var home = draw_home(canvas);
-        home.position = new Point(20, 20);
+        home.position = new Point(20 * this.paper.view.pixelRatio, 20 * this.paper.view.pixelRatio);
         var back = draw_back_arrow(canvas);
-        back.position = new Point(20, 60);
+        back.position = new Point(20 * this.paper.view.pixelRatio, home.position.height + (20 * this.paper.view.pixelRatio));
         var end = performance.now();
         var timeTaken = end - start;
-        is_client_fast_enough = (timeTaken < 10)
+        is_client_fast_enough = (timeTaken < 30)
         console.log('time to draw navigation menu: ' + timeTaken);
         draw_if_page_finished_loading();
     }

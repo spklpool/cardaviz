@@ -8,7 +8,7 @@ class StakePoolPerformanceChart {
     drawing_legend = true;
     document = null;
     legend_initialized = false;
-    background_color = 'black'
+    background_color = '#101010'
     separator_line_color = '#282828';
     current_epoch_color = '#282828';
     actual_block_color = '#D3D3D3';
@@ -118,7 +118,7 @@ class StakePoolPerformanceChart {
         path.closed = true;
         path.smooth({ type: 'catmull-rom', factor: 0.6 });
         path.fillColor = 'white';
-        path.scale(0.3);
+        path.scale(0.3 * this.paper.view.pixelRatio);
         var localcanvas = this.canvas;
         path.onMouseEnter = function (event) {
             path.fillColor = '#A9A9A9';
@@ -147,7 +147,7 @@ class StakePoolPerformanceChart {
         path.closed = true;
         path.smooth({ type: 'catmull-rom', factor: 0.6 });
         path.fillColor = 'white'
-        path.scale(0.3);
+        path.scale(0.3 * this.paper.view.pixelRatio);
         var localcanvas = this.canvas;
         path.onMouseEnter = function (event) {
             path.fillColor = '#A9A9A9';
@@ -365,8 +365,8 @@ class StakePoolPerformanceChart {
         this.legend_actual_path.position = new Point(legend_x + 40.5, legend_y + 85);
         this.legend_green_path.position = new Point(legend_x + 40, legend_y + 110);
         this.legend_red_path.position = new Point(legend_x + 40, legend_y + 120);
-        this.legend_home.position = new Point(legend_x + (this.legend_home.bounds.width / 2) + 28, 48.5);
-        this.legend_back_arrow.position = new Point(legend_x + (this.legend_back_arrow.bounds.width / 2) + 33, 88.5);
+        this.legend_home.position = new Point(legend_x + (this.legend_home.bounds.width / 2) + 28, 48.5 * this.paper.view.pixelRatio);
+        this.legend_back_arrow.position = new Point(legend_x + (this.legend_back_arrow.bounds.width / 2) + 33, (48.5 * this.paper.view.pixelRatio) + this.legend_home.bounds.height + (20 * this.paper.view.pixelRatio));
 
         if (this.legend_cumulative_path == null) {
             this.legend_cumulative_path = new this.paper.Path();
@@ -416,10 +416,10 @@ class StakePoolPerformanceChart {
             epochs_text.position = new Point((gap * 4) + (epochs_text.bounds.width / 2), 50);
             var luck_text = this.draw_text(0, 0, '💪 ' + this.data['current_lifetime_luck'].toFixed(2) + '%', 0, 18, 'white');
             luck_text.position = new Point((gap * 4) + (luck_text.bounds.width / 2), 75);
-            //var luck_text2 = this.draw_text(0, 0, 'diff ' + this.data['cumulative_diff'].toFixed(2), 0, 18, 'white');
-            //luck_text2.position = new Point((gap * 4) + (luck_text2.bounds.width / 2), 100);
-            //var luck_text3 = this.draw_text(0, 0, 'stake ' + (this.data['epochs'][this.data['epochs'].length - 1]['pool_stake'] / 1000000000).toFixed(2) + 'k', 0, 18, 'white');
-            //luck_text3.position = new Point((gap * 4) + (luck_text3.bounds.width / 2), 125);
+            var luck_text2 = this.draw_text(0, 0, 'diff ' + this.data['cumulative_diff'].toFixed(2), 0, 18, 'white');
+            luck_text2.position = new Point((gap * 4) + (luck_text2.bounds.width / 2), 100);
+            var luck_text3 = this.draw_text(0, 0, 'stake ' + (this.data['epochs'][this.data['epochs'].length - 1]['pool_stake'] / 1000000000).toFixed(2) + 'k', 0, 18, 'white');
+            luck_text3.position = new Point((gap * 4) + (luck_text3.bounds.width / 2), 125);
         }
     }
 }

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 function draw_cardaviz_logo(paper) {
     var p1 = new paper.Point(150, 210);
     var p2 = new paper.Point(120, 230);
@@ -14,12 +15,30 @@ function draw_cardaviz_logo(paper) {
     var background = new paper.Path.Rectangle(new paper.Point(0, 0), new paper.Size(300, 300));
     background.strokeColor = '#404040';
     background.fillColor = '#404040';
+=======
+function draw_cardaviz_logo() {
+    var p1 = new Point(150, 210);
+    var p2 = new Point(120, 230);
+    var p3 = new Point(80, 230);
+    var p4 = new Point(50, 200);
+    var p5 = new Point(50, 90);
+    var p6 = new Point(65, 70);
+    var p7 = new Point(75, 63);
+    var p8 = new Point(107, 55);
+    var p9 = new Point(135, 65);
+    var p10 = new Point(220, 230);
+    var p11 = new Point(290, 50);
+>>>>>>> Stashed changes
 
     var path = new paper.Path(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
 
     path.smooth({ type: 'catmull-rom', factor: 0.8 });
     path.strokeColor = 'yellow';
+<<<<<<< Updated upstream
     path.strokeWidth = 25;
+=======
+    path.strokeWidth = 18;
+>>>>>>> Stashed changes
     return path;
 }
 
@@ -42,7 +61,7 @@ function draw_home(canvas) {
     path.closed = true;
     path.smooth({ type: 'catmull-rom', factor: 0.6 });
     path.fillColor = 'white';
-    path.scale(0.3);
+    path.scale(0.3 * this.paper.view.pixelRatio);
     path.onMouseEnter = function (event) {
         path.fillColor = '#A9A9A9';
         canvas.style.cursor = "pointer";
@@ -70,7 +89,7 @@ function draw_back_arrow(canvas) {
     path.closed = true;
     path.smooth({ type: 'catmull-rom', factor: 0.6 });
     path.fillColor = 'white'
-    path.scale(0.3);
+    path.scale(0.3 * this.paper.view.pixelRatio);
     path.onMouseEnter = function (event) {
         path.fillColor = '#A9A9A9';
         canvas.style.cursor = "pointer";
@@ -86,5 +105,5 @@ function draw_back_arrow(canvas) {
 }
 
 if (typeof module !== 'undefined') {
-    module.exports = { draw_back_arrow, draw_home }
+    module.exports = { draw_back_arrow, draw_home, draw_cardaviz_logo }
 }

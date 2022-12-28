@@ -275,6 +275,7 @@ class StakePoolPerformanceChart {
                 }
                 this.draw_hollow_rectangle(epochX + block_offset, middle_y - (epochBlockExpected * blockHeight), this.blockWidth, epochBlockExpected * blockHeight, this.expected_block_color, this.blockRounding);
             }
+
             if (epoch < this.data["epochs"].length - 1) {
                 // performance diff lines
                 var diffPath = new this.paper.Path();

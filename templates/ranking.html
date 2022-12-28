@@ -122,7 +122,7 @@ document.addEventListener('readystatechange', (event) => {
         var home = draw_home(canvas);
         home.position = new Point(20 * this.paper.view.pixelRatio, 20 * this.paper.view.pixelRatio);
         var back = draw_back_arrow(canvas);
-        back.position = new Point(20 * this.paper.view.pixelRatio, home.position.height + (20 * this.paper.view.pixelRatio));
+        back.position = new Point(20 * this.paper.view.pixelRatio, home.position.y + (home.bounds.height / 2) + (20 * this.paper.view.pixelRatio));
         var end = performance.now();
         var timeTaken = end - start;
         is_client_fast_enough = (timeTaken < 30)
@@ -202,7 +202,7 @@ function toggle_expandable_details() {
 <table style="width: 100%; border: none;">
   <tr style="height: 100px;">
     <td style="width: 100px;">
-      <canvas style="height: 130px;" id="navigate_menu_canvas"></canvas>
+      <canvas style="height: 200px;" id="navigate_menu_canvas"></canvas>
     </td>
     <td style="width: auto;">
     </td>

@@ -1,3 +1,28 @@
+function draw_cardaviz_logo(paper) {
+    var p1 = new paper.Point(150, 210);
+    var p2 = new paper.Point(120, 230);
+    var p3 = new paper.Point(80, 230);
+    var p4 = new paper.Point(50, 200);
+    var p5 = new paper.Point(50, 90);
+    var p6 = new paper.Point(65, 70);
+    var p7 = new paper.Point(75, 63);
+    var p8 = new paper.Point(107, 55);
+    var p9 = new paper.Point(135, 65);
+    var p10 = new paper.Point(220, 230);
+    var p11 = new paper.Point(290, 50);
+
+    var background = new paper.Path.Rectangle(new paper.Point(0, 0), new paper.Size(300, 300));
+    background.strokeColor = '#404040';
+    background.fillColor = '#404040';
+
+    var path = new paper.Path(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+
+    path.smooth({ type: 'catmull-rom', factor: 0.8 });
+    path.strokeColor = 'yellow';
+    path.strokeWidth = 25;
+    return path;
+}
+
 function draw_home(canvas) {
     var p1 = new Point(20, 200);
     var p2 = new Point(53.333, 200);

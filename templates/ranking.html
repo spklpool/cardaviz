@@ -100,7 +100,9 @@ var pool_json_client_cache = {};
 window.addEventListener("resize", (event) => {
     console.log('resize');
     if (ready_to_render) {
-        //draw_if_page_finished_loading();
+        build_header_table();
+        draw_navigation();
+        draw_if_page_finished_loading();
     }
 });
 
@@ -114,29 +116,72 @@ window.addEventListener("pageshow", () => {
 document.addEventListener('readystatechange', (event) => {
     if (document.readyState === "complete") {
         console.log('readystatechange - ' + document.readyState);
-        var start = performance.now();
         ready_to_render = true;
-        paper.install(window);
-        var canvas = document.getElementById('navigate_menu_canvas')
-        paper.setup(canvas);
-        var home = draw_home(canvas);
-        home.position = new Point(20 * this.paper.view.pixelRatio, 20 * this.paper.view.pixelRatio);
-        var back = draw_back_arrow(canvas);
-        back.position = new Point(home.position.x, home.position.y + (home.bounds.height / 2) + (20 * this.paper.view.pixelRatio));
-        var end = performance.now();
-        var timeTaken = end - start;
-        is_client_fast_enough = (timeTaken < 30)
-        console.log('time to draw navigation menu: ' + timeTaken);
+        build_header_table();
+        draw_navigation();
         draw_if_page_finished_loading();
     }
 });
+
+function draw_navigation() {
+    var start = performance.now();
+    paper.install(window);
+    var canvas = document.getElementById('navigate_menu_canvas')
+    paper.setup(canvas);
+    var home = draw_home(canvas);
+    home.position = new Point(20 * this.paper.view.pixelRatio, 20 * this.paper.view.pixelRatio);
+    var back = draw_back_arrow(canvas);
+    back.position = new Point(home.position.x, home.position.y + (home.bounds.height / 2) + (20 * this.paper.view.pixelRatio));
+    var end = performance.now();
+    var timeTaken = end - start;
+    is_client_fast_enough = (timeTaken < 30)
+    console.log('time to draw navigation menu: ' + timeTaken);
+}
+
+function build_header_table() {
+    const one_row_header = `
+  <tr style="height: 100px;">
+    <td style="width: 100px;">
+      <canvas style="height: 200px;" id="navigate_menu_canvas"></canvas>
+    </td>
+    <td style="width: auto;">
+      <h1><center>{{ranking['pretty_name']}}</center></h1>
+      <h2><center>{{ranking['summary']}}</center></h2>
+    </td>
+    <td style="width: 100px;">&nbsp;</td>
+  </tr>
+    `
+    const two_row_header = `
+  <tr style="height: 80px;">
+    <td style="width: 100px;">
+      <canvas style="height: 80px;" id="navigate_menu_canvas"></canvas>
+    </td>
+    <td style="width: auto;">
+    </td>
+    <td style="width: 100px;">&nbsp;</td>
+  </tr>
+  <tr style="height: 100px;">
+    <td colspan="3" style="width: auto;">
+      <h1><center>{{ranking['pretty_name']}}</center></h1>
+      <h2><center>{{ranking['summary']}}</center></h2>
+    </td>
+  </tr>
+    `
+    var tableRef = document.getElementById('header_table').getElementsByTagName('tbody')[0];
+    if (window.innerWidth > 600) {
+      tableRef.innerHTML = one_row_header;
+    } else {
+      tableRef.innerHTML = two_row_header;
+    }
+}
 
 function draw_if_page_finished_loading() {
     if (ready_to_render) {
         var Table = document.getElementById("canvas_table");
         Table.innerHTML = "<tbody><tbody>";
+        console.log('rendering ' + pools_to_render.length + 'pools');
         for (var i=0; i<pools_to_render.length; i++) {
-            console.log('inserting new row - ' + pools_to_render[i]['ticker'].toUpperCase());
+            //console.log('inserting new row - ' + pools_to_render[i]['ticker'].toUpperCase());
             var canvasCellHTML = '<td><a href="../pools/' + pools_to_render[i]['ticker'].toUpperCase() + '">' + pools_to_render[i]['rank'] + ' - ' + pools_to_render[i]['ticker'].toUpperCase() + '</a></td>'
             if (is_client_fast_enough) {
                 canvasCellHTML = '<td><a href="../pools/' + pools_to_render[i]['ticker'].toUpperCase() + '"><canvas id="' + pools_to_render[i]['ticker'] + '"></canvas></a></td>'
@@ -169,13 +214,9 @@ function draw_if_page_finished_loading() {
 }
 
 function render_pool_thumbnail(data) {
-    var canvasCellHTML = '<td><a href="../pools/' + data['ticker'] + '"><canvas id="' + data['ticker'] + '"></canvas></a></td>'
-    var tableRef = document.getElementById('canvas_table').getElementsByTagName('tbody')[0];
-    var newRow = tableRef.insertRow(tableRef.rows.length);
-    newRow.innerHTML = canvasCellHTML;
     paper.install(window);
     var canvas = document.getElementById(data['ticker'])
-    canvas.width = window.innerWidth - 50
+    canvas.width = window.innerWidth * 0.6
     paper.setup(canvas);
     chart = new StakePoolPerformanceChart(canvas, paper, data, document, true);
     chart.draw(false, false);
@@ -199,21 +240,8 @@ function toggle_expandable_details() {
 }
 </script>
 <center>
-<table style="width: 100%; border: none;">
-  <tr style="height: 100px;">
-    <td style="width: 100px;">
-      <canvas style="height: 200px;" id="navigate_menu_canvas"></canvas>
-    </td>
-    <td style="width: auto;">
-    </td>
-    <td style="width: 100px;">&nbsp;</td>
-  </tr>
-  <tr style="height: 100px;">
-    <td colspan="3" style="width: auto;">
-      <h1><center>{{ranking['pretty_name']}}</center></h1>
-      <h2><center>{{ranking['summary']}}</center></h2>
-    </td>
-  </tr>
+<table id="header_table" style="width: 100%; border: none;">
+  <tbody><tbody>
 </table>
 </center>
 <div id="expandable_details" style="display: none;">
@@ -246,9 +274,11 @@ function toggle_expandable_details() {
 </div>
 <div>
   <center><div id="clickable_expand_div" onclick="toggle_expandable_details()"><i class="arrow down"></i><span class="clickable_text"> click here to see ranking methodology </span><i class="arrow down"></i></div></center>
-  <table class="tableClass" id="canvas_table" width="60%" cellpadding="0" cellspacing="0" border="0">
-    <tbody><tbody>
-  </table>
+  <center>
+    <table class="tableClass" id="canvas_table" width="60%" cellpadding="0" cellspacing="0" border="0">
+      <tbody><tbody>
+    </table>
+  </center>
 </div>
 </body>
 </html>

@@ -1,0 +1,12 @@
+[Unit]
+Description=Data update for Cardaviz
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/cardaviz
+ExecStart=/cardaviz/venv/bin/python -u /cardaviz/update.py
+
+[Install]
+WantedBy=multi-user.target

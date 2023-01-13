@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve Cardaviz
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/cardaviz
+Environment="/cardaviz/venv/bin"
+ExecStart=/cardaviz/venv/bin/gunicorn --workers 1 --bind unix:/var/www/cardaviz.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target

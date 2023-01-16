@@ -8,6 +8,7 @@ from thread_safe_objects import ThreadSafeDictOfPoolJson
 from ranking_evaluator import evaluate_ranking
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from background_thread import BackgroundThreadFactory
 
 
 class DataFileChangedHandler(FileSystemEventHandler):
@@ -24,12 +25,30 @@ class DataFileChangedHandler(FileSystemEventHandler):
 
 logging.basicConfig(level=logging.INFO, force=True)
 
-app = Flask(__name__)
-
 map_of_pool_jsons = ThreadSafeDictOfPoolJson()
 
+app = Flask(__name__)
+update_thread = BackgroundThreadFactory.create('update')
+
 directory = 'data/'
-#directory = '/var/www/html/data/'
+# directory = '/var/www/html/data/'
+
+update_thread.start()
+original_handler = signal.getsignal(signal.SIGINT)
+
+
+def sigint_handler(signum, frame):
+    update_thread.stop()
+    if update_thread.is_alive():
+        update_thread.join()
+    original_handler(signum, frame)
+
+
+try:
+    signal.signal(signal.SIGINT, sigint_handler)
+except ValueError as e:
+    logging.error(f'{e}. Continuing execution...')
+
 logging.info('starting initial load of datadirectory [' + directory + '] for changes')
 all_files = os.listdir(directory)
 for filename in all_files:
@@ -47,9 +66,11 @@ logging.info('directory monitoring started')
 
 original_handler = signal.getsignal(signal.SIGINT)
 
+
 def sigint_handler(signum, frame):
     logging.info("interrupt received")
     original_handler(signum, frame)
+
 
 try:
     signal.signal(signal.SIGINT, sigint_handler)
@@ -61,17 +82,21 @@ except ValueError as e:
 def sparkler():
     return render_template('sparkler.html')
 
+
 @app.route("/thumbnail/<pool_ticker>")
 def thumbnail(pool_ticker):
     return render_template('thumbnail.html', pool_ticker=pool_ticker.upper())
+
 
 @app.route("/pools/<pool_ticker>")
 def get_pool(pool_ticker):
     return render_template('perfchart.html', pool_ticker=pool_ticker.upper())
 
+
 @app.route("/")
 def get_pool_search():
     return render_template('pool_search.html')
+
 
 @app.route("/ranking/<ranking_name>")
 def get_ranking(ranking_name):
@@ -80,8 +105,7 @@ def get_ranking(ranking_name):
         print(pool['ticker'])
     return render_template('ranking.html', ranking=ranking)
 
+
 @app.route("/data/<pool_ticker>.json")
 def get_pool_epochs(pool_ticker):
     return map_of_pool_jsons[pool_ticker.upper()]
-
-

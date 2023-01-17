@@ -6,7 +6,7 @@ After=network.target
 User=root
 Group=root
 WorkingDirectory=/cardaviz
-ExecStart=/usr/bin/vault agent -config /home/ubuntu/agent-config.hcl
+ExecStart=/usr/bin/vault agent -config /cardaviz/etc/agent-config.hcl
 
 [Install]
 WantedBy=multi-user.target

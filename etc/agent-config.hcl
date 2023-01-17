@@ -14,7 +14,7 @@ auto_auth {
   sink "file" {
     config = {
       path = "/home/ubuntu/vault_token"
-      mode = 0644
+      mode = 0640
     }
   }
 }

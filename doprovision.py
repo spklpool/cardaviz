@@ -32,6 +32,8 @@ systemctl enable cardaviz_vault.service
 cp /cardaviz/etc/nginx.conf /etc/nginx/nginx.conf
 cp /cardaviz/etc/cardaviz.app /etc/nginx/sites-available/cardaviz.app
 ln -s /etc/nginx/sites-available/cardaviz.app /etc/nginx/sites-enabled/cardaviz.app
+cp /cardaviz/etc/options-ssl-nginx.conf /etc/letsencrypt/options-ssl-nginx.conf
+cp /cardaviz/etc/ssl-dhparams.pem /etc/letsencrypt/ssl-dhparams.pem
 """,
                                 region='nyc3',
                                 ssh_keys=['f9:c9:f9:d0:15:8a:5d:68:02:f5:9d:26:66:ff:a9:7f'],

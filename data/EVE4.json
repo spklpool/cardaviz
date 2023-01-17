@@ -3,16 +3,16 @@
     "epochs": [
         {
             "epoch": 252,
-            "expected": 0.00,
+            "expected": 0.0,
             "actual": 0,
             "pool_stake": 1515571644,
             "total_stake": 22675992136326807,
             "decentralisation_coefficient": 0.08,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 0.00,
+            "cumulative_expected_blocks": 0,
             "cumulative_actual_blocks": 0,
-            "epoch_diff": 0.00,
-            "epoch_cumulative_diff": 0.00
+            "epoch_diff": 0,
+            "epoch_cumulative_diff": 0
         },
         {
             "epoch": 253,
@@ -22,10 +22,10 @@
             "total_stake": 22807568628326603,
             "decentralisation_coefficient": 0.06,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 0.01,
+            "cumulative_expected_blocks": 0.0100000,
             "cumulative_actual_blocks": 0,
-            "epoch_diff": -0.01,
-            "epoch_cumulative_diff": -0.01
+            "epoch_diff": -0.0100000,
+            "epoch_cumulative_diff": -0.0100000
         },
         {
             "epoch": 254,
@@ -35,10 +35,10 @@
             "total_stake": 22929461287895664,
             "decentralisation_coefficient": 0.04,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 0.07,
+            "cumulative_expected_blocks": 0.0700000,
             "cumulative_actual_blocks": 0,
-            "epoch_diff": -0.06,
-            "epoch_cumulative_diff": -0.07
+            "epoch_diff": -0.0600000,
+            "epoch_cumulative_diff": -0.0700000
         },
         {
             "epoch": 255,
@@ -48,10 +48,10 @@
             "total_stake": 22753958467474959,
             "decentralisation_coefficient": 0.02,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 0.14,
+            "cumulative_expected_blocks": 0.140000,
             "cumulative_actual_blocks": 0,
-            "epoch_diff": -0.07,
-            "epoch_cumulative_diff": -0.14
+            "epoch_diff": -0.0700000,
+            "epoch_cumulative_diff": -0.140000
         },
         {
             "epoch": 256,
@@ -61,10 +61,10 @@
             "total_stake": 22488877070796904,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 0.27,
+            "cumulative_expected_blocks": 0.270000,
             "cumulative_actual_blocks": 0,
-            "epoch_diff": -0.13,
-            "epoch_cumulative_diff": -0.27
+            "epoch_diff": -0.130000,
+            "epoch_cumulative_diff": -0.270000
         },
         {
             "epoch": 257,
@@ -74,10 +74,10 @@
             "total_stake": 22670949084364797,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 0.48,
+            "cumulative_expected_blocks": 0.480000,
             "cumulative_actual_blocks": 0,
-            "epoch_diff": -0.21,
-            "epoch_cumulative_diff": -0.48
+            "epoch_diff": -0.210000,
+            "epoch_cumulative_diff": -0.480000
         },
         {
             "epoch": 258,
@@ -87,10 +87,10 @@
             "total_stake": 22760955541834538,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 1.72,
+            "cumulative_expected_blocks": 1.72000,
             "cumulative_actual_blocks": 3,
-            "epoch_diff": 1.76,
-            "epoch_cumulative_diff": 1.28
+            "epoch_diff": 1.76000,
+            "epoch_cumulative_diff": 1.28000
         },
         {
             "epoch": 259,
@@ -100,10 +100,10 @@
             "total_stake": 22791959380285638,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 12.06,
+            "cumulative_expected_blocks": 12.0600,
             "cumulative_actual_blocks": 9,
-            "epoch_diff": -4.34,
-            "epoch_cumulative_diff": -3.06
+            "epoch_diff": -4.34000,
+            "epoch_cumulative_diff": -3.06000
         },
         {
             "epoch": 260,
@@ -113,10 +113,10 @@
             "total_stake": 22796009141134396,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 30.43,
+            "cumulative_expected_blocks": 30.4300,
             "cumulative_actual_blocks": 24,
-            "epoch_diff": -3.37,
-            "epoch_cumulative_diff": -6.43
+            "epoch_diff": -3.37000,
+            "epoch_cumulative_diff": -6.43000
         },
         {
             "epoch": 261,
@@ -126,10 +126,10 @@
             "total_stake": 22716225550169723,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 57.69,
+            "cumulative_expected_blocks": 57.6900,
             "cumulative_actual_blocks": 49,
-            "epoch_diff": -2.26,
-            "epoch_cumulative_diff": -8.69
+            "epoch_diff": -2.26000,
+            "epoch_cumulative_diff": -8.69000
         },
         {
             "epoch": 262,
@@ -139,23 +139,23 @@
             "total_stake": 22755688720340301,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 85.32,
+            "cumulative_expected_blocks": 85.3200,
             "cumulative_actual_blocks": 79,
-            "epoch_diff": 2.37,
-            "epoch_cumulative_diff": -6.32
+            "epoch_diff": 2.37000,
+            "epoch_cumulative_diff": -6.32000
         },
         {
             "epoch": 263,
-            "expected": 32.20,
+            "expected": 32.2,
             "actual": 28,
             "pool_stake": 33875833326849,
             "total_stake": 22726917708873365,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 117.52,
+            "cumulative_expected_blocks": 117.520,
             "cumulative_actual_blocks": 107,
-            "epoch_diff": -4.20,
-            "epoch_cumulative_diff": -10.52
+            "epoch_diff": -4.20000,
+            "epoch_cumulative_diff": -10.5200
         },
         {
             "epoch": 264,
@@ -165,10 +165,10 @@
             "total_stake": 22955953661896809,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 155.60,
+            "cumulative_expected_blocks": 155.600,
             "cumulative_actual_blocks": 149,
-            "epoch_diff": 3.92,
-            "epoch_cumulative_diff": -6.60
+            "epoch_diff": 3.92000,
+            "epoch_cumulative_diff": -6.60000
         },
         {
             "epoch": 265,
@@ -178,10 +178,10 @@
             "total_stake": 23026399223411517,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 198.13,
+            "cumulative_expected_blocks": 198.130,
             "cumulative_actual_blocks": 200,
-            "epoch_diff": 8.47,
-            "epoch_cumulative_diff": 1.87
+            "epoch_diff": 8.47000,
+            "epoch_cumulative_diff": 1.87000
         },
         {
             "epoch": 266,
@@ -191,10 +191,10 @@
             "total_stake": 23083634214117687,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 240.36,
+            "cumulative_expected_blocks": 240.360,
             "cumulative_actual_blocks": 237,
-            "epoch_diff": -5.23,
-            "epoch_cumulative_diff": -3.36
+            "epoch_diff": -5.23000,
+            "epoch_cumulative_diff": -3.36000
         },
         {
             "epoch": 267,
@@ -204,10 +204,10 @@
             "total_stake": 23021654510419471,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 281.89,
+            "cumulative_expected_blocks": 281.890,
             "cumulative_actual_blocks": 274,
-            "epoch_diff": -4.53,
-            "epoch_cumulative_diff": -7.89
+            "epoch_diff": -4.53000,
+            "epoch_cumulative_diff": -7.89000
         },
         {
             "epoch": 268,
@@ -217,10 +217,10 @@
             "total_stake": 22843314790026736,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 323.33,
+            "cumulative_expected_blocks": 323.330,
             "cumulative_actual_blocks": 320,
-            "epoch_diff": 4.56,
-            "epoch_cumulative_diff": -3.33
+            "epoch_diff": 4.56000,
+            "epoch_cumulative_diff": -3.33000
         },
         {
             "epoch": 269,
@@ -230,10 +230,10 @@
             "total_stake": 22786770256604950,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 368.60,
+            "cumulative_expected_blocks": 368.600,
             "cumulative_actual_blocks": 365,
-            "epoch_diff": -0.27,
-            "epoch_cumulative_diff": -3.60
+            "epoch_diff": -0.270000,
+            "epoch_cumulative_diff": -3.60000
         },
         {
             "epoch": 270,
@@ -243,10 +243,10 @@
             "total_stake": 22893778548073522,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 413.15,
+            "cumulative_expected_blocks": 413.150,
             "cumulative_actual_blocks": 413,
-            "epoch_diff": 3.45,
-            "epoch_cumulative_diff": -0.15
+            "epoch_diff": 3.45000,
+            "epoch_cumulative_diff": -0.15000
         },
         {
             "epoch": 271,
@@ -256,10 +256,10 @@
             "total_stake": 22970909569111347,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 456.56,
+            "cumulative_expected_blocks": 456.560,
             "cumulative_actual_blocks": 465,
-            "epoch_diff": 8.59,
-            "epoch_cumulative_diff": 8.44
+            "epoch_diff": 8.59000,
+            "epoch_cumulative_diff": 8.44000
         },
         {
             "epoch": 272,
@@ -269,10 +269,10 @@
             "total_stake": 23020000415780615,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 499.61,
+            "cumulative_expected_blocks": 499.610,
             "cumulative_actual_blocks": 510,
-            "epoch_diff": 1.95,
-            "epoch_cumulative_diff": 10.39
+            "epoch_diff": 1.95000,
+            "epoch_cumulative_diff": 10.3900
         },
         {
             "epoch": 273,
@@ -282,10 +282,10 @@
             "total_stake": 23075664958746578,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 542.67,
+            "cumulative_expected_blocks": 542.670,
             "cumulative_actual_blocks": 549,
-            "epoch_diff": -4.06,
-            "epoch_cumulative_diff": 6.33
+            "epoch_diff": -4.06000,
+            "epoch_cumulative_diff": 6.33000
         },
         {
             "epoch": 274,
@@ -295,10 +295,10 @@
             "total_stake": 23094302016775953,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 585.66,
+            "cumulative_expected_blocks": 585.660,
             "cumulative_actual_blocks": 590,
-            "epoch_diff": -1.99,
-            "epoch_cumulative_diff": 4.34
+            "epoch_diff": -1.99000,
+            "epoch_cumulative_diff": 4.34000
         },
         {
             "epoch": 275,
@@ -308,10 +308,10 @@
             "total_stake": 23006172979540278,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 628.43,
+            "cumulative_expected_blocks": 628.430,
             "cumulative_actual_blocks": 629,
-            "epoch_diff": -3.77,
-            "epoch_cumulative_diff": 0.57
+            "epoch_diff": -3.77000,
+            "epoch_cumulative_diff": 0.57000
         },
         {
             "epoch": 276,
@@ -321,23 +321,23 @@
             "total_stake": 23092420021153886,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 671.06,
+            "cumulative_expected_blocks": 671.060,
             "cumulative_actual_blocks": 680,
-            "epoch_diff": 8.37,
-            "epoch_cumulative_diff": 8.94
+            "epoch_diff": 8.37000,
+            "epoch_cumulative_diff": 8.94000
         },
         {
             "epoch": 277,
-            "expected": 42.40,
+            "expected": 42.4,
             "actual": 36,
             "pool_stake": 45536825770716,
             "total_stake": 23196615273348567,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 713.46,
+            "cumulative_expected_blocks": 713.460,
             "cumulative_actual_blocks": 716,
-            "epoch_diff": -6.40,
-            "epoch_cumulative_diff": 2.54
+            "epoch_diff": -6.40000,
+            "epoch_cumulative_diff": 2.54000
         },
         {
             "epoch": 278,
@@ -347,10 +347,10 @@
             "total_stake": 23196379717228316,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 758.55,
+            "cumulative_expected_blocks": 758.550,
             "cumulative_actual_blocks": 758,
-            "epoch_diff": -3.09,
-            "epoch_cumulative_diff": -0.55
+            "epoch_diff": -3.09000,
+            "epoch_cumulative_diff": -0.55000
         },
         {
             "epoch": 279,
@@ -360,10 +360,10 @@
             "total_stake": 23210733595257321,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 804.99,
+            "cumulative_expected_blocks": 804.990,
             "cumulative_actual_blocks": 806,
-            "epoch_diff": 1.56,
-            "epoch_cumulative_diff": 1.01
+            "epoch_diff": 1.56000,
+            "epoch_cumulative_diff": 1.01000
         },
         {
             "epoch": 280,
@@ -373,10 +373,10 @@
             "total_stake": 23230827525683631,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 851.66,
+            "cumulative_expected_blocks": 851.660,
             "cumulative_actual_blocks": 840,
-            "epoch_diff": -12.67,
-            "epoch_cumulative_diff": -11.66
+            "epoch_diff": -12.6700,
+            "epoch_cumulative_diff": -11.6600
         },
         {
             "epoch": 281,
@@ -386,10 +386,10 @@
             "total_stake": 23254470605645231,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 898.23,
+            "cumulative_expected_blocks": 898.230,
             "cumulative_actual_blocks": 885,
-            "epoch_diff": -1.57,
-            "epoch_cumulative_diff": -13.23
+            "epoch_diff": -1.57000,
+            "epoch_cumulative_diff": -13.2300
         },
         {
             "epoch": 282,
@@ -399,10 +399,10 @@
             "total_stake": 23244660857359753,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 944.58,
+            "cumulative_expected_blocks": 944.580,
             "cumulative_actual_blocks": 923,
-            "epoch_diff": -8.35,
-            "epoch_cumulative_diff": -21.58
+            "epoch_diff": -8.35000,
+            "epoch_cumulative_diff": -21.5800
         },
         {
             "epoch": 283,
@@ -412,10 +412,10 @@
             "total_stake": 23277148789435534,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
-            "cumulative_expected_blocks": 990.82,
+            "cumulative_expected_blocks": 990.820,
             "cumulative_actual_blocks": 961,
-            "epoch_diff": -8.24,
-            "epoch_cumulative_diff": -29.82
+            "epoch_diff": -8.24000,
+            "epoch_cumulative_diff": -29.8200
         },
         {
             "epoch": 284,
@@ -427,8 +427,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1037.06,
             "cumulative_actual_blocks": 1006,
-            "epoch_diff": -1.24,
-            "epoch_cumulative_diff": -31.06
+            "epoch_diff": -1.24000,
+            "epoch_cumulative_diff": -31.0600
         },
         {
             "epoch": 285,
@@ -440,8 +440,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1083.22,
             "cumulative_actual_blocks": 1059,
-            "epoch_diff": 6.84,
-            "epoch_cumulative_diff": -24.22
+            "epoch_diff": 6.84000,
+            "epoch_cumulative_diff": -24.2200
         },
         {
             "epoch": 286,
@@ -453,8 +453,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1129.24,
             "cumulative_actual_blocks": 1106,
-            "epoch_diff": 0.98,
-            "epoch_cumulative_diff": -23.24
+            "epoch_diff": 0.980000,
+            "epoch_cumulative_diff": -23.2400
         },
         {
             "epoch": 287,
@@ -466,8 +466,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1174.50,
             "cumulative_actual_blocks": 1153,
-            "epoch_diff": 1.74,
-            "epoch_cumulative_diff": -21.50
+            "epoch_diff": 1.74000,
+            "epoch_cumulative_diff": -21.5000
         },
         {
             "epoch": 288,
@@ -479,8 +479,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1218.82,
             "cumulative_actual_blocks": 1189,
-            "epoch_diff": -8.32,
-            "epoch_cumulative_diff": -29.82
+            "epoch_diff": -8.32000,
+            "epoch_cumulative_diff": -29.8200
         },
         {
             "epoch": 289,
@@ -492,8 +492,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1262.55,
             "cumulative_actual_blocks": 1229,
-            "epoch_diff": -3.73,
-            "epoch_cumulative_diff": -33.55
+            "epoch_diff": -3.73000,
+            "epoch_cumulative_diff": -33.5500
         },
         {
             "epoch": 290,
@@ -505,8 +505,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1305.43,
             "cumulative_actual_blocks": 1281,
-            "epoch_diff": 9.12,
-            "epoch_cumulative_diff": -24.43
+            "epoch_diff": 9.12000,
+            "epoch_cumulative_diff": -24.4300
         },
         {
             "epoch": 291,
@@ -518,8 +518,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1347.57,
             "cumulative_actual_blocks": 1313,
-            "epoch_diff": -10.14,
-            "epoch_cumulative_diff": -34.57
+            "epoch_diff": -10.1400,
+            "epoch_cumulative_diff": -34.5700
         },
         {
             "epoch": 292,
@@ -531,8 +531,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1391.44,
             "cumulative_actual_blocks": 1350,
-            "epoch_diff": -6.87,
-            "epoch_cumulative_diff": -41.44
+            "epoch_diff": -6.87000,
+            "epoch_cumulative_diff": -41.4400
         },
         {
             "epoch": 293,
@@ -544,12 +544,12 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1437.80,
             "cumulative_actual_blocks": 1396,
-            "epoch_diff": -0.36,
-            "epoch_cumulative_diff": -41.80
+            "epoch_diff": -0.360000,
+            "epoch_cumulative_diff": -41.8000
         },
         {
             "epoch": 294,
-            "expected": 45.90,
+            "expected": 45.9,
             "actual": 41,
             "pool_stake": 49693152526210,
             "total_stake": 23382668673546580,
@@ -557,8 +557,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1483.70,
             "cumulative_actual_blocks": 1437,
-            "epoch_diff": -4.90,
-            "epoch_cumulative_diff": -46.70
+            "epoch_diff": -4.90000,
+            "epoch_cumulative_diff": -46.7000
         },
         {
             "epoch": 295,
@@ -570,12 +570,12 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1529.18,
             "cumulative_actual_blocks": 1482,
-            "epoch_diff": -0.48,
-            "epoch_cumulative_diff": -47.18
+            "epoch_diff": -0.480000,
+            "epoch_cumulative_diff": -47.1800
         },
         {
             "epoch": 296,
-            "expected": 45.10,
+            "expected": 45.1,
             "actual": 35,
             "pool_stake": 48959225831128,
             "total_stake": 23445774697795279,
@@ -583,12 +583,12 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1574.28,
             "cumulative_actual_blocks": 1517,
-            "epoch_diff": -10.10,
-            "epoch_cumulative_diff": -57.28
+            "epoch_diff": -10.1000,
+            "epoch_cumulative_diff": -57.2800
         },
         {
             "epoch": 297,
-            "expected": 44.80,
+            "expected": 44.8,
             "actual": 45,
             "pool_stake": 48696249310340,
             "total_stake": 23478023193513019,
@@ -596,8 +596,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1619.08,
             "cumulative_actual_blocks": 1562,
-            "epoch_diff": 0.20,
-            "epoch_cumulative_diff": -57.08
+            "epoch_diff": 0.200000,
+            "epoch_cumulative_diff": -57.0800
         },
         {
             "epoch": 298,
@@ -609,8 +609,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1663.25,
             "cumulative_actual_blocks": 1606,
-            "epoch_diff": -0.17,
-            "epoch_cumulative_diff": -57.25
+            "epoch_diff": -0.170000,
+            "epoch_cumulative_diff": -57.2500
         },
         {
             "epoch": 299,
@@ -622,8 +622,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1706.79,
             "cumulative_actual_blocks": 1652,
-            "epoch_diff": 2.46,
-            "epoch_cumulative_diff": -54.79
+            "epoch_diff": 2.46000,
+            "epoch_cumulative_diff": -54.7900
         },
         {
             "epoch": 300,
@@ -635,8 +635,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1749.00,
             "cumulative_actual_blocks": 1683,
-            "epoch_diff": -11.21,
-            "epoch_cumulative_diff": -66.00
+            "epoch_diff": -11.2100,
+            "epoch_cumulative_diff": -66.0000
         },
         {
             "epoch": 301,
@@ -648,8 +648,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1791.43,
             "cumulative_actual_blocks": 1730,
-            "epoch_diff": 4.57,
-            "epoch_cumulative_diff": -61.43
+            "epoch_diff": 4.57000,
+            "epoch_cumulative_diff": -61.4300
         },
         {
             "epoch": 302,
@@ -661,8 +661,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1836.57,
             "cumulative_actual_blocks": 1769,
-            "epoch_diff": -6.14,
-            "epoch_cumulative_diff": -67.57
+            "epoch_diff": -6.14000,
+            "epoch_cumulative_diff": -67.5700
         },
         {
             "epoch": 303,
@@ -674,8 +674,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1881.81,
             "cumulative_actual_blocks": 1812,
-            "epoch_diff": -2.24,
-            "epoch_cumulative_diff": -69.81
+            "epoch_diff": -2.24000,
+            "epoch_cumulative_diff": -69.8100
         },
         {
             "epoch": 304,
@@ -687,8 +687,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1926.78,
             "cumulative_actual_blocks": 1846,
-            "epoch_diff": -10.97,
-            "epoch_cumulative_diff": -80.78
+            "epoch_diff": -10.9700,
+            "epoch_cumulative_diff": -80.7800
         },
         {
             "epoch": 305,
@@ -700,8 +700,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1970.40,
             "cumulative_actual_blocks": 1887,
-            "epoch_diff": -2.62,
-            "epoch_cumulative_diff": -83.40
+            "epoch_diff": -2.62000,
+            "epoch_cumulative_diff": -83.4000
         },
         {
             "epoch": 306,
@@ -713,8 +713,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2013.06,
             "cumulative_actual_blocks": 1920,
-            "epoch_diff": -9.66,
-            "epoch_cumulative_diff": -93.06
+            "epoch_diff": -9.66000,
+            "epoch_cumulative_diff": -93.0600
         },
         {
             "epoch": 307,
@@ -726,8 +726,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2055.18,
             "cumulative_actual_blocks": 1962,
-            "epoch_diff": -0.12,
-            "epoch_cumulative_diff": -93.18
+            "epoch_diff": -0.120000,
+            "epoch_cumulative_diff": -93.1800
         },
         {
             "epoch": 308,
@@ -739,8 +739,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2096.83,
             "cumulative_actual_blocks": 2004,
-            "epoch_diff": 0.35,
-            "epoch_cumulative_diff": -92.83
+            "epoch_diff": 0.350000,
+            "epoch_cumulative_diff": -92.8300
         },
         {
             "epoch": 309,
@@ -752,8 +752,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2138.47,
             "cumulative_actual_blocks": 2043,
-            "epoch_diff": -2.64,
-            "epoch_cumulative_diff": -95.47
+            "epoch_diff": -2.64000,
+            "epoch_cumulative_diff": -95.4700
         },
         {
             "epoch": 310,
@@ -765,8 +765,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2179.85,
             "cumulative_actual_blocks": 2089,
-            "epoch_diff": 4.62,
-            "epoch_cumulative_diff": -90.85
+            "epoch_diff": 4.62000,
+            "epoch_cumulative_diff": -90.8500
         },
         {
             "epoch": 311,
@@ -778,8 +778,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2221.03,
             "cumulative_actual_blocks": 2113,
-            "epoch_diff": -17.18,
-            "epoch_cumulative_diff": -108.03
+            "epoch_diff": -17.1800,
+            "epoch_cumulative_diff": -108.030
         },
         {
             "epoch": 312,
@@ -791,8 +791,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2262.06,
             "cumulative_actual_blocks": 2147,
-            "epoch_diff": -7.03,
-            "epoch_cumulative_diff": -115.06
+            "epoch_diff": -7.03000,
+            "epoch_cumulative_diff": -115.060
         },
         {
             "epoch": 313,
@@ -804,8 +804,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2302.98,
             "cumulative_actual_blocks": 2178,
-            "epoch_diff": -9.92,
-            "epoch_cumulative_diff": -124.98
+            "epoch_diff": -9.92000,
+            "epoch_cumulative_diff": -124.980
         },
         {
             "epoch": 314,
@@ -817,8 +817,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2343.72,
             "cumulative_actual_blocks": 2210,
-            "epoch_diff": -8.74,
-            "epoch_cumulative_diff": -133.72
+            "epoch_diff": -8.74000,
+            "epoch_cumulative_diff": -133.720
         },
         {
             "epoch": 315,
@@ -830,8 +830,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2383.98,
             "cumulative_actual_blocks": 2245,
-            "epoch_diff": -5.26,
-            "epoch_cumulative_diff": -138.98
+            "epoch_diff": -5.26000,
+            "epoch_cumulative_diff": -138.980
         },
         {
             "epoch": 316,
@@ -843,8 +843,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2424.01,
             "cumulative_actual_blocks": 2283,
-            "epoch_diff": -2.03,
-            "epoch_cumulative_diff": -141.01
+            "epoch_diff": -2.03000,
+            "epoch_cumulative_diff": -141.010
         },
         {
             "epoch": 317,
@@ -856,8 +856,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2462.93,
             "cumulative_actual_blocks": 2315,
-            "epoch_diff": -6.92,
-            "epoch_cumulative_diff": -147.93
+            "epoch_diff": -6.92000,
+            "epoch_cumulative_diff": -147.930
         },
         {
             "epoch": 318,
@@ -869,8 +869,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2501.14,
             "cumulative_actual_blocks": 2356,
-            "epoch_diff": 2.79,
-            "epoch_cumulative_diff": -145.14
+            "epoch_diff": 2.79000,
+            "epoch_cumulative_diff": -145.140
         },
         {
             "epoch": 319,
@@ -882,8 +882,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2539.61,
             "cumulative_actual_blocks": 2398,
-            "epoch_diff": 3.53,
-            "epoch_cumulative_diff": -141.61
+            "epoch_diff": 3.53000,
+            "epoch_cumulative_diff": -141.610
         },
         {
             "epoch": 320,
@@ -895,8 +895,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2578.12,
             "cumulative_actual_blocks": 2440,
-            "epoch_diff": 3.49,
-            "epoch_cumulative_diff": -138.12
+            "epoch_diff": 3.49000,
+            "epoch_cumulative_diff": -138.120
         },
         {
             "epoch": 321,
@@ -908,8 +908,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2616.47,
             "cumulative_actual_blocks": 2472,
-            "epoch_diff": -6.35,
-            "epoch_cumulative_diff": -144.47
+            "epoch_diff": -6.35000,
+            "epoch_cumulative_diff": -144.470
         },
         {
             "epoch": 322,
@@ -921,12 +921,12 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2654.50,
             "cumulative_actual_blocks": 2508,
-            "epoch_diff": -2.03,
-            "epoch_cumulative_diff": -146.50
+            "epoch_diff": -2.03000,
+            "epoch_cumulative_diff": -146.500
         },
         {
             "epoch": 323,
-            "expected": 38.00,
+            "expected": 38.0,
             "actual": 37,
             "pool_stake": 41323555640815,
             "total_stake": 23487356050894396,
@@ -934,8 +934,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2692.50,
             "cumulative_actual_blocks": 2545,
-            "epoch_diff": -1.00,
-            "epoch_cumulative_diff": -147.50
+            "epoch_diff": -1,
+            "epoch_cumulative_diff": -147.500
         },
         {
             "epoch": 324,
@@ -947,8 +947,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2730.51,
             "cumulative_actual_blocks": 2576,
-            "epoch_diff": -7.01,
-            "epoch_cumulative_diff": -154.51
+            "epoch_diff": -7.01000,
+            "epoch_cumulative_diff": -154.510
         },
         {
             "epoch": 325,
@@ -960,8 +960,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2768.54,
             "cumulative_actual_blocks": 2607,
-            "epoch_diff": -7.03,
-            "epoch_cumulative_diff": -161.54
+            "epoch_diff": -7.03000,
+            "epoch_cumulative_diff": -161.540
         },
         {
             "epoch": 326,
@@ -973,12 +973,12 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2806.75,
             "cumulative_actual_blocks": 2640,
-            "epoch_diff": -5.21,
-            "epoch_cumulative_diff": -166.75
+            "epoch_diff": -5.21000,
+            "epoch_cumulative_diff": -166.750
         },
         {
             "epoch": 327,
-            "expected": 38.10,
+            "expected": 38.1,
             "actual": 32,
             "pool_stake": 41030083229575,
             "total_stake": 23258804977034064,
@@ -986,8 +986,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2844.85,
             "cumulative_actual_blocks": 2672,
-            "epoch_diff": -6.10,
-            "epoch_cumulative_diff": -172.85
+            "epoch_diff": -6.10000,
+            "epoch_cumulative_diff": -172.850
         },
         {
             "epoch": 328,
@@ -999,8 +999,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2883.67,
             "cumulative_actual_blocks": 2708,
-            "epoch_diff": -2.82,
-            "epoch_cumulative_diff": -175.67
+            "epoch_diff": -2.82000,
+            "epoch_cumulative_diff": -175.670
         },
         {
             "epoch": 329,
@@ -1012,8 +1012,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2921.13,
             "cumulative_actual_blocks": 2752,
-            "epoch_diff": 6.54,
-            "epoch_cumulative_diff": -169.13
+            "epoch_diff": 6.54000,
+            "epoch_cumulative_diff": -169.130
         },
         {
             "epoch": 330,
@@ -1025,8 +1025,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2959.25,
             "cumulative_actual_blocks": 2785,
-            "epoch_diff": -5.12,
-            "epoch_cumulative_diff": -174.25
+            "epoch_diff": -5.12000,
+            "epoch_cumulative_diff": -174.250
         },
         {
             "epoch": 331,
@@ -1038,8 +1038,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 2996.93,
             "cumulative_actual_blocks": 2816,
-            "epoch_diff": -6.68,
-            "epoch_cumulative_diff": -180.93
+            "epoch_diff": -6.68000,
+            "epoch_cumulative_diff": -180.930
         },
         {
             "epoch": 332,
@@ -1051,8 +1051,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3034.48,
             "cumulative_actual_blocks": 2853,
-            "epoch_diff": -0.55,
-            "epoch_cumulative_diff": -181.48
+            "epoch_diff": -0.550000,
+            "epoch_cumulative_diff": -181.480
         },
         {
             "epoch": 333,
@@ -1064,8 +1064,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3072.03,
             "cumulative_actual_blocks": 2893,
-            "epoch_diff": 2.45,
-            "epoch_cumulative_diff": -179.03
+            "epoch_diff": 2.45000,
+            "epoch_cumulative_diff": -179.030
         },
         {
             "epoch": 334,
@@ -1077,8 +1077,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3109.49,
             "cumulative_actual_blocks": 2934,
-            "epoch_diff": 3.54,
-            "epoch_cumulative_diff": -175.49
+            "epoch_diff": 3.54000,
+            "epoch_cumulative_diff": -175.490
         },
         {
             "epoch": 335,
@@ -1090,8 +1090,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3146.91,
             "cumulative_actual_blocks": 2975,
-            "epoch_diff": 3.58,
-            "epoch_cumulative_diff": -171.91
+            "epoch_diff": 3.58000,
+            "epoch_cumulative_diff": -171.910
         },
         {
             "epoch": 336,
@@ -1103,8 +1103,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3184.26,
             "cumulative_actual_blocks": 3006,
-            "epoch_diff": -6.35,
-            "epoch_cumulative_diff": -178.26
+            "epoch_diff": -6.35000,
+            "epoch_cumulative_diff": -178.260
         },
         {
             "epoch": 337,
@@ -1116,8 +1116,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3221.57,
             "cumulative_actual_blocks": 3048,
-            "epoch_diff": 4.69,
-            "epoch_cumulative_diff": -173.57
+            "epoch_diff": 4.69000,
+            "epoch_cumulative_diff": -173.570
         },
         {
             "epoch": 338,
@@ -1129,8 +1129,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3259.02,
             "cumulative_actual_blocks": 3079,
-            "epoch_diff": -6.45,
-            "epoch_cumulative_diff": -180.02
+            "epoch_diff": -6.45000,
+            "epoch_cumulative_diff": -180.020
         },
         {
             "epoch": 339,
@@ -1142,8 +1142,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3296.25,
             "cumulative_actual_blocks": 3119,
-            "epoch_diff": 2.77,
-            "epoch_cumulative_diff": -177.25
+            "epoch_diff": 2.77000,
+            "epoch_cumulative_diff": -177.250
         },
         {
             "epoch": 340,
@@ -1155,8 +1155,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3333.59,
             "cumulative_actual_blocks": 3151,
-            "epoch_diff": -5.34,
-            "epoch_cumulative_diff": -182.59
+            "epoch_diff": -5.34000,
+            "epoch_cumulative_diff": -182.590
         },
         {
             "epoch": 341,
@@ -1168,8 +1168,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3370.92,
             "cumulative_actual_blocks": 3180,
-            "epoch_diff": -8.33,
-            "epoch_cumulative_diff": -190.92
+            "epoch_diff": -8.33000,
+            "epoch_cumulative_diff": -190.920
         },
         {
             "epoch": 342,
@@ -1181,8 +1181,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3408.13,
             "cumulative_actual_blocks": 3224,
-            "epoch_diff": 6.79,
-            "epoch_cumulative_diff": -184.13
+            "epoch_diff": 6.79000,
+            "epoch_cumulative_diff": -184.130
         },
         {
             "epoch": 343,
@@ -1194,8 +1194,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3445.60,
             "cumulative_actual_blocks": 3262,
-            "epoch_diff": 0.53,
-            "epoch_cumulative_diff": -183.60
+            "epoch_diff": 0.530000,
+            "epoch_cumulative_diff": -183.600
         },
         {
             "epoch": 344,
@@ -1207,8 +1207,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3482.94,
             "cumulative_actual_blocks": 3297,
-            "epoch_diff": -2.34,
-            "epoch_cumulative_diff": -185.94
+            "epoch_diff": -2.34000,
+            "epoch_cumulative_diff": -185.940
         },
         {
             "epoch": 345,
@@ -1220,8 +1220,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3520.08,
             "cumulative_actual_blocks": 3335,
-            "epoch_diff": 0.86,
-            "epoch_cumulative_diff": -185.08
+            "epoch_diff": 0.860000,
+            "epoch_cumulative_diff": -185.080
         },
         {
             "epoch": 346,
@@ -1233,8 +1233,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3557.27,
             "cumulative_actual_blocks": 3374,
-            "epoch_diff": 1.81,
-            "epoch_cumulative_diff": -183.27
+            "epoch_diff": 1.81000,
+            "epoch_cumulative_diff": -183.270
         },
         {
             "epoch": 347,
@@ -1246,8 +1246,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3594.34,
             "cumulative_actual_blocks": 3419,
-            "epoch_diff": 7.93,
-            "epoch_cumulative_diff": -175.34
+            "epoch_diff": 7.93000,
+            "epoch_cumulative_diff": -175.340
         },
         {
             "epoch": 348,
@@ -1259,12 +1259,12 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3631.22,
             "cumulative_actual_blocks": 3454,
-            "epoch_diff": -1.88,
-            "epoch_cumulative_diff": -177.22
+            "epoch_diff": -1.88000,
+            "epoch_cumulative_diff": -177.220
         },
         {
             "epoch": 349,
-            "expected": 37.20,
+            "expected": 37.2,
             "actual": 34,
             "pool_stake": 42080181250621,
             "total_stake": 24435357519567074,
@@ -1272,8 +1272,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3668.42,
             "cumulative_actual_blocks": 3488,
-            "epoch_diff": -3.20,
-            "epoch_cumulative_diff": -180.42
+            "epoch_diff": -3.20000,
+            "epoch_cumulative_diff": -180.420
         },
         {
             "epoch": 350,
@@ -1285,8 +1285,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3705.58,
             "cumulative_actual_blocks": 3524,
-            "epoch_diff": -1.16,
-            "epoch_cumulative_diff": -181.58
+            "epoch_diff": -1.16000,
+            "epoch_cumulative_diff": -181.580
         },
         {
             "epoch": 351,
@@ -1298,8 +1298,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3742.81,
             "cumulative_actual_blocks": 3563,
-            "epoch_diff": 1.77,
-            "epoch_cumulative_diff": -179.81
+            "epoch_diff": 1.77000,
+            "epoch_cumulative_diff": -179.810
         },
         {
             "epoch": 352,
@@ -1311,8 +1311,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3780.07,
             "cumulative_actual_blocks": 3596,
-            "epoch_diff": -4.26,
-            "epoch_cumulative_diff": -184.07
+            "epoch_diff": -4.26000,
+            "epoch_cumulative_diff": -184.070
         },
         {
             "epoch": 353,
@@ -1325,7 +1325,7 @@
             "cumulative_expected_blocks": 3817.32,
             "cumulative_actual_blocks": 3627,
             "epoch_diff": -6.25,
-            "epoch_cumulative_diff": -190.32
+            "epoch_cumulative_diff": -190.320
         },
         {
             "epoch": 354,
@@ -1337,8 +1337,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3854.46,
             "cumulative_actual_blocks": 3668,
-            "epoch_diff": 3.86,
-            "epoch_cumulative_diff": -186.46
+            "epoch_diff": 3.86000,
+            "epoch_cumulative_diff": -186.460
         },
         {
             "epoch": 355,
@@ -1350,8 +1350,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3891.40,
             "cumulative_actual_blocks": 3703,
-            "epoch_diff": -1.94,
-            "epoch_cumulative_diff": -188.40
+            "epoch_diff": -1.94000,
+            "epoch_cumulative_diff": -188.400
         },
         {
             "epoch": 356,
@@ -1363,8 +1363,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3928.38,
             "cumulative_actual_blocks": 3738,
-            "epoch_diff": -1.98,
-            "epoch_cumulative_diff": -190.38
+            "epoch_diff": -1.98000,
+            "epoch_cumulative_diff": -190.380
         },
         {
             "epoch": 357,
@@ -1376,12 +1376,12 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 3965.33,
             "cumulative_actual_blocks": 3773,
-            "epoch_diff": -1.95,
-            "epoch_cumulative_diff": -192.33
+            "epoch_diff": -1.95000,
+            "epoch_cumulative_diff": -192.330
         },
         {
             "epoch": 358,
-            "expected": 36.90,
+            "expected": 36.9,
             "actual": 42,
             "pool_stake": 41947374847763,
             "total_stake": 24552945219532238,
@@ -1389,8 +1389,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4002.23,
             "cumulative_actual_blocks": 3815,
-            "epoch_diff": 5.10,
-            "epoch_cumulative_diff": -187.23
+            "epoch_diff": 5.10000,
+            "epoch_cumulative_diff": -187.230
         },
         {
             "epoch": 359,
@@ -1402,8 +1402,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4039.00,
             "cumulative_actual_blocks": 3851,
-            "epoch_diff": -0.77,
-            "epoch_cumulative_diff": -188.00
+            "epoch_diff": -0.770000,
+            "epoch_cumulative_diff": -188.000
         },
         {
             "epoch": 360,
@@ -1415,8 +1415,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4075.87,
             "cumulative_actual_blocks": 3885,
-            "epoch_diff": -2.87,
-            "epoch_cumulative_diff": -190.87
+            "epoch_diff": -2.87000,
+            "epoch_cumulative_diff": -190.870
         },
         {
             "epoch": 361,
@@ -1428,8 +1428,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4112.60,
             "cumulative_actual_blocks": 3914,
-            "epoch_diff": -7.73,
-            "epoch_cumulative_diff": -198.60
+            "epoch_diff": -7.73000,
+            "epoch_cumulative_diff": -198.600
         },
         {
             "epoch": 362,
@@ -1441,8 +1441,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4149.08,
             "cumulative_actual_blocks": 3959,
-            "epoch_diff": 8.52,
-            "epoch_cumulative_diff": -190.08
+            "epoch_diff": 8.52000,
+            "epoch_cumulative_diff": -190.080
         },
         {
             "epoch": 363,
@@ -1454,8 +1454,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4185.31,
             "cumulative_actual_blocks": 3986,
-            "epoch_diff": -9.23,
-            "epoch_cumulative_diff": -199.31
+            "epoch_diff": -9.23000,
+            "epoch_cumulative_diff": -199.310
         },
         {
             "epoch": 364,
@@ -1467,8 +1467,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4221.14,
             "cumulative_actual_blocks": 4013,
-            "epoch_diff": -8.83,
-            "epoch_cumulative_diff": -208.14
+            "epoch_diff": -8.83000,
+            "epoch_cumulative_diff": -208.140
         },
         {
             "epoch": 365,
@@ -1480,12 +1480,12 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4256.99,
             "cumulative_actual_blocks": 4045,
-            "epoch_diff": -3.85,
-            "epoch_cumulative_diff": -211.99
+            "epoch_diff": -3.85000,
+            "epoch_cumulative_diff": -211.990
         },
         {
             "epoch": 366,
-            "expected": 36.00,
+            "expected": 36.0,
             "actual": 33,
             "pool_stake": 41718638261603,
             "total_stake": 25028585125722443,
@@ -1493,8 +1493,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4292.99,
             "cumulative_actual_blocks": 4078,
-            "epoch_diff": -3.00,
-            "epoch_cumulative_diff": -214.99
+            "epoch_diff": -3,
+            "epoch_cumulative_diff": -214.990
         },
         {
             "epoch": 367,
@@ -1506,8 +1506,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4329.58,
             "cumulative_actual_blocks": 4114,
-            "epoch_diff": -0.59,
-            "epoch_cumulative_diff": -215.58
+            "epoch_diff": -0.590000,
+            "epoch_cumulative_diff": -215.580
         },
         {
             "epoch": 368,
@@ -1519,8 +1519,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4365.71,
             "cumulative_actual_blocks": 4145,
-            "epoch_diff": -5.13,
-            "epoch_cumulative_diff": -220.71
+            "epoch_diff": -5.13000,
+            "epoch_cumulative_diff": -220.710
         },
         {
             "epoch": 369,
@@ -1532,8 +1532,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4402.07,
             "cumulative_actual_blocks": 4171,
-            "epoch_diff": -10.36,
-            "epoch_cumulative_diff": -231.07
+            "epoch_diff": -10.3600,
+            "epoch_cumulative_diff": -231.070
         },
         {
             "epoch": 370,
@@ -1545,8 +1545,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4438.86,
             "cumulative_actual_blocks": 4212,
-            "epoch_diff": 4.21,
-            "epoch_cumulative_diff": -226.86
+            "epoch_diff": 4.21000,
+            "epoch_cumulative_diff": -226.860
         },
         {
             "epoch": 371,
@@ -1558,8 +1558,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4476.33,
             "cumulative_actual_blocks": 4248,
-            "epoch_diff": -1.47,
-            "epoch_cumulative_diff": -228.33
+            "epoch_diff": -1.47000,
+            "epoch_cumulative_diff": -228.330
         },
         {
             "epoch": 372,
@@ -1571,8 +1571,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4514.49,
             "cumulative_actual_blocks": 4285,
-            "epoch_diff": -1.16,
-            "epoch_cumulative_diff": -229.49
+            "epoch_diff": -1.16000,
+            "epoch_cumulative_diff": -229.490
         },
         {
             "epoch": 373,
@@ -1584,8 +1584,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4552.44,
             "cumulative_actual_blocks": 4313,
-            "epoch_diff": -9.95,
-            "epoch_cumulative_diff": -239.44
+            "epoch_diff": -9.95000,
+            "epoch_cumulative_diff": -239.440
         },
         {
             "epoch": 374,
@@ -1597,8 +1597,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4590.29,
             "cumulative_actual_blocks": 4353,
-            "epoch_diff": 2.15,
-            "epoch_cumulative_diff": -237.29
+            "epoch_diff": 2.15000,
+            "epoch_cumulative_diff": -237.290
         },
         {
             "epoch": 375,
@@ -1610,8 +1610,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4628.07,
             "cumulative_actual_blocks": 4385,
-            "epoch_diff": -5.78,
-            "epoch_cumulative_diff": -243.07
+            "epoch_diff": -5.78000,
+            "epoch_cumulative_diff": -243.070
         },
         {
             "epoch": 376,
@@ -1623,12 +1623,12 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4665.84,
             "cumulative_actual_blocks": 4422,
-            "epoch_diff": -0.77,
-            "epoch_cumulative_diff": -243.84
+            "epoch_diff": -0.770000,
+            "epoch_cumulative_diff": -243.840
         },
         {
             "epoch": 377,
-            "expected": 37.80,
+            "expected": 37.8,
             "actual": 49,
             "pool_stake": 44094191731065,
             "total_stake": 25197315592272395,
@@ -1636,8 +1636,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4703.64,
             "cumulative_actual_blocks": 4471,
-            "epoch_diff": 11.20,
-            "epoch_cumulative_diff": -232.64
+            "epoch_diff": 11.2000,
+            "epoch_cumulative_diff": -232.640
         },
         {
             "epoch": 378,
@@ -1649,8 +1649,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4741.48,
             "cumulative_actual_blocks": 4500,
-            "epoch_diff": -8.84,
-            "epoch_cumulative_diff": -241.48
+            "epoch_diff": -8.84000,
+            "epoch_cumulative_diff": -241.480
         },
         {
             "epoch": 379,
@@ -1662,8 +1662,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4779.53,
             "cumulative_actual_blocks": 4532,
-            "epoch_diff": -6.05,
-            "epoch_cumulative_diff": -247.53
+            "epoch_diff": -6.05000,
+            "epoch_cumulative_diff": -247.530
         },
         {
             "epoch": 380,
@@ -1675,8 +1675,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4817.54,
             "cumulative_actual_blocks": 4567,
-            "epoch_diff": -3.01,
-            "epoch_cumulative_diff": -250.54
+            "epoch_diff": -3.01000,
+            "epoch_cumulative_diff": -250.540
         },
         {
             "epoch": 381,
@@ -1688,8 +1688,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4855.42,
             "cumulative_actual_blocks": 4602,
-            "epoch_diff": -2.88,
-            "epoch_cumulative_diff": -253.42
+            "epoch_diff": -2.88000,
+            "epoch_cumulative_diff": -253.420
         },
         {
             "epoch": 382,
@@ -1701,8 +1701,8 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4893.36,
             "cumulative_actual_blocks": 4641,
-            "epoch_diff": 1.06,
-            "epoch_cumulative_diff": -252.36
+            "epoch_diff": 1.06000,
+            "epoch_cumulative_diff": -252.360
         },
         {
             "epoch": 383,
@@ -1714,22 +1714,87 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 4931.28,
             "cumulative_actual_blocks": 4666,
-            "epoch_diff": -12.92,
-            "epoch_cumulative_diff": -265.28
+            "epoch_diff": -12.9200,
+            "epoch_cumulative_diff": -265.280
+        },
+        {
+            "epoch": 384,
+            "expected": 37.91,
+            "actual": 33,
+            "pool_stake": 44511273976320,
+            "total_stake": 25363740356767789,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 4969.19,
+            "cumulative_actual_blocks": 4699,
+            "epoch_diff": -4.91000,
+            "epoch_cumulative_diff": -270.190
+        },
+        {
+            "epoch": 385,
+            "expected": 37.9,
+            "actual": 39,
+            "pool_stake": 44542505854719,
+            "total_stake": 25388654503848140,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 5007.09,
+            "cumulative_actual_blocks": 4738,
+            "epoch_diff": 1.10000,
+            "epoch_cumulative_diff": -269.090
+        },
+        {
+            "epoch": 386,
+            "expected": 38.33,
+            "actual": 38,
+            "pool_stake": 44552946955111,
+            "total_stake": 25107872285168544,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 5045.42,
+            "cumulative_actual_blocks": 4776,
+            "epoch_diff": -0.330000,
+            "epoch_cumulative_diff": -269.420
+        },
+        {
+            "epoch": 387,
+            "expected": 37.62,
+            "actual": 33,
+            "pool_stake": 44271840881469,
+            "total_stake": 25418973672435766,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 5083.04,
+            "cumulative_actual_blocks": 4809,
+            "epoch_diff": -4.62000,
+            "epoch_cumulative_diff": -274.040
+        },
+        {
+            "epoch": 388,
+            "expected": 37.86,
+            "actual": 7,
+            "pool_stake": 44564850013639,
+            "total_stake": 25427056571856294,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 5120.90,
+            "cumulative_actual_blocks": 4816,
+            "epoch_diff": -30.8600,
+            "epoch_cumulative_diff": -304.900
         }
     ],
     "max_epoch_blocks": 53,
-    "latest_epoch_pool_stake": 44291464758585,
-    "latest_epoch_total_stake": 25226159003727233,
+    "latest_epoch_pool_stake": 44564850013639,
+    "latest_epoch_total_stake": 25427056571856294,
     "max_positive_diff": 1.28,
-    "max_negative_diff": 265.28,
-    "max_cumulative_diff": 265.28,
-    "cumulative_diff": -265.28,
-    "cumulative_expected_blocks": 4931.28,
-    "cumulative_actual_blocks": 4666,
+    "max_negative_diff": 304.90,
+    "max_cumulative_diff": 304.90,
+    "cumulative_diff": -304.90,
+    "cumulative_expected_blocks": 5120.90,
+    "cumulative_actual_blocks": 4816,
     "max_actual_blocks": 53,
     "max_expected_blocks": 46.67,
-    "current_lifetime_luck": 94.6205,
-    "highest_lifetime_luck": 100.026,
-    "lowest_lifetime_luck": 94.6205
+    "current_lifetime_luck": 94.0460,
+    "highest_lifetime_luck": 100.025,
+    "lowest_lifetime_luck": 94.0460
 }

@@ -1,12 +1,12 @@
 [Unit]
-Description=Data update for Cardaviz
+Description=Vault agent for Cardaviz
 After=network.target
 
 [Service]
 User=root
 Group=root
 WorkingDirectory=/cardaviz
-ExecStart=/cardaviz/venv/bin/python -u /cardaviz/update.py
+ExecStart=/usr/bin/vault agent -config /home/ubuntu/agent-config.hcl
 
 [Install]
 WantedBy=multi-user.target

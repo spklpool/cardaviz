@@ -26,9 +26,12 @@ chown -R root:www-data /var/www/html/data/
 cp /cardaviz/etc/cardaviz_backend.service /etc/systemd/system/cardaviz_backend.service
 systemctl start cardaviz_backend.service
 systemctl enable cardaviz_backend.service
-cp /cardaviz/etc/cardaviz_update.service /etc/systemd/system/cardaviz_update.service
-systemctl start cardaviz_update.service
-systemctl enable cardaviz_update.service
+cp /cardaviz/etc/cardaviz_vault.service /etc/systemd/system/cardaviz_vault.service
+systemctl start cardaviz_vault.service
+systemctl enable cardaviz_vault.service
+cp /cardaviz/etc/nginx.conf /etc/nginx/nginx.conf
+cp /cardaviz/etc/cardaviz.app /etc/nginx/sites-available/cardaviz.app
+ln -s /etc/nginx/sites-available/cardaviz.app /etc/nginx/sites-enabled/cardaviz.app
 """,
                                 region='nyc3',
                                 ssh_keys=['f9:c9:f9:d0:15:8a:5d:68:02:f5:9d:26:66:ff:a9:7f'],

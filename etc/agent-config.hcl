@@ -19,6 +19,22 @@ auto_auth {
   }
 }
 template {
-  source = "/home/ubuntu/database.ini.tmpl"
+  source = "/cardaviz/etc/database.ini.tmpl"
   destination = "/cardaviz/database.ini"
+}
+template {
+  source = "/cardaviz/etc/cert.pem.tmpl"
+  destination = "/etc/letsencrypt/live/cardaviz.app/cert.pem"
+}
+template {
+  source = "/cardaviz/etc/chain.pem.tmpl"
+  destination = "/etc/letsencrypt/live/cardaviz.app/chain.pem"
+}
+template {
+  source = "/cardaviz/etc/fullchain.pem.tmpl"
+  destination = "/etc/letsencrypt/live/cardaviz.app/fullchain.pem"
+}
+template {
+  source = "/cardaviz/etc/privkey.pem.tmpl"
+  destination = "/etc/letsencrypt/live/cardaviz.app/privkey.pem"
 }

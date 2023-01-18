@@ -247,13 +247,14 @@ def add_all_missing_epochs():
             if pool_ticker in tickers_json:
                 pool_id = tickers_json[pool_ticker]
                 missing_epochs = get_missing_epochs(pool_json)
-                for index in range(0, len(missing_epochs)):
-                    print(missing_epochs[index])
-                    refresh_epoch(pool_json, pool_id, missing_epochs[index])
-                recalculate_pool(pool_json)
-                reorder_pool(pool_json)
-                with open(data_folder + '/' + pool_ticker.upper() + '.json', 'w') as outfile:
-                    json.dump(pool_json, outfile, indent=4, use_decimal=True)
+                if len(missing_epochs) > 0:
+                    for index in range(0, len(missing_epochs)):
+                        print(missing_epochs[index])
+                        refresh_epoch(pool_json, pool_id, missing_epochs[index])
+                    recalculate_pool(pool_json)
+                    reorder_pool(pool_json)
+                    with open(data_folder + '/' + pool_ticker.upper() + '.json', 'w') as outfile:
+                        json.dump(pool_json, outfile, indent=4, use_decimal=True)
     return "done"
 
 def recalculate_pool(pool_json):

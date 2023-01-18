@@ -2314,20 +2314,33 @@
             "cumulative_actual_blocks": 6,
             "epoch_diff": -0.0100000,
             "epoch_cumulative_diff": -14.6900
+        },
+        {
+            "epoch": 388,
+            "expected": 0.01,
+            "actual": 0,
+            "pool_stake": 12252292972,
+            "total_stake": 25427056571856294,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 20.7000,
+            "cumulative_actual_blocks": 6,
+            "epoch_diff": -0.01,
+            "epoch_cumulative_diff": -14.7000
         }
     ],
     "max_epoch_blocks": 2,
     "latest_epoch_pool_stake": 12252292972,
-    "latest_epoch_total_stake": 25226159003727233,
+    "latest_epoch_total_stake": 25427056571856294,
     "max_positive_diff": 0.00,
-    "max_negative_diff": 14.69,
-    "max_cumulative_diff": 14.69,
-    "cumulative_diff": -14.69,
-    "cumulative_expected_blocks": 20.6900,
+    "max_negative_diff": 14.70,
+    "max_cumulative_diff": 14.70,
+    "cumulative_diff": -14.70,
+    "cumulative_expected_blocks": 20.7000,
     "cumulative_actual_blocks": 6,
     "max_actual_blocks": 2,
     "max_expected_blocks": 0.56,
-    "current_lifetime_luck": 28.9995,
+    "current_lifetime_luck": 28.9855,
     "highest_lifetime_luck": 100,
-    "lowest_lifetime_luck": 28.9995
+    "lowest_lifetime_luck": 28.9855
 }

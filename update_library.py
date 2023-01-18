@@ -148,7 +148,10 @@ def refresh_epoch(pool_json, pool_id, epoch_to_update):
                 epoch_element = json_epoch
                 already_has_latest_epoch = True
 
-        epoch_element["pool_stake"] = stake_query_results[0]['stake']
+        if len(stake_query_results) > 0:
+            epoch_element["pool_stake"] = stake_query_results[0]['stake']
+        else:
+            epoch_element["pool_stake"] = 0
 
         if str(epoch_to_update) in total_stake_json:
             total_stake = Decimal(total_stake_json[str(epoch_to_update)])

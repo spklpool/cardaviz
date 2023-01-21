@@ -9,8 +9,8 @@ import os
 from datetime import datetime, timedelta
 
 
-data_folder = './data'
-#data_folder = '/var/www/html/data'
+#data_folder = './data'
+data_folder = '/var/www/html/data'
 
 
 def get_first_pool_epoch(pool_id):
@@ -217,7 +217,7 @@ def get_missing_epochs(pool_json):
     pool_id = tickers_json[pool_json['ticker']]
     first_epoch = get_first_pool_epoch(pool_id)
     latest_epoch = get_latest_epoch()
-    for searched_epoch in range(first_epoch, latest_epoch):
+    for searched_epoch in range(first_epoch, latest_epoch + 1):
         contains_epoch = False
         for target_epoch_index in range(0, len(pool_json['epochs'])):
             if pool_json['epochs'][target_epoch_index]['epoch'] == searched_epoch:
@@ -232,29 +232,24 @@ def reorder_pool(pool_json):
     print("reordering " + pool_ticker)
     pool_json['epochs'] = sorted(pool_json['epochs'], key=lambda d: d['epoch'])
 
-def add_all_missing_epochs():
+def add_all_missing_epochs(map_of_pool_jsons):
+    tickers_json = json.load(open('static/tickers.json'))
     current_count = 0
-    all_files = os.listdir(data_folder)
-    all_files = [os.path.join(data_folder, f) for f in all_files]
-    all_files.sort(key=lambda x: os.path.getmtime(x))
-    for filename in all_files:
+    for pool_ticker in map_of_pool_jsons.keys():
         current_count += 1
-        if os.path.isfile(filename):
-            print("updating " + str(current_count) + " of " + str(len(all_files)) + " - " + filename)
-            tickers_json = json.load(open('static/tickers.json'))
-            pool_json = json.load(open(filename))
-            pool_ticker = pool_json['ticker']
-            if pool_ticker in tickers_json:
-                pool_id = tickers_json[pool_ticker]
-                missing_epochs = get_missing_epochs(pool_json)
-                if len(missing_epochs) > 0:
-                    for index in range(0, len(missing_epochs)):
-                        print(missing_epochs[index])
-                        refresh_epoch(pool_json, pool_id, missing_epochs[index])
-                    recalculate_pool(pool_json)
-                    reorder_pool(pool_json)
-                    with open(data_folder + '/' + pool_ticker.upper() + '.json', 'w') as outfile:
-                        json.dump(pool_json, outfile, indent=4, use_decimal=True)
+        pool_json = map_of_pool_jsons[pool_ticker]
+        if pool_ticker in tickers_json:
+            pool_id = tickers_json[pool_ticker]
+            missing_epochs = get_missing_epochs(pool_json)
+            print(pool_ticker + ' has ' + str(len(missing_epochs)) + ' missing epochs')
+            if len(missing_epochs) > 0:
+                for index in range(0, len(missing_epochs)):
+                    print(missing_epochs[index])
+                    refresh_epoch(pool_json, pool_id, missing_epochs[index])
+                recalculate_pool(pool_json)
+                reorder_pool(pool_json)
+                with open(data_folder + '/' + pool_ticker.upper() + '.json', 'w') as outfile:
+                    json.dump(pool_json, outfile, indent=4, use_decimal=True)
     return "done"
 
 def recalculate_pool(pool_json):

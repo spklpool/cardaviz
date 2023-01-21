@@ -8,7 +8,7 @@ from thread_safe_objects import ThreadSafeDictOfPoolJson
 from ranking_evaluator import evaluate_ranking
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from background_thread import BackgroundThreadFactory
+from background_thread import UpdateThread
 
 
 class DataFileChangedHandler(FileSystemEventHandler):
@@ -28,12 +28,12 @@ logging.basicConfig(level=logging.INFO, force=True)
 map_of_pool_jsons = ThreadSafeDictOfPoolJson()
 
 app = Flask(__name__)
-update_thread = BackgroundThreadFactory.create('update')
-
-directory = 'data/'
-# directory = '/var/www/html/data/'
-
+update_thread = UpdateThread(map_of_pool_jsons)
 update_thread.start()
+
+#directory = 'data/'
+directory = '/var/www/html/data/'
+
 original_handler = signal.getsignal(signal.SIGINT)
 
 
@@ -48,14 +48,6 @@ try:
     signal.signal(signal.SIGINT, sigint_handler)
 except ValueError as e:
     logging.error(f'{e}. Continuing execution...')
-
-logging.info('starting initial load of datadirectory [' + directory + '] for changes')
-all_files = os.listdir(directory)
-for filename in all_files:
-    pool_file = os.path.join(directory, filename)
-    if os.path.isfile(pool_file):
-        pool_json = json.load(open(pool_file))
-        map_of_pool_jsons[pool_json['ticker']] = pool_json
 
 logging.info('starting to monitor directory [' + directory + '] for changes')
 event_handler = DataFileChangedHandler()

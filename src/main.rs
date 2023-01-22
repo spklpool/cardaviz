@@ -11,11 +11,6 @@ mod tests {
     }
 }
 
-#[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
-}
-
 #[get("/hello/<name>")]
 fn hello(name: &str) -> String {
     format!("Hello, {}!", name)
@@ -23,14 +18,13 @@ fn hello(name: &str) -> String {
 
 #[get("/pools/<ticker>")]
 fn templated(ticker: &str) -> Template {
-    let contents = fs::read_to_string("data/SPKL.json")
-        .expect("Should have been able to read the file");
-    let json: serde_json::Value =
-        serde_json::from_str(&*contents).expect("JSON was not well-formatted");
     Template::render("perfchart", context! { ticker: ticker })
 }
 
-
+#[get("/")]
+fn index() -> Template {
+    Template::render("pool_search", context! { })
+}
 
 #[launch]
 fn rocket() -> _ {

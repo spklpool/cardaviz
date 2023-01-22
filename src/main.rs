@@ -1,6 +1,7 @@
 #[macro_use] extern crate rocket;
 use rocket_dyn_templates::{Template, context};
 use std::fs;
+use rocket::fs::FileServer;
 
 #[cfg(test)]
 mod tests {
@@ -20,28 +21,13 @@ fn hello(name: &str) -> String {
     format!("Hello, {}!", name)
 }
 
-#[get("/templated")]
-fn templated() -> Template {
+#[get("/pools/<ticker>")]
+fn templated(ticker: &str) -> Template {
     let contents = fs::read_to_string("data/SPKL.json")
         .expect("Should have been able to read the file");
-    let the_file = r#"{
-        "FirstName": "John",
-        "LastName": "Doe",
-        "Age": 43,
-        "Address": {
-            "Street": "Downing Street 10",
-            "City": "London",
-            "Country": "Great Britain"
-        },
-        "PhoneNumbers": [
-            "+44 1234567",
-            "+44 2345678"
-        ]
-    }"#;
-
     let json: serde_json::Value =
         serde_json::from_str(&*contents).expect("JSON was not well-formatted");
-    Template::render("perfchart", json)
+    Template::render("perfchart", context! { ticker: ticker })
 }
 
 
@@ -50,5 +36,7 @@ fn templated() -> Template {
 fn rocket() -> _ {
     rocket::build().attach(Template::fairing())
         .mount("/", routes![index, hello, templated])
+        .mount("/static", FileServer::from("./static"))
+        .mount("/data", FileServer::from("./data"))
 }
 

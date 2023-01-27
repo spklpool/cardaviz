@@ -1,7 +1,7 @@
-{{  with secret "secret/data/cexplorer_db"  }}
+{{  with secret "database/creds/cardaviz_web"  }}
 [postgresql]
 host=192.168.0.139
 database=cexplorer
-user={{  .Data.data.username  }}
-password={{  .Data.data.password  }}
+user={{  .Data.username  }}
+password={{  .Data.password  }}
 {{  end  }}

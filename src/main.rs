@@ -5,21 +5,12 @@ use rocket_db_pools::sqlx::Row;
 use rocket_dyn_templates::{Template, context};
 use rocket::fs::FileServer;
 
-#[derive(Database)]
-#[database("cexplorer")]
-struct CExplorer(sqlx::PgPool);
-
 #[cfg(test)]
 mod tests {
     #[test]
     fn internal() {
         assert_eq!(4, 2 + 2);
     }
-}
-
-#[get("/hello/<name>")]
-fn hello(name: &str) -> String {
-    format!("Hello, {}!", name)
 }
 
 #[get("/pools/<ticker>")]
@@ -39,4 +30,5 @@ fn rocket() -> _ {
         .mount("/", routes![index, hello, templated, latestepoch])
         .mount("/static", FileServer::from("./static"))
         .mount("/data", FileServer::from("./data"))
+    load_pools_from_json();
 }

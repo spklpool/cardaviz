@@ -23,6 +23,10 @@ template {
   destination = "/cardaviz/database.ini"
 }
 template {
+  source = "/cardaviz/etc/Rocket.toml.tmpl"
+  destination = "/cardaviz/Rocket.toml"
+}
+template {
   source = "/cardaviz/etc/cert.pem.tmpl"
   destination = "/etc/letsencrypt/live/cardaviz.app/cert.pem"
 }

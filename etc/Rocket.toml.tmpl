@@ -1,0 +1,3 @@
+[global.databases.cexplorer]{{  with secret "database/creds/cardaviz_web"  }}
+url = "postgres://{{  .Data.username  }}:{{  .Data.password  }}@db/cexplorer"
+{{  end  }}

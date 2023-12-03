@@ -9,7 +9,7 @@ from ranking_evaluator import evaluate_ranking
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from background_thread import UpdateThread
-
+from update_library import data_folder
 
 class DataFileChangedHandler(FileSystemEventHandler):
     def on_modified(self, event):
@@ -26,6 +26,17 @@ class DataFileChangedHandler(FileSystemEventHandler):
 logging.basicConfig(level=logging.INFO, force=True)
 
 map_of_pool_jsons = ThreadSafeDictOfPoolJson()
+
+all_files = os.listdir(data_folder)
+for filename in all_files:
+    pool_file = os.path.join(data_folder, filename)
+    if os.path.isfile(pool_file):
+        logging.info(f'loading: ' + pool_file)
+        try:
+            pool_json = json.load(open(pool_file))
+            map_of_pool_jsons[pool_json['ticker']] = pool_json
+        except:
+            logging.info(f'exception loading json')
 
 app = Flask(__name__)
 update_thread = UpdateThread(map_of_pool_jsons)
@@ -92,7 +103,7 @@ def get_pool_search():
 
 @app.route("/ranking/<ranking_name>")
 def get_ranking(ranking_name):
-    ranking = evaluate_ranking(map_of_pool_jsons, ranking_name, 20)
+    ranking = evaluate_ranking(map_of_pool_jsons, ranking_name, 10)
     for pool in ranking['results']:
         print(pool['ticker'])
     return render_template('ranking.html', ranking=ranking)

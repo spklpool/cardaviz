@@ -266,11 +266,15 @@ def recalculate_pool(pool_json):
     max_negative_cumulative_diff = Decimal(0)
     max_actual_blocks = Decimal(0)
     max_expected_blocks = Decimal(0)
-    max_epoch_blocks= Decimal(0)
-    pool_json['max_epoch_blocks'] =Decimal(0)
+    max_epoch_blocks = Decimal(0)
+    pool_json['max_epoch_blocks'] = Decimal(0)
+    blocks_in_last_ten_epochs = 0
+
 
     for epoch in pool_json['epochs']:
         try:
+            if epoch['epoch'] > (latest_epoch - 10):
+                blocks_in_last_ten_epochs += epoch['actual']
             cumulative_expected_blocks += Decimal(epoch['expected'])
             epoch['cumulative_expected_blocks'] = cumulative_expected_blocks
             cumulative_actual_blocks += Decimal(epoch['actual'])
@@ -312,6 +316,7 @@ def recalculate_pool(pool_json):
     if 'total_stake' in latest_pool_epoch:
         pool_json['latest_epoch_total_stake'] = latest_pool_epoch['total_stake']
 
+    pool_json['blocks_in_last_ten_epochs'] = blocks_in_last_ten_epochs
     pool_json['max_positive_diff'] = round(max_positive_cumulative_diff, 2)
     pool_json['max_negative_diff'] = round(max_negative_cumulative_diff, 2)
     pool_json['max_cumulative_diff'] = round(max_cumulative_diff, 2)

@@ -1,5 +1,6 @@
 import traceback
 
+import logging
 import simplejson as json
 import urllib.request
 
@@ -60,6 +61,7 @@ def evaluate_ranking(map_of_pool_jsons, ranking_name, number_of_pools_to_return)
 
             # first pass, set all values with highest and lowest
             for ticker in map_of_pool_jsons.keys():
+                logging.info(f'first pass ' + ticker)
                 pool_json = map_of_pool_jsons[ticker]
                 pool = {}
                 iter_count += 1
@@ -82,6 +84,7 @@ def evaluate_ranking(map_of_pool_jsons, ranking_name, number_of_pools_to_return)
                     set_dict_value_with_highest_lowest(pool, absolute, 'max_cumulative_diff', pool_json['max_cumulative_diff'])
                     set_dict_value_with_highest_lowest(pool, absolute, 'highest_lifetime_luck', pool_json['highest_lifetime_luck'])
                     set_dict_value_with_highest_lowest(pool, absolute, 'lowest_lifetime_luck', pool_json['lowest_lifetime_luck'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'blocks_in_last_ten_epochs', pool_json['blocks_in_last_ten_epochs'])
                     pools.append(pool)
                 except Exception as e:
                     print(e)
@@ -90,6 +93,7 @@ def evaluate_ranking(map_of_pool_jsons, ranking_name, number_of_pools_to_return)
 
             # second pass, set normalized values
             for pool in pools:
+                logging.info(f'second pass ' + pool['ticker'])
                 set_normalized_value(pool, absolute, 'latest_epoch_pool_stake')
                 set_normalized_value(pool, absolute, 'lifetime_epochs')
                 set_normalized_value(pool, absolute, 'max_positive_diff')
@@ -104,18 +108,23 @@ def evaluate_ranking(map_of_pool_jsons, ranking_name, number_of_pools_to_return)
                 set_normalized_value(pool, absolute, 'max_cumulative_diff')
                 set_normalized_value(pool, absolute, 'highest_lifetime_luck')
                 set_normalized_value(pool, absolute, 'lowest_lifetime_luck')
+                set_normalized_value(pool, absolute, 'blocks_in_last_ten_epochs')
 
             for pool in pools:
+                logging.info(f'evaluating pool ' + pool['ticker'])
                 if len(ranking['filters']) == 0:
                     filtered_pools.append(pool)
                 else:
                     passes_all_filters = True
                     for current_filter in ranking['filters']:
                         if not safe_eval(current_filter['expression'], pool, spa_tickers):
+                            logging.info(f'pool ' + pool['ticker'] + ' failed filter ' + current_filter['expression'])
                             passes_all_filters = False
                             break
                     if passes_all_filters:
                         filtered_pools.append(pool)
+
+            logging.info(f'pools left after filtering ' + str(len(filtered_pools)))
 
             for pool in filtered_pools:
                 pool['ranking_field'] = safe_eval(ranking['expression'], pool, spa_tickers)

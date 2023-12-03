@@ -70,18 +70,6 @@ class BackgroundThread(threading.Thread, ABC):
 class UpdateThread(BackgroundThread):
     def __init__(self, map_of_pool_jsons):
         self.map_of_pool_jsons = map_of_pool_jsons
-        try:
-            logging.info('starting initial load of datadirectory [' + data_folder + '] for changes')
-            all_files = os.listdir(data_folder)
-            for filename in all_files:
-                pool_file = os.path.join(data_folder, filename)
-                if os.path.isfile(pool_file):
-                    print('loading ' + pool_file)
-                    pool_json = json.load(open(pool_file))
-                    map_of_pool_jsons[pool_json['ticker']] = pool_json
-        except (Exception) as error:
-            print("Error: " + str(error))
-
         super().__init__()
 
     def startup(self) -> None:

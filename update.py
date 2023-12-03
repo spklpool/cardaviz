@@ -31,11 +31,8 @@ def recalculate_all_pools():
                 recalculate_pool(pool_json)
     return "done"
 
-
-
-
-
 def refresh_all_pools_for_epoch(epoch, sleep_seconds):
+    print("updating " + str(epoch))
     current_count = 0
     all_files = os.listdir(data_folder)
     all_files = [os.path.join(data_folder, f) for f in all_files]
@@ -57,13 +54,9 @@ def refresh_all_pools_for_epoch(epoch, sleep_seconds):
                 sleep(sleep_seconds)
     return "done"
 
-
 def update():
-    refresh_all_pools_for_epoch(383,1)
-    refresh_all_pools_for_epoch(384,1)
-    refresh_all_pools_for_epoch(385,1)
-    refresh_all_pools_for_epoch(386,1)
-    refresh_all_pools_for_epoch(387,1)
+    refresh_all_pools_for_epoch(450,1)
 
 
-add_all_missing_epochs_for_pool()
+update()
+#add_all_missing_epochs_for_pool()

@@ -185,7 +185,7 @@ function draw_if_page_finished_loading() {
             //console.log('inserting new row - ' + pools_to_render[i]['ticker'].toUpperCase());
             var canvasCellHTML = '<td><a href="../pools/' + pools_to_render[i]['id'] + '">' + pools_to_render[i]['rank'] + ' - ' + pools_to_render[i]['ticker'].toUpperCase() + '</a></td>'
             if (is_client_fast_enough) {
-                canvasCellHTML = '<td><a href="../pools/' + pools_to_render[i]['ticker'].toUpperCase() + '"><canvas id="' + pools_to_render[i]['ticker'] + '"></canvas></a></td>'
+                canvasCellHTML = '<td><a href="../pools/' + pools_to_render[i]['id'] + '"><canvas id="' + pools_to_render[i]['ticker'] + '"></canvas></a></td>'
             }
             var tableRef = document.getElementById('canvas_table').getElementsByTagName('tbody')[0];
             var newRow = tableRef.insertRow(tableRef.rows.length);

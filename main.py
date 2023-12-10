@@ -91,9 +91,9 @@ def thumbnail(pool_ticker):
     return render_template('thumbnail.html', pool_ticker=pool_ticker.upper())
 
 
-@app.route("/pools/<pool_ticker>")
-def get_pool(pool_ticker):
-    return render_template('perfchart.html', pool_ticker=pool_ticker.upper())
+@app.route("/pools/<pool_id>")
+def get_pool(pool_id):
+    return render_template('perfchart.html', pool_id=pool_id)
 
 
 @app.route("/")

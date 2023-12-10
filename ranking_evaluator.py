@@ -67,6 +67,7 @@ def evaluate_ranking(map_of_pool_jsons, ranking_name, number_of_pools_to_return)
                 iter_count += 1
                 try:
                     pool['ticker'] = ticker
+                    pool['id'] = map_of_pool_jsons[ticker]['id']
                     if len(pool_json['epochs']) > 0:
                         set_dict_value_with_highest_lowest(pool, absolute, 'latest_epoch_pool_stake', pool_json['epochs'][len(pool_json['epochs']) - 1]['pool_stake'])
                     else:
@@ -136,6 +137,7 @@ def evaluate_ranking(map_of_pool_jsons, ranking_name, number_of_pools_to_return)
     if number_of_pools_to_return > len(sorted_by_ranking_field):
         number_of_pools_to_return = len(sorted_by_ranking_field)
     for rank in range(0, number_of_pools_to_return):
+        logging.info(f'returning ticker ' + str(sorted_by_ranking_field[rank]['ticker']) + ' id ' + sorted_by_ranking_field[rank]['id'])
         sorted_by_ranking_field[rank]['rank'] = rank
         return_pools.append(sorted_by_ranking_field[rank])
 

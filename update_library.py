@@ -8,10 +8,28 @@ from decimal import Decimal, getcontext
 import os
 from datetime import datetime, timedelta
 
-
 #data_folder = './data'
 data_folder = '/var/www/html/data'
 
+
+def process_pool(ticker):
+    tickers_json = json.load(open('static/tickers.json'))
+    pool_id = tickers_json[ticker]
+    pool_file_path = data_folder + '/' + pool_id + '.json'
+    if not os.path.isfile(pool_file_path):
+        first_epoch = get_first_pool_epoch(pool_id)
+        latest_epoch = get_latest_epoch()
+        pool_json = {}
+        pool_json['ticker'] = ticker.upper()
+        pool_json['id'] = pool_id
+        pool_json['epochs'] = []
+        for searched_epoch in range(first_epoch, latest_epoch + 1):
+            print('updating ' + ticker + " for epoch " + str(searched_epoch))
+            refresh_epoch(pool_json, pool_id, searched_epoch)
+            recalculate_pool(pool_json)
+            reorder_pool(pool_json)
+            with open(pool_file_path, 'w') as outfile:
+                json.dump(pool_json, outfile, indent=4, use_decimal=True)        
 
 def get_first_pool_epoch(pool_id):
     conn = None
@@ -87,9 +105,34 @@ def get_latest_epoch():
     return return_value
 
 
+def is_epoch_state_complete(epoch):
+    ret = False
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        stake_cursor = conn.cursor(cursor_factory=RealDictCursor)
+        stake_query = "SELECT epoch_no, completed FROM epoch_stake_progress WHERE epoch_no = " + str(epoch)
+        stake_cursor.execute(stake_query)
+        stake_query_results = stake_cursor.fetchall()
+        for row in stake_query_results:
+            if row['epoch_no'] == epoch:
+                ret = row['completed']
+        stake_cursor.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        return "Error: " + str(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return ret
+
+
 def get_totalStake_for_epoch(epoch):
     epoch_stake = Decimal('0')
     conn = None
+    if is_epoch_state_complete(epoch) == False:
+        return 0
+
     try:
         params = config()
         conn = psycopg2.connect(**params)

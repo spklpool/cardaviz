@@ -1,8 +1,14 @@
 from time import sleep
 import simplejson as json
 import os
-from update_library import get_missing_epochs, reorder_pool, refresh_epoch, recalculate_pool, get_first_pool_epoch, get_latest_epoch, data_folder
+from update_library import get_missing_epochs, reorder_pool, refresh_epoch, recalculate_pool, get_first_pool_epoch, get_latest_epoch, data_folder, process_pool
 
+
+def full_update():
+    tickers_json = json.load(open('static/tickers.json'))
+    for ticker in tickers_json:
+        process_pool(ticker)
+    return "done"
 
 def quick_refresh():
     latest_epoch = get_latest_epoch()
@@ -54,9 +60,7 @@ def refresh_all_pools_for_epoch(epoch, sleep_seconds):
                 sleep(sleep_seconds)
     return "done"
 
-def update():
-    refresh_all_pools_for_epoch(450,1)
-
-
-update()
-#add_all_missing_epochs_for_pool()
+full_update()
+#process_pool('SPKL')
+#refresh_all_pools_for_epoch(452,1)
+#add_all_epochs()

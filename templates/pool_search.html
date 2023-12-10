@@ -146,7 +146,7 @@ const debounce = (func, delay) => {
 }
 
 function render_pool_thumbnail(data) {
-    var canvasCellHTML = '<td><a href="pools/' + data['ticker'] + '"><canvas id="' + data['ticker'] + '"></canvas></a></td>'
+    var canvasCellHTML = '<td><a href="pools/' + get_pool_id_from_ticker(data['ticker']) + '"><canvas id="' + data['ticker'] + '"></canvas></a></td>'
     var tableRef = document.getElementById('canvas_table').getElementsByTagName('tbody')[0];
     var newRow = tableRef.insertRow(tableRef.rows.length);
     newRow.innerHTML = canvasCellHTML;
@@ -195,6 +195,10 @@ function set_no_results_visibility(visibility) {
   }
 }
 
+function get_pool_id_from_ticker(ticker) {
+  return tickers_json[ticker]
+}
+
 var filter_pools = debounce(function() {
   if (is_rendering) {
     console.log('already rendering - ' + is_rendering_count)
@@ -234,7 +238,7 @@ var filter_pools = debounce(function() {
               console.log('rendering from client cache');
               render_pool_thumbnail(pool_json_client_cache[filtered_pools[i].toUpperCase()]);
             } else {
-              var data_url = '/data/' + filtered_pools[i].toUpperCase() + '.json';
+              var data_url = '/data/' + get_pool_id_from_ticker(filtered_pools[i]) + '.json';
               console.log('fetching data from ' + data_url);
               fetch(data_url)
               .then(function (response) {

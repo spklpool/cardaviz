@@ -92,6 +92,7 @@ var pools_to_render = [];
 var pool_entry = {};
 pool_entry['rank'] = '{{pool['rank']}}';
 pool_entry['ticker'] = '{{pool['ticker']}}';
+pool_entry['id'] = '{{pool['id']}}';
 pools_to_render.push(pool_entry);
 {% endfor %}
 var ready_to_render = false;
@@ -179,10 +180,10 @@ function draw_if_page_finished_loading() {
     if (ready_to_render) {
         var Table = document.getElementById("canvas_table");
         Table.innerHTML = "<tbody><tbody>";
-        console.log('rendering ' + pools_to_render.length + 'pools');
+        console.log('rendering ' + pools_to_render.length + ' pools');
         for (var i=0; i<pools_to_render.length; i++) {
             //console.log('inserting new row - ' + pools_to_render[i]['ticker'].toUpperCase());
-            var canvasCellHTML = '<td><a href="../pools/' + pools_to_render[i]['ticker'].toUpperCase() + '">' + pools_to_render[i]['rank'] + ' - ' + pools_to_render[i]['ticker'].toUpperCase() + '</a></td>'
+            var canvasCellHTML = '<td><a href="../pools/' + pools_to_render[i]['id'] + '">' + pools_to_render[i]['rank'] + ' - ' + pools_to_render[i]['ticker'].toUpperCase() + '</a></td>'
             if (is_client_fast_enough) {
                 canvasCellHTML = '<td><a href="../pools/' + pools_to_render[i]['ticker'].toUpperCase() + '"><canvas id="' + pools_to_render[i]['ticker'] + '"></canvas></a></td>'
             }
@@ -193,7 +194,7 @@ function draw_if_page_finished_loading() {
                 if (pools_to_render[i]['ticker'].toUpperCase() in pool_json_client_cache) {
                     render_pool_thumbnail(pool_json_client_cache[pools_to_render[i]['ticker'].toUpperCase()]);
                 } else {
-                    var data_url = '/data/' + pools_to_render[i]["ticker"].toUpperCase() + '.json';
+                    var data_url = '/data/' + pools_to_render[i]["id"] + '.json';
                     fetch(data_url)
                     .then(function (response) {
                         return response.json();

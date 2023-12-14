@@ -23,6 +23,12 @@
       border-radius: 25px;
     }
 
+    .selectClass
+    {
+        color: #888888;
+        background-color: black;
+    }
+
     .tableClass {
       margin: 10px;
       height: 100%;
@@ -117,6 +123,12 @@ document.addEventListener('readystatechange', (event) => {
         logo.position = new Point(75, 60);
     }
 });
+
+function onNetworkChanged() {
+    var network = document.getElementById("network");
+    console.log(network.value);
+    console.log(network.options[network.selectedIndex].text);
+}
 
 function poolsThatStartWith(unfiltered_pools_json, starts_with_text) {
     var ret = {}
@@ -238,7 +250,7 @@ var filter_pools = debounce(function() {
               console.log('rendering from client cache');
               render_pool_thumbnail(pool_json_client_cache[filtered_pools[i].toUpperCase()]);
             } else {
-              var data_url = '/data/' + get_pool_id_from_ticker(filtered_pools[i]) + '.json';
+              var data_url = '/' + document.getElementById("network").value + '_data/' + get_pool_id_from_ticker(filtered_pools[i]) + '.json';
               console.log('fetching data from ' + data_url);
               fetch(data_url)
               .then(function (response) {
@@ -288,7 +300,12 @@ function draw_cardaviz_logo() {
     return path;
 }
 </script>
-<div><br></div>
+<div>
+<select name="network" id="network" class="selectClass" onchange="onNetworkChanged()">
+  <option value="mainnet">mainnet</option>
+  <option value="sanchonet">sanchonet</option>
+</select>
+</div>
 <center><canvas id="cardaviz_logo" width="150" height="150"></canvas></center>
 <center><span style="color: #888888;">Cardaviz - Cardano Blockchain Visualizations</span></center>
 <div><br></div>

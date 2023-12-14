@@ -9,8 +9,10 @@ import os
 from datetime import datetime, timedelta
 
 #data_folder = './data'
-data_folder = '/var/www/html/data'
+data_folder = '/var/www/html/mainnet_data'
 
+def load_tickers_json(network='mainnet'):
+        return json.load(open('static/' + network + '_tickers.json'))
 
 def process_pool(ticker):
     tickers_json = json.load(open('static/tickers.json'))

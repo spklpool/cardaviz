@@ -4,12 +4,12 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 
 
-def get_all_tickers():
+def get_all_tickers(network='mainnet'):
     ticker_map = {}
     view_map = {}
     conn = None
     try:
-        params = config()
+        params = config(network + '.ini', 'postgresql')
         conn = psycopg2.connect(**params)
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         query = """ SELECT pool_hash.view, pool_offline_data.ticker_name as ticker
@@ -24,7 +24,9 @@ def get_all_tickers():
                           and pool_retire.retiring_epoch <= (select max (epoch_no) from block))
                     ORDER BY ticker_name"""
         cursor.execute(query)
+        print(query)
         query_results = cursor.fetchall()
+        print(query_results)
         cursor.close()
 
         for row in query_results:
@@ -32,17 +34,18 @@ def get_all_tickers():
             view_map[row['view']] = row['ticker']
 
     except (Exception, psycopg2.DatabaseError) as error:
+        print(str(error))
         return "Error: " + str(error)
     finally:
         if conn is not None:
             conn.close()
 
-    with open('static/tickers.json', 'w') as outfile:
+    with open('static/' + network + '_tickers.json', 'w') as outfile:
         outfile.write(json.dumps(ticker_map, indent=4, use_decimal=True))
-    with open('static/pool_tickers.json', 'w') as outfile:
+    with open('static/' + network + '_pool_tickers.json', 'w') as outfile:
         outfile.write(json.dumps(view_map, indent=4, use_decimal=True))
 
     return 'done'
 
 
-get_all_tickers()
+get_all_tickers('sancho')

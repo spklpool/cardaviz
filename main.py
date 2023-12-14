@@ -43,7 +43,7 @@ update_thread = UpdateThread(map_of_pool_jsons)
 update_thread.start()
 
 #directory = 'data/'
-directory = '/var/www/html/data/'
+directory = '/var/www/html/mainnet_data/'
 
 original_handler = signal.getsignal(signal.SIGINT)
 
@@ -103,7 +103,7 @@ def get_pool_search():
 
 @app.route("/ranking/<ranking_name>")
 def get_ranking(ranking_name):
-    ranking = evaluate_ranking(map_of_pool_jsons, ranking_name, 10)
+    ranking = evaluate_ranking(map_of_pool_jsons, ranking_name, 20)
     for pool in ranking['results']:
         print(pool['ticker'])
     return render_template('ranking.html', ranking=ranking)

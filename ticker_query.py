@@ -12,9 +12,9 @@ def get_all_tickers(network='mainnet'):
         params = config(network + '.ini', 'postgresql')
         conn = psycopg2.connect(**params)
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        query = """ SELECT pool_hash.view, pool_offline_data.ticker_name as ticker
+        query = """ SELECT pool_hash.view, off_chain_pool_data.ticker_name as ticker
                     FROM pool_hash
-                    INNER JOIN pool_offline_data ON pool_offline_data.pool_id = pool_hash.id 
+                    INNER JOIN off_chain_pool_data ON off_chain_pool_data.pool_id = pool_hash.id 
                     INNER JOIN pool_update ON pool_update.hash_id = pool_hash.id
                     WHERE registered_tx_id IN (
                         SELECT max(registered_tx_id) 

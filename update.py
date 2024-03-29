@@ -1,13 +1,13 @@
 from time import sleep
 import simplejson as json
 import os
-from update_library import get_missing_epochs, reorder_pool, refresh_epoch, recalculate_pool, get_first_pool_epoch, get_latest_epoch, data_folder, process_pool, load_tickers_json
+from update_library import get_missing_epochs, reorder_pool, refresh_epoch, recalculate_pool, get_first_pool_epoch, get_latest_epoch, process_pool, load_tickers_json, is_epoch_state_complete
 
 
 def full_update(network='mainnet'):
     tickers_json = load_tickers_json(network)
     for ticker in tickers_json:
-        process_pool(ticker)
+        process_pool(ticker, network)
     return "done"
 
 def quick_refresh(network='mainnet'):
@@ -37,6 +37,19 @@ def recalculate_all_pools(network='mainnet'):
                 recalculate_pool(pool_json)
     return "done"
 
+def refresh_pool_for_epoch(ticker, epoch, sleep_seconds, network='mainnet'):
+    print("updating " + str(epoch))
+    tickers_json = load_tickers_json(network)
+    pool_id = tickers_json[ticker]
+    pool_file_path = data_folder + '/' + pool_id + '.json'
+    pool_json = json.load(open(pool_file_path))
+    refresh_epoch(pool_json, pool_id, epoch, network)
+    recalculate_pool(pool_json)
+    reorder_pool(pool_json)
+    with open(pool_file_path, 'w') as outfile:
+        json.dump(pool_json, outfile, indent=4, use_decimal=True)
+    return "done"
+
 def refresh_all_pools_for_epoch(epoch, sleep_seconds, network='mainnet'):
     print("updating " + str(epoch))
     current_count = 0
@@ -63,10 +76,9 @@ def refresh_all_pools_for_epoch(epoch, sleep_seconds, network='mainnet'):
 #network = 'sancho'
 network = 'mainnet'
 data_folder = '/var/www/html/' + network + '_data'
-#recalculate_all_pools(network)
-#quick_refresh(network)
-#full_update()
-#process_pool('SPKL')
-#refresh_all_pools_for_epoch(453, 1, network)
-refresh_all_pools_for_epoch(454, 1, network)
-#add_all_epochs()
+while(True):
+    latest_epoch = get_latest_epoch()
+    if is_epoch_state_complete(latest_epoch):
+        refresh_all_pools_for_epoch(latest_epoch, 1, network)
+    refresh_all_pools_for_epoch(latest_epoch - 1, 1, network)
+

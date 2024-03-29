@@ -9,7 +9,8 @@ from ranking_evaluator import evaluate_ranking
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from background_thread import UpdateThread
-from update_library import data_folder
+
+data_folder = '/var/www/html/mainnet_data/'
 
 class DataFileChangedHandler(FileSystemEventHandler):
     def on_modified(self, event):

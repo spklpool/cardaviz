@@ -9,34 +9,37 @@ import os
 from datetime import datetime, timedelta
 
 #data_folder = './data'
-data_folder = '/var/www/html/mainnet_data'
+base_data_folder = '/var/www/html'
 
 def load_tickers_json(network='mainnet'):
         return json.load(open('static/' + network + '_tickers.json'))
 
-def process_pool(ticker):
-    tickers_json = json.load(open('static/tickers.json'))
+def process_pool(ticker, network='mainnet'):
+    tickers_json = json.load(open('static/' + network + '_tickers.json'))
     pool_id = tickers_json[ticker]
-    pool_file_path = data_folder + '/' + pool_id + '.json'
+    pool_file_path = base_data_folder +  '/' + network + '_data/' + pool_id + '.json'
+    print('processing file ' + pool_file_path)
     if not os.path.isfile(pool_file_path):
-        first_epoch = get_first_pool_epoch(pool_id)
-        latest_epoch = get_latest_epoch()
+        first_epoch = get_first_pool_epoch(pool_id, network)
+        print('first epoch is ' + str(first_epoch))
+        latest_epoch = get_latest_epoch(network)
+        print('latest epoch is ' + str(latest_epoch))
         pool_json = {}
         pool_json['ticker'] = ticker.upper()
         pool_json['id'] = pool_id
         pool_json['epochs'] = []
         for searched_epoch in range(first_epoch, latest_epoch + 1):
             print('updating ' + ticker + " for epoch " + str(searched_epoch))
-            refresh_epoch(pool_json, pool_id, searched_epoch)
+            refresh_epoch(pool_json, pool_id, searched_epoch, network)
             recalculate_pool(pool_json)
             reorder_pool(pool_json)
             with open(pool_file_path, 'w') as outfile:
                 json.dump(pool_json, outfile, indent=4, use_decimal=True)        
 
-def get_first_pool_epoch(pool_id):
+def get_first_pool_epoch(pool_id, network='mainnet'):
     conn = None
     try:
-        params = config()
+        params = config(network + '.ini')
         conn = psycopg2.connect(**params)
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         query = """ SELECT min(active_epoch_no) as first_epoch
@@ -48,6 +51,7 @@ def get_first_pool_epoch(pool_id):
         return_value = result[0]['first_epoch']
         cursor.close()
     except (Exception, psycopg2.DatabaseError) as error:
+        print(str(error))
         return str(error)
     finally:
         if conn is not None:
@@ -85,12 +89,12 @@ def is_in_quiet_period():
     return ret
 
 
-def get_latest_epoch():
+def get_latest_epoch(network='mainnet'):
     conn = None
     try:
         five_hours_ago = datetime.utcnow() - timedelta(hours=5)
         date_time_threshold_string = five_hours_ago.strftime("%Y-%m-%d %H:%M:%S")
-        params = config()
+        params = config(network + '.ini')
         conn = psycopg2.connect(**params)
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         query = "SELECT MAX(NO) as latest_epoch FROM epoch WHERE start_time < \'" + date_time_threshold_string + "\';"
@@ -129,14 +133,14 @@ def is_epoch_state_complete(epoch):
     return ret
 
 
-def get_totalStake_for_epoch(epoch):
+def get_totalStake_for_epoch(epoch, network='mainnet'):
     epoch_stake = Decimal('0')
     conn = None
     if is_epoch_state_complete(epoch) == False:
         return 0
 
     try:
-        params = config()
+        params = config(network + '.ini')
         conn = psycopg2.connect(**params)
         stake_cursor = conn.cursor(cursor_factory=RealDictCursor)
         stake_query = "SELECT epoch_no, sum (amount) AS stake FROM epoch_stake WHERE epoch_no = " + str(
@@ -144,6 +148,7 @@ def get_totalStake_for_epoch(epoch):
         print(stake_query)
         stake_cursor.execute(stake_query)
         stake_query_results = stake_cursor.fetchall()
+        print(stake_query_results)
         for row in stake_query_results:
             if row['epoch_no'] == epoch:
                 epoch_stake = row['stake']
@@ -157,12 +162,12 @@ def get_totalStake_for_epoch(epoch):
     return epoch_stake
 
 
-def refresh_epoch(pool_json, pool_id, epoch_to_update):
+def refresh_epoch(pool_json, pool_id, epoch_to_update, network='mainnet'):
     total_stake_json = json.load(open('static/total_stake.json'))
 
     conn = None
     try:
-        params = config()
+        params = config(network + '.ini')
         conn = psycopg2.connect(**params)
         blocks_cursor = conn.cursor(cursor_factory=RealDictCursor)
         blocks_query = """ SELECT count(block.block_no), block.epoch_no, pool_hash.view
@@ -171,8 +176,10 @@ def refresh_epoch(pool_json, pool_id, epoch_to_update):
                     INNER JOIN pool_hash ON slot_leader.pool_hash_id = pool_hash.id
                     WHERE pool_hash.view = \'""" + pool_id + "\' and epoch_no = \'" + str(epoch_to_update) + """\'
                     GROUP BY block.epoch_no, pool_hash.view;"""
+        print(str(blocks_query))
         blocks_cursor.execute(blocks_query)
         blocks_query_results = blocks_cursor.fetchall()
+        print(str(blocks_query_results))
         blocks_cursor.close()
 
         stake_cursor = conn.cursor(cursor_factory=RealDictCursor)
@@ -184,6 +191,7 @@ def refresh_epoch(pool_json, pool_id, epoch_to_update):
 	                    ORDER BY epoch_no;"""
         stake_cursor.execute(stake_query)
         stake_query_results = stake_cursor.fetchall()
+        print(str(stake_query_results))
         stake_cursor.close()
 
         already_has_latest_epoch = False
@@ -202,7 +210,7 @@ def refresh_epoch(pool_json, pool_id, epoch_to_update):
             total_stake = Decimal(total_stake_json[str(epoch_to_update)])
             print('total_stake from existing json: ' + str(total_stake))
         else:
-            total_stake = Decimal(get_totalStake_for_epoch(epoch_to_update))
+            total_stake = Decimal(get_totalStake_for_epoch(epoch_to_update, network))
             if total_stake > 0:
                 total_stake_json[str(epoch_to_update)] = total_stake
                 with open('static/total_stake.json', 'w') as outfile:
@@ -222,6 +230,7 @@ def refresh_epoch(pool_json, pool_id, epoch_to_update):
         getcontext().prec = 6
 
         # 5 * 24 * 60 * 60 = 432000
+        print("Total stake:  " + str(Decimal(total_stake)))
         epoch_element["expected"] = round(Decimal(epoch_element["pool_stake"]) / Decimal(total_stake) * Decimal(
             432000) * Decimal(slot_coefficient) * Decimal((1 - decentralisation_coefficient)), 2)
         epoch_element["decentralisation_coefficient"] = decentralisation_coefficient
@@ -362,10 +371,10 @@ def recalculate_pool(pool_json):
         pool_json['latest_epoch_total_stake'] = latest_pool_epoch['total_stake']
 
     pool_json['blocks_in_last_ten_epochs'] = blocks_in_last_ten_epochs
-    pool_json['max_positive_diff'] = round(max_positive_cumulative_diff, 2)
-    pool_json['max_negative_diff'] = round(max_negative_cumulative_diff, 2)
-    pool_json['max_cumulative_diff'] = round(max_cumulative_diff, 2)
-    pool_json['cumulative_diff'] = round(cumulative_diff, 2)
+    pool_json['max_positive_diff'] = max_positive_cumulative_diff
+    pool_json['max_negative_diff'] = max_negative_cumulative_diff
+    pool_json['max_cumulative_diff'] = max_cumulative_diff
+    pool_json['cumulative_diff'] = cumulative_diff
     pool_json['cumulative_expected_blocks'] = cumulative_expected_blocks
     pool_json['cumulative_actual_blocks'] = cumulative_actual_blocks
     pool_json['max_actual_blocks'] = max_actual_blocks

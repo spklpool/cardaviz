@@ -136,6 +136,14 @@ document.addEventListener('readystatechange', (event) => {
 function onNetworkChanged() {
     sessionStorage.network = document.getElementById("network").value;
     console.log('network changed to ' + sessionStorage.network);
+    for (var pool_json in pool_json_client_cache) {
+        if (pool_json_client_cache.hasOwnProperty(pool_json)) {
+            delete pool_json_client_cache[pool_json];
+        }
+    }
+    fetch_tickers();
+    document.getElementById('poolSearch').value = "";
+    filter_pools();
 }
 
 function poolsThatStartWith(unfiltered_pools_json, starts_with_text) {

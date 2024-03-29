@@ -3,7 +3,7 @@ import logging
 import threading
 from queue import Queue
 from abc import abstractmethod, ABC
-from update_library import is_in_quiet_period, add_all_missing_epochs, reorder_pool, refresh_epoch, recalculate_pool, get_latest_epoch, data_folder
+from update_library import is_in_quiet_period, add_all_missing_epochs, reorder_pool, refresh_epoch, recalculate_pool, get_latest_epoch
 import simplejson as json
 from datetime import datetime
 from config import config
@@ -14,7 +14,7 @@ from thread_safe_objects import ThreadSafeDictOfPoolJson
 
 
 TASKS_QUEUE = Queue()
-
+data_folder = '/var/www/html/mainnet_data/'
 
 class BackgroundThread(threading.Thread, ABC):
     def __init__(self):

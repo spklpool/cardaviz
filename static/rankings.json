@@ -16,8 +16,8 @@
         "expression": "pool['cumulative_diff'] > 0"
       },
       {
-        "name": "at least a year in operation",
-        "expression": "pool['lifetime_epochs'] > 73"
+        "name": "at least 3 years in operation",
+        "expression": "pool['lifetime_epochs'] > 219"
       },
       {
         "name": "at least 10 lifetime blocks",

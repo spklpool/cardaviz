@@ -12,8 +12,8 @@
         "expression": "pool['latest_epoch_pool_stake'] > (10000 * 1000000)"
       },
       {
-        "name": "positive cumulative diff",
-        "expression": "pool['cumulative_diff'] > 0"
+        "name": "meaningfully positive cumulative diff - we're looking for high performers",
+        "expression": "pool['cumulative_diff'] > 2"
       },
       {
         "name": "at least 3 years in operation",

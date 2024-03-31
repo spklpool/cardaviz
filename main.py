@@ -28,9 +28,13 @@ logging.basicConfig(level=logging.INFO, force=True)
 
 map_of_pool_jsons = ThreadSafeDictOfPoolJson()
 
-all_files = os.listdir(data_folder)
-for filename in all_files:
-    pool_file = os.path.join(data_folder, filename)
+
+#all_files = os.listdir(data_folder)
+#for filename in all_files:
+tickers_json = json.load(open('static/mainnet_tickers.json'))
+for ticker in tickers_json:
+    pool_id = tickers_json[ticker]
+    pool_file = os.path.join(data_folder, pool_id + '.json')
     if os.path.isfile(pool_file):
         logging.info(f'loading: ' + pool_file)
         try:

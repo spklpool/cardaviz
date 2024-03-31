@@ -7,8 +7,10 @@ from psycopg2.extras import RealDictCursor
 from decimal import Decimal, getcontext
 import os
 from datetime import datetime, timedelta
+from os.path import exists
 
-#data_folder = './data'
+
+#base_data_folder = './data'
 base_data_folder = '/var/www/html'
 
 def load_tickers_json(network='mainnet'):
@@ -62,24 +64,17 @@ def get_first_pool_epoch(pool_id, network='mainnet'):
 
 def is_in_quiet_period():
     ret = False
+    conn = None
     try:
-        five_hours_ago = datetime.utcnow() - timedelta(hours=5)
-        date_time_threshold_string = five_hours_ago.strftime("%Y-%m-%d %H:%M:%S")
-        params = config()
+        params = config(network + '.ini')
         conn = psycopg2.connect(**params)
-        cursor1 = conn.cursor(cursor_factory=RealDictCursor)
-        query1 = "SELECT MAX(NO) as latest_epoch FROM epoch WHERE start_time < \'" + date_time_threshold_string + "\';"
-        cursor1.execute(query1)
-        result1 = cursor1.fetchall()
-        epoch1 = result1[0]['latest_epoch']
-        cursor1.close()
-        cursor2 = conn.cursor(cursor_factory=RealDictCursor)
-        query2 = "SELECT MAX(NO) as latest_epoch FROM epoch WHERE start_time < \'" + date_time_threshold_string + "\';"
-        cursor2.execute(query2)
-        result2 = cursor2.fetchall()
-        epoch2 = result2[0]['latest_epoch']
-        cursor2.close()
-        ret = epoch1 != epoch2
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        query = """ SELECT completed FROM epoch_stake_progress WHERE epoch_no = (SELECT MAX(NO) FROM epoch); """
+        cursor.execute(query)
+        result = cursor.fetchall()
+        return_value = result[0]
+        print(return_value)
+        cursor.close()
     except (Exception, psycopg2.DatabaseError) as error:
         return str(error)
     finally:
@@ -265,9 +260,16 @@ def getExpectedEpochBlocksForPool(epoch, epoch_stake, total_stake):
     return Decimal(epoch_stake) / Decimal(total_stake) * 21600 * Decimal((1 - decentralisation_coefficient))
 
 
-def get_missing_epochs(pool_json):
+def list_missing_pools(network='mainnet'):
+    tickers_json = json.load(open('static/' + network + '_tickers.json'))
+    for ticker in tickers_json:
+        pool_id = tickers_json[ticker]
+        if not exists(base_data_folder + '/' + network + '_data/' + pool_id + '.json'):
+            print(pool_id + ' ' + ticker)
+
+def get_missing_epochs(pool_json, network='mainnet'):
     ret = []
-    tickers_json = json.load(open('static/tickers.json'))
+    tickers_json = json.load(open('static/' + network + '_tickers.json'))
     pool_id = tickers_json[pool_json['ticker']]
     first_epoch = get_first_pool_epoch(pool_id)
     latest_epoch = get_latest_epoch()
@@ -286,23 +288,26 @@ def reorder_pool(pool_json):
     print("reordering " + pool_ticker)
     pool_json['epochs'] = sorted(pool_json['epochs'], key=lambda d: d['epoch'])
 
-def add_all_missing_epochs(map_of_pool_jsons):
-    tickers_json = json.load(open('static/tickers.json'))
+def add_all_missing_epochs(map_of_pool_jsons, network='mainnet'):
+    tickers_json = json.load(open('static/' + network + '_tickers.json'))
     current_count = 0
-    for pool_ticker in map_of_pool_jsons.keys():
+    pool_keys = map_of_pool_jsons.keys()
+    total_count = len(pool_keys)
+    for pool_ticker in pool_keys:
         current_count += 1
         pool_json = map_of_pool_jsons[pool_ticker]
         if pool_ticker in tickers_json:
             pool_id = tickers_json[pool_ticker]
             missing_epochs = get_missing_epochs(pool_json)
-            print(pool_ticker + ' has ' + str(len(missing_epochs)) + ' missing epochs')
+            print(str(current_count) + ' of ' + str(total_count) + ' ' + pool_ticker + ' has ' + str(len(missing_epochs)) + ' missing epochs')
             if len(missing_epochs) > 0:
                 for index in range(0, len(missing_epochs)):
                     print(missing_epochs[index])
                     refresh_epoch(pool_json, pool_id, missing_epochs[index])
                 recalculate_pool(pool_json)
                 reorder_pool(pool_json)
-                with open(data_folder + '/' + pool_ticker.upper() + '.json', 'w') as outfile:
+                pool_file_path = base_data_folder +  '/' + network + '_data/' + pool_id + '.json'
+                with open(pool_file_path, 'w') as outfile:
                     json.dump(pool_json, outfile, indent=4, use_decimal=True)
     return "done"
 

@@ -24,14 +24,13 @@ def get_all_tickers(network='mainnet'):
                           and pool_retire.retiring_epoch <= (select max (epoch_no) from block))
                     ORDER BY ticker_name"""
         cursor.execute(query)
-        print(query)
         query_results = cursor.fetchall()
-        print(query_results)
         cursor.close()
 
         for row in query_results:
             ticker_map[row['ticker']] = row['view']
             view_map[row['view']] = row['ticker']
+            print(row['ticker'])
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(str(error))
@@ -40,12 +39,12 @@ def get_all_tickers(network='mainnet'):
         if conn is not None:
             conn.close()
 
-    with open('static/' + network + '_tickers.json', 'w') as outfile:
+    with open('static/' + network + '_tickers.json.comp', 'w') as outfile:
         outfile.write(json.dumps(ticker_map, indent=4, use_decimal=True))
-    with open('static/' + network + '_pool_tickers.json', 'w') as outfile:
+    with open('static/' + network + '_pool_tickers.json.comp', 'w') as outfile:
         outfile.write(json.dumps(view_map, indent=4, use_decimal=True))
 
     return 'done'
 
 
-get_all_tickers('sancho')
+get_all_tickers('mainnet')

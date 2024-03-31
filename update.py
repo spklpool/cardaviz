@@ -1,14 +1,29 @@
 from time import sleep
 import simplejson as json
 import os
+from os.path import exists
 from update_library import get_missing_epochs, reorder_pool, refresh_epoch, recalculate_pool, get_first_pool_epoch, get_latest_epoch, process_pool, load_tickers_json, is_epoch_state_complete
 
 
 def full_update(network='mainnet'):
+    current_count = 0
     tickers_json = load_tickers_json(network)
+    total_count = len(tickers_json)
     for ticker in tickers_json:
+        print(str(current_count) + ' of ' + str(total_count) + ' ' + ticker)
         process_pool(ticker, network)
     return "done"
+
+def add_missing_pools(network='mainnet'):
+    current_count = 0
+    tickers_json = load_tickers_json(network)
+    total_count = len(tickers_json)
+    for ticker in tickers_json:
+        current_count += 1
+        print(str(current_count) + ' of ' + str(total_count) + ' ' + ticker)
+        pool_id = tickers_json[ticker]
+        if not exists(data_folder + '/' + network + '_data/' + pool_id + '.json'):
+            process_pool(ticker, network)
 
 def quick_refresh(network='mainnet'):
     latest_epoch = get_latest_epoch()
@@ -76,9 +91,9 @@ def refresh_all_pools_for_epoch(epoch, sleep_seconds, network='mainnet'):
 #network = 'sancho'
 network = 'mainnet'
 data_folder = '/var/www/html/' + network + '_data'
-while(True):
-    latest_epoch = get_latest_epoch()
-    if is_epoch_state_complete(latest_epoch):
-        refresh_all_pools_for_epoch(latest_epoch, 1, network)
-    refresh_all_pools_for_epoch(latest_epoch - 1, 1, network)
-
+#while(True):
+#    latest_epoch = get_latest_epoch()
+#    if is_epoch_state_complete(latest_epoch):
+#        refresh_all_pools_for_epoch(latest_epoch, 1, network)
+#    refresh_all_pools_for_epoch(latest_epoch - 1, 1, network)
+add_missing_pools(network)

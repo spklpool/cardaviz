@@ -85,7 +85,7 @@ class UpdateThread(BackgroundThread):
         if not is_in_quiet_period():
             latest_epoch = get_latest_epoch()
             updates_file_name = 'static/updates.json'
-            pool_tickers_file_name = 'static/pool_tickers.json'
+            pool_tickers_file_name = 'static/mainnet_tickers.json'
 
             current_time = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
             print("Current Time =", current_time)

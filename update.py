@@ -96,4 +96,6 @@ data_folder = '/var/www/html/' + network + '_data'
 #    if is_epoch_state_complete(latest_epoch):
 #        refresh_all_pools_for_epoch(latest_epoch, 1, network)
 #    refresh_all_pools_for_epoch(latest_epoch - 1, 1, network)
-add_missing_pools(network)
+#add_missing_pools(network)
+
+refresh_all_pools_for_epoch(476, 1, network)

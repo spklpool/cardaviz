@@ -3,7 +3,7 @@ import logging
 import threading
 from queue import Queue
 from abc import abstractmethod, ABC
-from update_library import is_in_quiet_period, add_all_missing_epochs, reorder_pool, refresh_epoch, recalculate_pool, get_latest_epoch
+from update_library import is_in_quiet_period, add_missing_pools, add_all_missing_epochs, reorder_pool, refresh_epoch, recalculate_pool, get_latest_epoch
 import simplejson as json
 from datetime import datetime
 from config import config
@@ -67,6 +67,28 @@ class BackgroundThread(threading.Thread, ABC):
         self.shutdown()
 
 
+class MissingEpochsThread(BackgroundThread):
+    def __init__(self, map_of_pool_jsons):
+        self.map_of_pool_jsons = map_of_pool_jsons
+        super().__init__()
+
+    def startup(self) -> None:
+        logging.info('MissingEpochsThread started')
+
+    def shutdown(self) -> None:
+        logging.info('MissingEpochsThread stopped')
+
+    def handle(self) -> None:
+        print('adding any missing pools')
+        add_missing_pools()
+        print('done adding any missing pools')
+        print('adding any missing epochs for all pools')
+        add_all_missing_epochs(self.map_of_pool_jsons)
+        sleep(60)
+        print('done adding any missing epochs for all pools')
+
+
+
 class UpdateThread(BackgroundThread):
     def __init__(self, map_of_pool_jsons):
         self.map_of_pool_jsons = map_of_pool_jsons
@@ -79,13 +101,13 @@ class UpdateThread(BackgroundThread):
         logging.info('UpdateThread stopped')
 
     def handle(self) -> None:
-        print('adding any missing epochs for all pools')
-        add_all_missing_epochs(self.map_of_pool_jsons)
-        print('done adding any missing epochs for all pools')
-        if not is_in_quiet_period():
+        if is_in_quiet_period():
+            print('in quiet period.  waiting 10 seconds')
+            sleep(10)
+        else:
             latest_epoch = get_latest_epoch()
             updates_file_name = 'static/updates.json'
-            pool_tickers_file_name = 'static/mainnet_tickers.json'
+            pool_tickers_file_name = 'static/mainnet_pool_tickers.json'
 
             current_time = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
             print("Current Time =", current_time)
@@ -100,7 +122,7 @@ class UpdateThread(BackgroundThread):
             conn = None
             try:
                 print("fetching pools with blocks since " + last_update_time)
-                params = config()
+                params = config('mainnet.ini')
                 conn = psycopg2.connect(**params)
                 cursor = conn.cursor(cursor_factory=RealDictCursor)
                 query = """ SELECT DISTINCT pool_hash.view
@@ -108,13 +130,16 @@ class UpdateThread(BackgroundThread):
                             INNER JOIN slot_leader ON slot_leader.id = block.slot_leader_id
                             INNER JOIN pool_hash ON pool_hash.id = slot_leader.pool_hash_id
                             WHERE TIME > \'""" + last_update_time + "\' ;"""
+                print(query)
                 cursor.execute(query)
                 query_results = cursor.fetchall()
                 cursor.close()
 
                 valid_pools_needing_updates = []
                 for row in query_results:
+                    print(row['view'])
                     if row['view'] in pool_tickers_json:
+                        print('valid')
                         current_pool_needing_update = {}
                         current_pool_needing_update['view'] = row['view']
                         current_pool_needing_update['ticker'] = pool_tickers_json[row['view']]
@@ -135,7 +160,7 @@ class UpdateThread(BackgroundThread):
                     processing_count += 1
                     print('processing ' + str(processing_count) + ' of ' + str(len(valid_pools_needing_updates)) + ' - ' + row['ticker'].upper())
                     try:
-                        pool_json_path = data_folder + "/" + row['ticker'].upper() + ".json"
+                        pool_json_path = data_folder + "/" + row['view'] + ".json"
                         pool_json = json.load(open(pool_json_path))
                         refresh_epoch(pool_json, row['view'], latest_epoch - 1)
                         refresh_epoch(pool_json, row['view'], latest_epoch)
@@ -143,7 +168,7 @@ class UpdateThread(BackgroundThread):
                         recalculate_pool(pool_json)
                         reorder_pool(pool_json)
 
-                        with open(data_folder + '/' + row['ticker'].upper() + '.json', 'w') as outfile:
+                        with open(data_folder + '/' + row['view'] + '.json', 'w') as outfile:
                             json.dump(pool_json, outfile, indent=4, use_decimal=True)
 
                     except (Exception) as metadata_error:
@@ -161,5 +186,8 @@ class BackgroundThreadFactory:
     def create(thread_type: str) -> BackgroundThread:
         if thread_type == 'update':
             return UpdateThread()
+        if thread_type == 'missing_epochs':
+            return MissingEpochsThread()
 
         raise NotImplementedError('Specified thread type is not implemented.')
+

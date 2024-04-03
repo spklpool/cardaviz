@@ -113,6 +113,7 @@ window.addEventListener("pageshow", () => {
 
 document.addEventListener('readystatechange', (event) => {
     if (document.readyState === "complete") {
+	document.getElementById("poolSearch").focus();
         ready_to_render = true;
         paper.install(window);
         var canvas = document.getElementById('cardaviz_logo')
@@ -327,7 +328,8 @@ function draw_cardaviz_logo() {
 <div id="instructions_div">
   <center><h4>or</h4></center>
   <center><h4>pick one of the predefined rankings below to see stake pool performance charts</h4></center>
-  <center><h3><a href="ranking/underappreciated_performers">Underappreciated Performers</a></h3></center>
+  <center><h3><a href="ranking/underappreciated_overperformers">Underappreciated Overperformers</a></h3></center>
+  <center><h3><a href="ranking/overappreciated_underperformers">Overappreciated Underperformers</a></h3></center>
 </div>
 <div id="results_instructions_div" style="display: none;">
   <center><h4>Too many results to display.  Keep typing.</h4></center>

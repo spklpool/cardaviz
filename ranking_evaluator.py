@@ -86,6 +86,7 @@ def evaluate_ranking(map_of_pool_jsons, ranking_name, number_of_pools_to_return)
                     set_dict_value_with_highest_lowest(pool, absolute, 'highest_lifetime_luck', pool_json['highest_lifetime_luck'])
                     set_dict_value_with_highest_lowest(pool, absolute, 'lowest_lifetime_luck', pool_json['lowest_lifetime_luck'])
                     set_dict_value_with_highest_lowest(pool, absolute, 'blocks_in_last_ten_epochs', pool_json['blocks_in_last_ten_epochs'])
+                    set_dict_value_with_highest_lowest(pool, absolute, 'last_delegator_count', pool_json['last_delegator_count'])
                     pools.append(pool)
                 except Exception as e:
                     print(e)

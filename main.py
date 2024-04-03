@@ -8,7 +8,7 @@ from thread_safe_objects import ThreadSafeDictOfPoolJson
 from ranking_evaluator import evaluate_ranking
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from background_thread import UpdateThread
+from background_thread import UpdateThread, MissingEpochsThread
 
 data_folder = '/var/www/html/mainnet_data/'
 
@@ -45,7 +45,9 @@ for ticker in tickers_json:
 
 app = Flask(__name__)
 update_thread = UpdateThread(map_of_pool_jsons)
+missing_epochs_thread = MissingEpochsThread(map_of_pool_jsons)
 update_thread.start()
+missing_epochs_thread.start()
 
 #directory = 'data/'
 directory = '/var/www/html/mainnet_data/'

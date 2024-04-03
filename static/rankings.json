@@ -1,7 +1,7 @@
 [
     {
-    "name": "underappreciated_performers",
-    "pretty_name": "Underappreciated Performers",
+    "name": "underappreciated_overperformers",
+    "pretty_name": "Underappreciated Overperformers",
     "summary": "Pools with strong performance but low stake currently",
     "description": "These pools have demonstrated that they can consistently produce their assigned blocks but have not been noticed by delegators.  If they would get more stake, they would have a good chance at generating some of the highest return on stake if their future performance remains similar to their past performance.",
     "expression": "pool['current_lifetime_luck__normalized'] * pool['lifetime_epochs__normalized'] / pool['latest_epoch_pool_stake__normalized']",
@@ -34,12 +34,25 @@
     ]
   },
     {
-    "name": "running_dead",
-    "pretty_name": "Running Dead",
+    "name": "overappreciated_underperformers",
+    "pretty_name": "Overappreciated Underperformers",
     "summary": "Pools that have horrible performance, yet have a surprising amount of stake.",
-    "description": "",
-    "expression": "pool['cumulative_diff']",
+    "description": "These pools have consistently produced fewer blocks than they should have been allocated by the protocol over a long period of time.",
+    "expression": "(-pool['cumulative_diff__normalized'])*pool['latest_epoch_pool_stake__normalized']",
     "expression_explanation": "",
-    "filters": []
+    "filters": [
+      {
+        "name": "no private pools with very few delegators",
+        "expression": "pool['last_delegator_count'] > 25"
+      },
+      {
+        "name": "at least 1M ADA staked",
+        "expression": "pool['latest_epoch_pool_stake'] > (1000000 * 1000000)"
+      },
+      {
+        "name": "at least 3 years in operation",
+        "expression": "pool['lifetime_epochs'] > 219"
+      }
+    ]
   }
 ]

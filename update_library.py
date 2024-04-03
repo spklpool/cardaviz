@@ -1,11 +1,11 @@
 import traceback
 
+import os
 import psycopg2
 import simplejson as json
 from config import config
 from psycopg2.extras import RealDictCursor
 from decimal import Decimal, getcontext
-import os
 from datetime import datetime, timedelta
 from os.path import exists
 
@@ -62,8 +62,8 @@ def get_first_pool_epoch(pool_id, network='mainnet'):
     return return_value
 
 
-def is_in_quiet_period():
-    ret = False
+def is_in_quiet_period(network='mainnet'):
+    ret = True
     conn = None
     try:
         params = config(network + '.ini')
@@ -72,11 +72,11 @@ def is_in_quiet_period():
         query = """ SELECT completed FROM epoch_stake_progress WHERE epoch_no = (SELECT MAX(NO) FROM epoch); """
         cursor.execute(query)
         result = cursor.fetchall()
-        return_value = result[0]
-        print(return_value)
+        if result[0]['completed'] == True:
+            ret = False
         cursor.close()
     except (Exception, psycopg2.DatabaseError) as error:
-        return str(error)
+        print(str(error))
     finally:
         if conn is not None:
             conn.close()
@@ -140,10 +140,8 @@ def get_totalStake_for_epoch(epoch, network='mainnet'):
         stake_cursor = conn.cursor(cursor_factory=RealDictCursor)
         stake_query = "SELECT epoch_no, sum (amount) AS stake FROM epoch_stake WHERE epoch_no = " + str(
             epoch) + " GROUP BY epoch_no;"
-        print(stake_query)
         stake_cursor.execute(stake_query)
         stake_query_results = stake_cursor.fetchall()
-        print(stake_query_results)
         for row in stake_query_results:
             if row['epoch_no'] == epoch:
                 epoch_stake = row['stake']
@@ -171,14 +169,12 @@ def refresh_epoch(pool_json, pool_id, epoch_to_update, network='mainnet'):
                     INNER JOIN pool_hash ON slot_leader.pool_hash_id = pool_hash.id
                     WHERE pool_hash.view = \'""" + pool_id + "\' and epoch_no = \'" + str(epoch_to_update) + """\'
                     GROUP BY block.epoch_no, pool_hash.view;"""
-        print(str(blocks_query))
         blocks_cursor.execute(blocks_query)
         blocks_query_results = blocks_cursor.fetchall()
-        print(str(blocks_query_results))
         blocks_cursor.close()
 
         stake_cursor = conn.cursor(cursor_factory=RealDictCursor)
-        stake_query = """SELECT pool_hash.view, epoch_no, sum (amount) as stake 
+        stake_query = """SELECT pool_hash.view, count(*) as delegator_count, epoch_no, sum (amount) as stake 
                         FROM epoch_stake
                         INNER JOIN pool_hash on epoch_stake.pool_id = pool_hash.id
                         WHERE pool_hash.view = \'""" + pool_id + "\' and epoch_no = \'" + str(epoch_to_update) + """\'
@@ -186,7 +182,6 @@ def refresh_epoch(pool_json, pool_id, epoch_to_update, network='mainnet'):
 	                    ORDER BY epoch_no;"""
         stake_cursor.execute(stake_query)
         stake_query_results = stake_cursor.fetchall()
-        print(str(stake_query_results))
         stake_cursor.close()
 
         already_has_latest_epoch = False
@@ -197,13 +192,17 @@ def refresh_epoch(pool_json, pool_id, epoch_to_update, network='mainnet'):
                 already_has_latest_epoch = True
 
         if len(stake_query_results) > 0:
+            epoch_element["delegator_count"] = stake_query_results[0]['delegator_count']
+        else:
+            epoch_element["delegator_count"] = 0
+
+        if len(stake_query_results) > 0:
             epoch_element["pool_stake"] = stake_query_results[0]['stake']
         else:
             epoch_element["pool_stake"] = 0
 
         if str(epoch_to_update) in total_stake_json:
             total_stake = Decimal(total_stake_json[str(epoch_to_update)])
-            print('total_stake from existing json: ' + str(total_stake))
         else:
             total_stake = Decimal(get_totalStake_for_epoch(epoch_to_update, network))
             if total_stake > 0:
@@ -214,8 +213,6 @@ def refresh_epoch(pool_json, pool_id, epoch_to_update, network='mainnet'):
 
         epoch_element["total_stake"] = total_stake
 
-        print('total_stake: ' + str(total_stake))
-
         slot_coefficient = 0.05
         decentralisation_coefficient = 0
         decentralisation_data = json.load(open('static/decentralisation.json'))
@@ -225,7 +222,6 @@ def refresh_epoch(pool_json, pool_id, epoch_to_update, network='mainnet'):
         getcontext().prec = 6
 
         # 5 * 24 * 60 * 60 = 432000
-        print("Total stake:  " + str(Decimal(total_stake)))
         epoch_element["expected"] = round(Decimal(epoch_element["pool_stake"]) / Decimal(total_stake) * Decimal(
             432000) * Decimal(slot_coefficient) * Decimal((1 - decentralisation_coefficient)), 2)
         epoch_element["decentralisation_coefficient"] = decentralisation_coefficient
@@ -267,6 +263,23 @@ def list_missing_pools(network='mainnet'):
         if not exists(base_data_folder + '/' + network + '_data/' + pool_id + '.json'):
             print(pool_id + ' ' + ticker)
 
+def get_missing_epochs_delegator_count(pool_json, network='mainnet'):
+    ret = []
+    tickers_json = json.load(open('static/' + network + '_tickers.json'))
+    pool_id = tickers_json[pool_json['ticker']]
+    first_epoch = get_first_pool_epoch(pool_id)
+    latest_epoch = get_latest_epoch()
+    for searched_epoch in range(first_epoch, latest_epoch + 1):
+        contains_epoch = False
+        for target_epoch_index in range(0, len(pool_json['epochs'])):
+            if pool_json['epochs'][target_epoch_index]['epoch'] == searched_epoch:
+                if 'delegator_count' in pool_json['epochs'][target_epoch_index]:
+                    contains_epoch = True
+                    break
+        if not contains_epoch:
+            ret.append(searched_epoch)
+    return ret
+
 def get_missing_epochs(pool_json, network='mainnet'):
     ret = []
     tickers_json = json.load(open('static/' + network + '_tickers.json'))
@@ -288,6 +301,33 @@ def reorder_pool(pool_json):
     print("reordering " + pool_ticker)
     pool_json['epochs'] = sorted(pool_json['epochs'], key=lambda d: d['epoch'])
 
+def add_missing_pools(network='mainnet'):
+    tickers_to_update = []
+    tickers_json = json.load(open('static/' + network + '_tickers.json'))
+    for ticker in tickers_json:
+        pool_id = tickers_json[ticker]
+        if not os.path.exists(base_data_folder + '/' + network + '_data/' + pool_id + '.json'):
+            tickers_to_update.append(ticker)
+
+    latest_epoch = get_latest_epoch()
+    progress_count = 0
+    for ticker in tickers_to_update:
+        pool_id = tickers_json[ticker]
+        pool_json = {}
+        pool_json['ticker'] = ticker.upper()
+        pool_json['epochs'] = []
+        progress_count += 1
+        first_epoch = get_first_pool_epoch(tickers_json[ticker]);
+        print('updating ' + str(progress_count) + ' of ' + str(len(tickers_to_update)) + ' - ' + ticker + '(' + str(first_epoch) + ',' + str(latest_epoch) + ')')
+        for epoch in range(first_epoch, latest_epoch + 1):
+            print('updating ' + str(progress_count) + ' of ' + str(len(tickers_to_update)) + ' - ' + ticker + ' - epoch ' + str(epoch))
+            refresh_epoch(pool_json, tickers_json[ticker], epoch)
+
+        recalculate_pool(pool_json)
+
+        with open(base_data_folder + '/' + network + '_data/' + pool_id + '.json', 'w') as outfile:
+            json.dump(pool_json, outfile, indent=4, use_decimal=True)
+
 def add_all_missing_epochs(map_of_pool_jsons, network='mainnet'):
     tickers_json = json.load(open('static/' + network + '_tickers.json'))
     current_count = 0
@@ -299,10 +339,9 @@ def add_all_missing_epochs(map_of_pool_jsons, network='mainnet'):
         if pool_ticker in tickers_json:
             pool_id = tickers_json[pool_ticker]
             missing_epochs = get_missing_epochs(pool_json)
-            print(str(current_count) + ' of ' + str(total_count) + ' ' + pool_ticker + ' has ' + str(len(missing_epochs)) + ' missing epochs')
             if len(missing_epochs) > 0:
                 for index in range(0, len(missing_epochs)):
-                    print(missing_epochs[index])
+                    print('adding missing epochs for pool ' + str(current_count) + ' of ' + str(total_count) + ' ' + pool_ticker + ' updating epoch ' + str(index) + ' of ' + str(len(missing_epochs)) + ' missing epochs')
                     refresh_epoch(pool_json, pool_id, missing_epochs[index])
                 recalculate_pool(pool_json)
                 reorder_pool(pool_json)
@@ -328,6 +367,7 @@ def recalculate_pool(pool_json):
     max_epoch_blocks = Decimal(0)
     pool_json['max_epoch_blocks'] = Decimal(0)
     blocks_in_last_ten_epochs = 0
+    last_delegator_count = 0
 
 
     for epoch in pool_json['epochs']:
@@ -341,6 +381,7 @@ def recalculate_pool(pool_json):
             epoch['epoch_diff'] = Decimal(epoch['actual']) - Decimal(epoch['expected'])
             cumulative_diff += Decimal(epoch['epoch_diff'])
             epoch['epoch_cumulative_diff'] = cumulative_diff
+            last_delegator_count = epoch['delegator_count']
         except (Exception) as error:
             print("Error: " + str(error))
             traceback.print_exc()
@@ -375,6 +416,7 @@ def recalculate_pool(pool_json):
     if 'total_stake' in latest_pool_epoch:
         pool_json['latest_epoch_total_stake'] = latest_pool_epoch['total_stake']
 
+    pool_json['last_delegator_count'] = last_delegator_count
     pool_json['blocks_in_last_ten_epochs'] = blocks_in_last_ten_epochs
     pool_json['max_positive_diff'] = max_positive_cumulative_diff
     pool_json['max_negative_diff'] = max_negative_cumulative_diff

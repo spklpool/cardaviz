@@ -24,6 +24,8 @@ mkdir /var/www/html/mainnet_data
 cp -r /cardaviz/data/* /var/www/html/mainnet_data/
 chown -R root:www-data /var/www/html/mainnet_data/
 cp /cardaviz/etc/cardaviz_backend.service /etc/systemd/system/cardaviz_backend.service
+cp /cardaviz/etc/journald.conf /etc/systemd/journald.conf
+systemctl restart systemd-journald
 systemctl start cardaviz_backend.service
 systemctl enable cardaviz_backend.service
 cp /cardaviz/etc/cardaviz_vault.service /etc/systemd/system/cardaviz_vault.service

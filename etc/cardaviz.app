@@ -4,7 +4,7 @@ server {
         include proxy_params;
         proxy_pass http://unix:/var/www/cardaviz.sock;
     }
-    location /data {
+    location /mainnet_data {
         root  /var/www/html;
     }
     location /images {

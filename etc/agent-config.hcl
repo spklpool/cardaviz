@@ -20,7 +20,7 @@ auto_auth {
 }
 template {
   source = "/cardaviz/etc/database.ini.tmpl"
-  destination = "/cardaviz/database.ini"
+  destination = "/cardaviz/mainnet.ini"
 }
 template {
   source = "/cardaviz/etc/Rocket.toml.tmpl"

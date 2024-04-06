@@ -30,9 +30,9 @@
 		var global_data = null;
 		var data_fetch_completed = false;
 		var first_drawing_complete = false;
-		var data_url = '/' + sessionStorage.network + '_data/{{pool_id}}.json';
-
+		sessionStorage.network = 'mainnet';
 		console.log('network is ' + sessionStorage.network);
+		var data_url = '/' + sessionStorage.network + '_data/{{pool_id}}.json';
 		console.log('fetching data from ' + data_url);
 		fetch(data_url)
 		.then(function (response) {

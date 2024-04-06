@@ -65,19 +65,20 @@ def refresh_pool_for_epoch(ticker, epoch, sleep_seconds, network='mainnet'):
         json.dump(pool_json, outfile, indent=4, use_decimal=True)
     return "done"
 
-def refresh_all_pools_for_epoch(epoch, sleep_seconds, network='mainnet'):
+def refresh_all_pools_for_epoch(epoch, network='mainnet'):
     print("updating " + str(epoch))
+    tickers_json = load_tickers_json(network)
     current_count = 0
+    print('refreshing all pools in ' + data_folder)
     all_files = os.listdir(data_folder)
     all_files = [os.path.join(data_folder, f) for f in all_files]
     all_files.sort(key=lambda x: os.path.getmtime(x))
     for filename in all_files:
         current_count += 1
         if os.path.isfile(filename):
-            print("updating " + str(current_count) + " of " + str(len(all_files)) + " - " + filename)
-            tickers_json = load_tickers_json(network)
             pool_json = json.load(open(filename))
             pool_ticker = pool_json['ticker']
+            print("updating " + str(current_count) + " of " + str(len(all_files)) + " - " + pool_ticker + " - " + filename)
             if pool_ticker in tickers_json:
                 pool_id = tickers_json[pool_ticker]
                 refresh_epoch(pool_json, pool_id, epoch)
@@ -85,7 +86,6 @@ def refresh_all_pools_for_epoch(epoch, sleep_seconds, network='mainnet'):
                 reorder_pool(pool_json)
                 with open(data_folder + '/' + pool_id + '.json', 'w') as outfile:
                     json.dump(pool_json, outfile, indent=4, use_decimal=True)
-                sleep(sleep_seconds)
     return "done"
 
 #network = 'sancho'
@@ -98,4 +98,4 @@ data_folder = '/var/www/html/' + network + '_data'
 #    refresh_all_pools_for_epoch(latest_epoch - 1, 1, network)
 #add_missing_pools(network)
 
-refresh_all_pools_for_epoch(476, 1, network)
+refresh_all_pools_for_epoch(476, network)

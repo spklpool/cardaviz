@@ -263,7 +263,7 @@ def list_missing_pools(network='mainnet'):
         if not exists(base_data_folder + '/' + network + '_data/' + pool_id + '.json'):
             print(pool_id + ' ' + ticker)
 
-def get_missing_epochs_delegator_count(pool_json, network='mainnet'):
+def get_missing_epochs(pool_json, network='mainnet'):
     ret = []
     tickers_json = json.load(open('static/' + network + '_tickers.json'))
     pool_id = tickers_json[pool_json['ticker']]
@@ -280,7 +280,7 @@ def get_missing_epochs_delegator_count(pool_json, network='mainnet'):
             ret.append(searched_epoch)
     return ret
 
-def get_missing_epochs(pool_json, network='mainnet'):
+def get_missing_epochs_bak(pool_json, network='mainnet'):
     ret = []
     tickers_json = json.load(open('static/' + network + '_tickers.json'))
     pool_id = tickers_json[pool_json['ticker']]
@@ -295,6 +295,63 @@ def get_missing_epochs(pool_json, network='mainnet'):
         if not contains_epoch:
             ret.append(searched_epoch)
     return ret
+
+def get_all_tickers(network='mainnet'):
+    ticker_map = {}
+    view_map = {}
+    conn = None
+    try:
+        params = config(network + '.ini', 'postgresql')
+        conn = psycopg2.connect(**params)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        query = """ SELECT pool_hash.view, off_chain_pool_data.ticker_name as ticker
+                    FROM pool_hash
+                    INNER JOIN off_chain_pool_data ON off_chain_pool_data.pool_id = pool_hash.id
+                    INNER JOIN pool_update ON pool_update.hash_id = pool_hash.id
+                    WHERE registered_tx_id IN (
+                        SELECT max(registered_tx_id)
+                        FROM pool_update
+                        GROUP BY hash_id) and not exists
+                          ( select * from pool_retire where pool_retire.hash_id = pool_update.hash_id
+                          and pool_retire.retiring_epoch <= (select max (epoch_no) from block))
+                    AND off_chain_pool_data.id IN (SELECT MAX(id) FROM off_chain_pool_data GROUP BY off_chain_pool_data.pool_id)
+                    ORDER BY ticker_name"""
+        cursor.execute(query)
+        query_results = cursor.fetchall()
+        cursor.close()
+
+        for row in query_results:
+            ticker_map[row['ticker']] = row['view']
+            view_map[row['view']] = row['ticker']
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(str(error))
+        return "Error: " + str(error)
+    finally:
+        if conn is not None:
+            conn.close()
+
+    with open('static/' + network + '_tickers.json', 'w') as outfile:
+        outfile.write(json.dumps(ticker_map, indent=4, use_decimal=True))
+    with open('static/' + network + '_pool_tickers.json', 'w') as outfile:
+        outfile.write(json.dumps(view_map, indent=4, use_decimal=True))
+
+    return 'done'
+
+def reset_tickers(map_of_pool_jsons, network='mainnet'):
+    tickers_json = json.load(open('static/' + network + '_tickers.json'))
+    for pool_ticker in tickers_json:
+        pool_id = tickers_json[pool_ticker]
+        pool_file_path = '/var/www/html/mainnet_data/' + pool_id + '.json'
+        if os.path.exists(pool_file_path):
+            pool_json = json.load(open(pool_file_path))
+            if pool_json['ticker'] != pool_ticker:
+                print('resetting ticker for pool: ' + pool_ticker + ' ' + pool_id)
+                pool_json['ticker'] = pool_ticker
+                pool_file_path = base_data_folder +  '/' + network + '_data/' + pool_id + '.json'
+                with open(pool_file_path, 'w') as outfile:
+                    json.dump(pool_json, outfile, indent=4, use_decimal=True)
+    return "done"
 
 def reorder_pool(pool_json):
     pool_ticker = pool_json['ticker']
@@ -314,7 +371,7 @@ def add_missing_pools(network='mainnet'):
     for ticker in tickers_to_update:
         pool_id = tickers_json[ticker]
         pool_json = {}
-        pool_json['ticker'] = ticker.upper()
+        pool_json['ticker'] = ticker
         pool_json['epochs'] = []
         progress_count += 1
         first_epoch = get_first_pool_epoch(tickers_json[ticker]);

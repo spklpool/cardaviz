@@ -147,7 +147,8 @@ function onNetworkChanged() {
 function poolsThatStartWith(unfiltered_pools_json, starts_with_text) {
     var ret = {}
     for (const [key, value] of Object.entries(unfiltered_pools_json)) {
-      if (key.startsWith(starts_with_text)) {
+      console.log('unfiltered pools: ' + key + ' compared with ' + starts_with_text)
+      if (key.toUpperCase().startsWith(starts_with_text.toUpperCase())) {
           ret[key] = value;
       }
     }
@@ -172,6 +173,7 @@ const debounce = (func, delay) => {
 }
 
 function render_pool_thumbnail(data) {
+    console.log('rendering thumbnail for ticker: ' + data['ticker']);
     var canvasCellHTML = '<td><a href="pools/' + get_pool_id_from_ticker(data['ticker']) + '"><canvas id="' + data['ticker'] + '"></canvas></a></td>'
     var tableRef = document.getElementById('canvas_table').getElementsByTagName('tbody')[0];
     var newRow = tableRef.insertRow(tableRef.rows.length);
@@ -248,7 +250,7 @@ var filter_pools = debounce(function() {
       set_instructions_visibility(false);
       set_results_instructions_visibility(false);
       set_no_results_visibility(false);
-      var filtered_pools = poolsThatStartWith(tickers_json, inputBox.value.toUpperCase());
+      var filtered_pools = poolsThatStartWith(tickers_json, inputBox.value);
       if (Object.keys(filtered_pools).length == 0) {
          console.log('0 results');
          set_no_results_visibility(true);
@@ -260,9 +262,9 @@ var filter_pools = debounce(function() {
         for (var i=0; i<filtered_pools.length; i++) {
             var ticker_item = document.createElement("li");
             console.log('rendering ' + filtered_pools[i]);
-            if (filtered_pools[i].toUpperCase() in pool_json_client_cache) {
+            if (filtered_pools[i] in pool_json_client_cache) {
               console.log('rendering from client cache');
-              render_pool_thumbnail(pool_json_client_cache[filtered_pools[i].toUpperCase()]);
+              render_pool_thumbnail(pool_json_client_cache[filtered_pools[i]]);
             } else {
               var data_url = '/' + document.getElementById("network").value + '_data/' + get_pool_id_from_ticker(filtered_pools[i]) + '.json';
               console.log('fetching data from ' + data_url);
@@ -272,7 +274,7 @@ var filter_pools = debounce(function() {
               })
               .then(function (data) {
                   console.log('data fetch completed for ' + data['ticker']);
-                  pool_json_client_cache[data['ticker'].toUpperCase()] = data;
+                  pool_json_client_cache[data['ticker']] = data;
                   render_pool_thumbnail(data);
               })
               .catch(function (err) {

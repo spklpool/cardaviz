@@ -22,6 +22,7 @@ def get_all_tickers(network='mainnet'):
                         GROUP BY hash_id) and not exists
                           ( select * from pool_retire where pool_retire.hash_id = pool_update.hash_id
                           and pool_retire.retiring_epoch <= (select max (epoch_no) from block))
+                    AND off_chain_pool_data.id IN (SELECT MAX(id) FROM off_chain_pool_data GROUP BY off_chain_pool_data.pool_id)
                     ORDER BY ticker_name"""
         cursor.execute(query)
         query_results = cursor.fetchall()
@@ -39,9 +40,9 @@ def get_all_tickers(network='mainnet'):
         if conn is not None:
             conn.close()
 
-    with open('static/' + network + '_tickers.json.comp', 'w') as outfile:
+    with open('static/' + network + '_tickers.json', 'w') as outfile:
         outfile.write(json.dumps(ticker_map, indent=4, use_decimal=True))
-    with open('static/' + network + '_pool_tickers.json.comp', 'w') as outfile:
+    with open('static/' + network + '_pool_tickers.json', 'w') as outfile:
         outfile.write(json.dumps(view_map, indent=4, use_decimal=True))
 
     return 'done'

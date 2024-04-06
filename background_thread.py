@@ -3,7 +3,7 @@ import logging
 import threading
 from queue import Queue
 from abc import abstractmethod, ABC
-from update_library import is_in_quiet_period, add_missing_pools, add_all_missing_epochs, reorder_pool, refresh_epoch, recalculate_pool, get_latest_epoch
+from update_library import is_in_quiet_period, add_missing_pools, add_all_missing_epochs, reorder_pool, refresh_epoch, recalculate_pool, get_latest_epoch, get_all_tickers, reset_tickers
 import simplejson as json
 from datetime import datetime
 from config import config
@@ -79,9 +79,11 @@ class MissingEpochsThread(BackgroundThread):
         logging.info('MissingEpochsThread stopped')
 
     def handle(self) -> None:
+        print('updating tickers')
+        get_all_tickers()
+        reset_tickers(self.map_of_pool_jsons)
         print('adding any missing pools')
         add_missing_pools()
-        print('done adding any missing pools')
         print('adding any missing epochs for all pools')
         add_all_missing_epochs(self.map_of_pool_jsons)
         sleep(60)
@@ -130,16 +132,13 @@ class UpdateThread(BackgroundThread):
                             INNER JOIN slot_leader ON slot_leader.id = block.slot_leader_id
                             INNER JOIN pool_hash ON pool_hash.id = slot_leader.pool_hash_id
                             WHERE TIME > \'""" + last_update_time + "\' ;"""
-                print(query)
                 cursor.execute(query)
                 query_results = cursor.fetchall()
                 cursor.close()
 
                 valid_pools_needing_updates = []
                 for row in query_results:
-                    print(row['view'])
                     if row['view'] in pool_tickers_json:
-                        print('valid')
                         current_pool_needing_update = {}
                         current_pool_needing_update['view'] = row['view']
                         current_pool_needing_update['ticker'] = pool_tickers_json[row['view']]
@@ -151,7 +150,8 @@ class UpdateThread(BackgroundThread):
                     with open(updates_file_name, 'w') as outfile:
                         json.dump(updates_json, outfile, indent=4, use_decimal=True)
                 else:
-                    print('nothing to update - waiting a few seconds')
+                    print('nothing to update - waiting 30 seconds')
+                    sleep(30)
 
                 print('out of ' + str(len(query_results)) + ' keeping ' + str(len(valid_pools_needing_updates)) + ' that have working tickers')
 

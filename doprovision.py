@@ -5,7 +5,7 @@ cardaviz_role_id = os.environ.get('cardaviz_role_id')
 cardaviz_secret_id = os.environ.get('cardaviz_secret_id')
 
 droplet = digitalocean.Droplet(token=os.environ.get('DIGITALOCEAN_ACCESS_TOKEN'),
-                                name='Cardaviz2',
+                                name='Cardaviz1',
                                 user_data="""#!/bin/bash
 apt update -y 
 ant upgrade -y

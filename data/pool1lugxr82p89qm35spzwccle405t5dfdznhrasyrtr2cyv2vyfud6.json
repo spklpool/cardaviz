@@ -1,5 +1,5 @@
 {
-    "ticker": "COFE2",
+    "ticker": "KISSA",
     "id": "pool1lugxr82p89qm35spzwccle405t5dfdznhrasyrtr2cyv2vyfud6",
     "epochs": [
         {
@@ -572,9 +572,23 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 24.2000,
             "cumulative_actual_blocks": 26,
-            "epoch_diff": -0.760000,
+            "epoch_diff": -0.76,
             "epoch_cumulative_diff": 1.80000,
             "delegator_count": 5
+        },
+        {
+            "epoch": 477,
+            "expected": 0.76,
+            "actual": 1,
+            "delegator_count": 5,
+            "pool_stake": 802588530461,
+            "total_stake": 22697968340213296,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 24.9600,
+            "cumulative_actual_blocks": 27,
+            "epoch_diff": 0.24,
+            "epoch_cumulative_diff": 2.04000
         }
     ],
     "max_epoch_blocks": 4,
@@ -582,15 +596,15 @@
     "max_positive_diff": 4.60000,
     "max_negative_diff": 2.81000,
     "max_cumulative_diff": 4.60000,
-    "cumulative_diff": 1.80000,
-    "cumulative_expected_blocks": 24.2000,
-    "cumulative_actual_blocks": 26,
+    "cumulative_diff": 2.04000,
+    "cumulative_expected_blocks": 24.9600,
+    "cumulative_actual_blocks": 27,
     "max_actual_blocks": 4,
     "max_expected_blocks": 0.76,
-    "current_lifetime_luck": 107.438,
-    "highest_lifetime_luck": 119.008,
-    "lowest_lifetime_luck": 88.3884,
+    "current_lifetime_luck": 108.173,
+    "highest_lifetime_luck": 118.430,
+    "lowest_lifetime_luck": 88.7420,
     "latest_epoch_pool_stake": 802588530461,
-    "latest_epoch_total_stake": 22705372932636708,
+    "latest_epoch_total_stake": 22697968340213296,
     "last_delegator_count": 5
 }

@@ -1,5 +1,5 @@
 {
-    "ticker": "CRAZY",
+    "ticker": "VEGAS",
     "id": "pool1df9rj4n0t3zlpak7xnh4ue6t3yh9zlw7a02w4l8askp77up25rt",
     "epochs": [
         {
@@ -3736,9 +3736,23 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 1167.81,
             "cumulative_actual_blocks": 1101,
-            "epoch_diff": -1.62000,
+            "epoch_diff": -1.62,
             "epoch_cumulative_diff": -66.8100,
             "delegator_count": 973
+        },
+        {
+            "epoch": 477,
+            "expected": 4.63,
+            "actual": 4,
+            "delegator_count": 973,
+            "pool_stake": 4865642213629,
+            "total_stake": 22697968340213296,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 1172.44,
+            "cumulative_actual_blocks": 1105,
+            "epoch_diff": -0.63,
+            "epoch_cumulative_diff": -67.4400
         }
     ],
     "max_epoch_blocks": 22,
@@ -3746,15 +3760,15 @@
     "max_positive_diff": 15.3700,
     "max_negative_diff": 78.7000,
     "max_cumulative_diff": 78.7000,
-    "cumulative_diff": -66.8100,
-    "cumulative_expected_blocks": 1167.81,
-    "cumulative_actual_blocks": 1101,
+    "cumulative_diff": -67.4400,
+    "cumulative_expected_blocks": 1172.44,
+    "cumulative_actual_blocks": 1105,
     "max_actual_blocks": 22,
     "max_expected_blocks": 14.53,
-    "current_lifetime_luck": 94.2790,
-    "highest_lifetime_luck": 101.316,
-    "lowest_lifetime_luck": 93.2609,
-    "latest_epoch_pool_stake": 4852519251766,
-    "latest_epoch_total_stake": 22705372932636708,
+    "current_lifetime_luck": 94.2479,
+    "highest_lifetime_luck": 101.311,
+    "lowest_lifetime_luck": 93.2875,
+    "latest_epoch_pool_stake": 4865642213629,
+    "latest_epoch_total_stake": 22697968340213296,
     "last_delegator_count": 973
 }

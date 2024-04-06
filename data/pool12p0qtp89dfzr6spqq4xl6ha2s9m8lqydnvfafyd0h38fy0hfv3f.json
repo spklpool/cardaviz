@@ -1,5 +1,5 @@
 {
-    "ticker": "PANDA",
+    "ticker": "BUZZ",
     "id": "pool12p0qtp89dfzr6spqq4xl6ha2s9m8lqydnvfafyd0h38fy0hfv3f",
     "epochs": [
         {
@@ -2409,6 +2409,20 @@
             "epoch_diff": 0,
             "epoch_cumulative_diff": 0,
             "delegator_count": 3
+        },
+        {
+            "epoch": 477,
+            "expected": 0.0,
+            "actual": 0,
+            "delegator_count": 3,
+            "pool_stake": 181886382,
+            "total_stake": 22697968340213296,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 0.0,
+            "cumulative_actual_blocks": 0,
+            "epoch_diff": 0.0,
+            "epoch_cumulative_diff": 0.0
         }
     ],
     "max_epoch_blocks": 0,
@@ -2416,8 +2430,8 @@
     "max_positive_diff": 0,
     "max_negative_diff": 0,
     "max_cumulative_diff": 0,
-    "cumulative_diff": 0,
-    "cumulative_expected_blocks": 0,
+    "cumulative_diff": 0.0,
+    "cumulative_expected_blocks": 0.0,
     "cumulative_actual_blocks": 0,
     "max_actual_blocks": 0,
     "max_expected_blocks": 0,
@@ -2425,6 +2439,6 @@
     "highest_lifetime_luck": 0,
     "lowest_lifetime_luck": 0,
     "latest_epoch_pool_stake": 181886382,
-    "latest_epoch_total_stake": 22705372932636708,
+    "latest_epoch_total_stake": 22697968340213296,
     "last_delegator_count": 3
 }

@@ -1,5 +1,5 @@
 {
-    "ticker": "P2PCX",
+    "ticker": "PPCX2",
     "id": "pool1nhlv5z2lsptzgcp9ype0mppc7zyndm66ypm4sw5hy27ewdchqx0",
     "epochs": [
         {
@@ -3519,16 +3519,30 @@
         {
             "epoch": 476,
             "expected": 9.47,
-            "actual": 6,
+            "actual": 13,
             "pool_stake": 9957292632882,
             "total_stake": 22705372932636708,
             "decentralisation_coefficient": 0,
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 7209.75,
-            "cumulative_actual_blocks": 6834,
-            "epoch_diff": -3.47000,
-            "epoch_cumulative_diff": -375.750,
+            "cumulative_actual_blocks": 6841,
+            "epoch_diff": 3.53,
+            "epoch_cumulative_diff": -368.750,
             "delegator_count": 2129
+        },
+        {
+            "epoch": 477,
+            "expected": 9.47,
+            "actual": 2,
+            "delegator_count": 2128,
+            "pool_stake": 9947470262664,
+            "total_stake": 22697968340213296,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 7219.22,
+            "cumulative_actual_blocks": 6843,
+            "epoch_diff": -7.47,
+            "epoch_cumulative_diff": -376.220
         }
     ],
     "max_epoch_blocks": 78,
@@ -3536,15 +3550,15 @@
     "max_positive_diff": 11.5500,
     "max_negative_diff": 387.420,
     "max_cumulative_diff": 387.420,
-    "cumulative_diff": -375.750,
-    "cumulative_expected_blocks": 7209.75,
-    "cumulative_actual_blocks": 6834,
+    "cumulative_diff": -376.220,
+    "cumulative_expected_blocks": 7219.22,
+    "cumulative_actual_blocks": 6843,
     "max_actual_blocks": 78,
     "max_expected_blocks": 61.93,
-    "current_lifetime_luck": 94.7883,
+    "current_lifetime_luck": 94.7886,
     "highest_lifetime_luck": 100.160,
-    "lowest_lifetime_luck": 94.6264,
-    "latest_epoch_pool_stake": 9957292632882,
-    "latest_epoch_total_stake": 22705372932636708,
-    "last_delegator_count": 2129
+    "lowest_lifetime_luck": 94.6335,
+    "latest_epoch_pool_stake": 9947470262664,
+    "latest_epoch_total_stake": 22697968340213296,
+    "last_delegator_count": 2128
 }

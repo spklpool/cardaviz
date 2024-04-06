@@ -1,5 +1,5 @@
 {
-    "ticker": "BAG",
+    "ticker": "SHIP",
     "id": "pool1h9jr0f9evk3raxlljq6mt4gj7ej4v82afvnlc2wh28rwy2d8lsy",
     "epochs": [
         {
@@ -3148,25 +3148,39 @@
             "slot_coefficient": 0.05,
             "cumulative_expected_blocks": 51.0500,
             "cumulative_actual_blocks": 66,
-            "epoch_diff": -0.570000,
+            "epoch_diff": -0.57,
             "epoch_cumulative_diff": 14.9500,
             "delegator_count": 28
+        },
+        {
+            "epoch": 477,
+            "expected": 0.45,
+            "actual": 1,
+            "delegator_count": 27,
+            "pool_stake": 472249265683,
+            "total_stake": 22697968340213296,
+            "decentralisation_coefficient": 0,
+            "slot_coefficient": 0.05,
+            "cumulative_expected_blocks": 51.5000,
+            "cumulative_actual_blocks": 67,
+            "epoch_diff": 0.55,
+            "epoch_cumulative_diff": 15.5000
         }
     ],
     "max_epoch_blocks": 6,
-    "blocks_in_last_ten_epochs": 7,
+    "blocks_in_last_ten_epochs": 6,
     "max_positive_diff": 17.4300,
     "max_negative_diff": 1.09000,
     "max_cumulative_diff": 17.4300,
-    "cumulative_diff": 14.9500,
-    "cumulative_expected_blocks": 51.0500,
-    "cumulative_actual_blocks": 66,
+    "cumulative_diff": 15.5000,
+    "cumulative_expected_blocks": 51.5000,
+    "cumulative_actual_blocks": 67,
     "max_actual_blocks": 6,
     "max_expected_blocks": 2.76,
-    "current_lifetime_luck": 129.285,
-    "highest_lifetime_luck": 134.143,
-    "lowest_lifetime_luck": 97.8648,
-    "latest_epoch_pool_stake": 596395664177,
-    "latest_epoch_total_stake": 22705372932636708,
-    "last_delegator_count": 28
+    "current_lifetime_luck": 130.097,
+    "highest_lifetime_luck": 133.845,
+    "lowest_lifetime_luck": 97.8835,
+    "latest_epoch_pool_stake": 472249265683,
+    "latest_epoch_total_stake": 22697968340213296,
+    "last_delegator_count": 27
 }

@@ -1,6 +1,7 @@
 {{  with secret "database/creds/cardaviz_web"  }}
 [postgresql]
-host=192.168.0.139
+host=relay1.spklpool.com
+port=55432
 database=cexplorer
 user={{  .Data.username  }}
 password={{  .Data.password  }}

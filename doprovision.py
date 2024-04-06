@@ -1,6 +1,9 @@
 import digitalocean
 import os
 
+cardaviz_role_id = os.environ.get('cardaviz_role_id')
+cardaviz_secret_id = os.environ.get('cardaviz_secret_id')
+
 droplet = digitalocean.Droplet(token=os.environ.get('DIGITALOCEAN_ACCESS_TOKEN'),
                                 name='Cardaviz1',
                                 user_data="""#!/bin/bash
@@ -20,6 +23,11 @@ git clone https://github.com/spklpool/cardaviz.git
 cd /cardaviz
 python3 -m venv /cardaviz/venv
 /cardaviz/venv/bin/pip3 install -r requirements.txt
+echo """ + cardaviz_role_id + """ /cardaviz/cardaviz_role_id
+echo """ + cardaviz_secret_id + """ /cardaviz/cardaviz_secret_id
+cp /cardaviz/etc/cardaviz_vault.service /etc/systemd/system/cardaviz_vault.service
+systemctl start cardaviz_vault.service
+systemctl enable cardaviz_vault.service
 mkdir /var/www/html/mainnet_data
 cp -r /cardaviz/data/* /var/www/html/mainnet_data/
 chown -R root:www-data /var/www/html/mainnet_data/
@@ -28,9 +36,6 @@ cp /cardaviz/etc/journald.conf /etc/systemd/journald.conf
 systemctl restart systemd-journald
 systemctl start cardaviz_backend.service
 systemctl enable cardaviz_backend.service
-cp /cardaviz/etc/cardaviz_vault.service /etc/systemd/system/cardaviz_vault.service
-systemctl start cardaviz_vault.service
-systemctl enable cardaviz_vault.service
 cp /cardaviz/etc/nginx.conf /etc/nginx/nginx.conf
 cp /cardaviz/etc/cardaviz.app /etc/nginx/sites-available/cardaviz.app
 ln -s /etc/nginx/sites-available/cardaviz.app /etc/nginx/sites-enabled/cardaviz.app

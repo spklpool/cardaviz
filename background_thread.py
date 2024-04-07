@@ -150,8 +150,8 @@ class UpdateThread(BackgroundThread):
                     with open(updates_file_name, 'w') as outfile:
                         json.dump(updates_json, outfile, indent=4, use_decimal=True)
                 else:
-                    print('nothing to update - waiting 30 seconds')
-                    sleep(30)
+                    print('nothing to update - waiting 120 seconds')
+                    sleep(120)
 
                 print('out of ' + str(len(query_results)) + ' keeping ' + str(len(valid_pools_needing_updates)) + ' that have working tickers')
 

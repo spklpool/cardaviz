@@ -8,7 +8,7 @@ cardaviz_secret_id = os.environ.get('cardaviz_secret_id')
 token = os.environ.get('DIGITALOCEAN_ACCESS_TOKEN')
 
 droplet = digitalocean.Droplet(token=token,
-                                name='Cardaviz2',
+                                name='Cardaviz1',
                                 user_data="""#!/bin/bash
 apt update -y 
 ant upgrade -y
@@ -56,7 +56,7 @@ systemctl restart nginx
                                 region='nyc3',
                                 ssh_keys=['f9:c9:f9:d0:15:8a:5d:68:02:f5:9d:26:66:ff:a9:7f'],
                                 image='ubuntu-22-04-x64',
-                                size_slug='s-1vcpu-1gb-intel',
+                                size_slug='s-2vcpu-4gb-amd',
                                 backups=False)
 
 

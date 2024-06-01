@@ -87,12 +87,12 @@ def is_in_quiet_period(network='mainnet'):
 def get_latest_epoch(network='mainnet'):
     conn = None
     try:
-        five_hours_ago = datetime.utcnow() - timedelta(hours=5)
-        date_time_threshold_string = five_hours_ago.strftime("%Y-%m-%d %H:%M:%S")
+        #five_hours_ago = datetime.utcnow() - timedelta(hours=5)
+        #date_time_threshold_string = five_hours_ago.strftime("%Y-%m-%d %H:%M:%S")
         params = config(network + '.ini')
         conn = psycopg2.connect(**params)
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        query = "SELECT MAX(NO) as latest_epoch FROM epoch WHERE start_time < \'" + date_time_threshold_string + "\';"
+        query = "SELECT MAX(NO) as latest_epoch FROM epoch;"
         cursor.execute(query)
         result = cursor.fetchall()
         return_value = result[0]['latest_epoch']
@@ -386,6 +386,7 @@ def add_missing_pools(network='mainnet'):
             json.dump(pool_json, outfile, indent=4, use_decimal=True)
 
 def add_all_missing_epochs(map_of_pool_jsons, network='mainnet'):
+    latest_epoch = get_latest_epoch()
     tickers_json = json.load(open('static/' + network + '_tickers.json'))
     current_count = 0
     pool_keys = map_of_pool_jsons.keys()
@@ -398,13 +399,19 @@ def add_all_missing_epochs(map_of_pool_jsons, network='mainnet'):
             missing_epochs = get_missing_epochs(pool_json)
             if len(missing_epochs) > 0:
                 for index in range(0, len(missing_epochs)):
-                    print('adding missing epochs for pool ' + str(current_count) + ' of ' + str(total_count) + ' ' + pool_ticker + ' updating epoch ' + str(index) + ' of ' + str(len(missing_epochs)) + ' missing epochs')
+                    print('adding missing epochs for pool ' + str(current_count) + ' of ' + 
+                            str(total_count) + ' ' + pool_ticker + ' updating epoch ' + 
+                            str(index) + ' of ' + str(len(missing_epochs)) + ' missing epochs')
                     refresh_epoch(pool_json, pool_id, missing_epochs[index])
                 recalculate_pool(pool_json)
                 reorder_pool(pool_json)
                 pool_file_path = base_data_folder +  '/' + network + '_data/' + pool_id + '.json'
                 with open(pool_file_path, 'w') as outfile:
                     json.dump(pool_json, outfile, indent=4, use_decimal=True)
+            else:
+                latest_epoch = get_latest_epoch()
+                print('no missing epochs for pool ' + pool_ticker + ' at epoch ' + str(latest_epoch))
+                
     return "done"
 
 def recalculate_pool(pool_json):

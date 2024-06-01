@@ -79,16 +79,22 @@ class MissingEpochsThread(BackgroundThread):
         logging.info('MissingEpochsThread stopped')
 
     def handle(self) -> None:
-        print('updating tickers')
-        get_all_tickers()
-        reset_tickers(self.map_of_pool_jsons)
-        print('adding any missing pools')
-        add_missing_pools()
-        print('adding any missing epochs for all pools')
-        add_all_missing_epochs(self.map_of_pool_jsons)
-        sleep(60)
-        print('done adding any missing epochs for all pools')
-
+        if is_in_quiet_period():
+            print('MissingEpochsThread - in quiet period.  waiting 10 seconds')
+            sleep(10)
+        else:
+            try:
+                print('MissingEpochsThread - updating tickers')
+                get_all_tickers()
+                reset_tickers(self.map_of_pool_jsons)
+                print('MissingEpochsThread - adding any missing pools')
+                add_missing_pools()
+                print('MissingEpochsThread - adding any missing epochs for all pools')
+                add_all_missing_epochs(self.map_of_pool_jsons)
+                sleep(60)
+                print('MissingEpochsThread - done adding any missing epochs for all pools')
+            except (Exception, psycopg2.DatabaseError) as error:
+                print("MissingEpochsThread - Error: " + str(error))
 
 
 class UpdateThread(BackgroundThread):
@@ -175,7 +181,7 @@ class UpdateThread(BackgroundThread):
                         print(metadata_error)
 
             except (Exception, psycopg2.DatabaseError) as error:
-                print("Error: " + str(error))
+                print("UpdateThread - Error: " + str(error))
             finally:
                 if conn is not None:
                     conn.close()

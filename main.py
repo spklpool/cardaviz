@@ -9,6 +9,9 @@ from ranking_evaluator import evaluate_ranking
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from background_thread import UpdateThread, MissingEpochsThread
+from treasury import get_treasury_withdrawals_from_database, get_treasury_withdrawal_details_from_database, \
+                     get_votes_for_gov_action_from_database, get_reserves_from_database, get_pots_from_database
+
 
 data_folder = '/var/www/html/mainnet_data/'
 
@@ -110,7 +113,7 @@ def get_pool_search():
 
 @app.route("/ranking/<ranking_name>")
 def get_ranking(ranking_name):
-    ranking = evaluate_ranking(map_of_pool_jsons, ranking_name, 5)
+    ranking = evaluate_ranking(map_of_pool_jsons, ranking_name, 10)
     for pool in ranking['results']:
         print(pool['ticker'])
     return render_template('ranking.html', ranking=ranking)
@@ -119,3 +122,14 @@ def get_ranking(ranking_name):
 @app.route("/data/<pool_ticker>.json")
 def get_pool_epochs(pool_ticker):
     return map_of_pool_jsons[pool_ticker.upper()]
+
+
+@app.route("/treasury_withdrawals")
+def get_treasury_withdrawals():
+    return get_treasury_withdrawals_from_database()
+
+
+@app.route("/treasury")
+def get_treasury():
+    return render_template('treasury.html')
+

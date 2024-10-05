@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" href="/static/favicon.svg" sizes="any" type="image/svg+xml" />
+<style>
+    html,
+    body {
+        margin: 0;
+        height: 100%;
+        width: 100%;
+    }
+    canvas[resize] {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+</head>
+<body  class="fullscreen" style="background-color: black;">
+<script type="text/javascript" src="../static/js/paper-full.js"></script>
+<script type="text/javascript" src="../static/js/PaperSankeyDiagram.js"></script>
+<script>
+
+var data_fetch_completed = false;
+var ready_to_render = false;
+var is_rendering = false;
+var treasury_withdrawals_json = null;
+var canvas = null;
+
+function fetch_data() {
+    var treasury_withdrawals_url = '/treasury_withdrawals';
+    console.log('fetching treasury withdrawals json from ' + treasury_withdrawals_url);
+    fetch(treasury_withdrawals_url)
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        console.log('data fetch completed');
+        treasury_withdrawals_json = data;
+        //console.log(treasury_withdrawals_json);
+        data_fetch_completed = true;
+    })
+    .catch(function (err) {
+        console.log('error: ' + err);
+    });
+}
+
+function draw_if_data_finished_loading() {
+    if (data_fetch_completed) {
+        paper.install(window);
+        canvas = document.getElementById('treasury_visualization');
+        paper.setup(canvas);
+        drawTreasury();
+        first_drawing_complete = true;
+    } else {
+        setTimeout(draw_if_data_finished_loading, 100);
+    }
+}
+
+window.onload = function() {
+    setTimeout(draw_if_data_finished_loading, 100);
+}
+
+window.addEventListener("pageshow", () => {
+    var network = sessionStorage.getItem('network');
+    if (network) {
+        document.getElementById("network").value = network;
+    }
+    fetch_data()
+    console.log('pageshow');
+    sessionStorage.network = document.getElementById("network").value;
+    console.log('network is ' + sessionStorage.network);
+    if (ready_to_render) {
+        drawTreasury();
+    }
+});
+
+window.addEventListener("resize", (event) => {
+    console.log('resize, resize, resize...');
+    if (first_drawing_complete) {
+        draw_if_data_finished_loading();
+    }
+}, true);
+
+function onNetworkChanged() {
+    sessionStorage.network = document.getElementById("network").value;
+    console.log('network changed to ' + sessionStorage.network);
+}
+
+function drawTreasury() {
+    var sankey = new CardanoTreasuryPaperSankeyDiagram(this.canvas, treasury_withdrawals_json, 300, 10, 200, paper.view.size.height);
+}
+
+</script>
+<div>
+<select name="network" id="network" class="selectClass" onchange="onNetworkChanged()">
+  <option value="mainnet">mainnet</option>
+  <option value="sancho">sancho</option>
+</select>
+</div>
+<canvas resize="true" id="treasury_visualization" resize></canvas>
+</body>
+</html>
+

@@ -1,0 +1,51 @@
+[
+    {
+    "label": "Total Supply",
+    "amount": 45000000000,
+    "children": [
+        {
+            "label": "Distribution",
+            "amount": 5185414106,
+            "children": [
+                {
+                    "label": "Cardano Foundation",
+                    "amount": 648176761 
+                },
+                {
+                    "label": "IOHK",
+                    "amount":  2463071701
+                },
+                {
+                    "label": "Emurgo",
+                    "amount":  2074165644
+                }
+            ]
+        },
+        {
+            "label": "Initial sale",
+            "amount": 25927070538 
+        },
+        {
+            "label": "Initial Reserves",
+            "amount":  13887515356,
+            "children": [
+                {
+                    "label": "Treasury",
+                    "amount":  1390000000
+                },
+                {
+                    "label": "Reserves Remaining",
+                    "amount": 8330000000 
+                },
+                {
+                    "label": "Rewards",
+                    "amount":  4167515356
+                }
+            ]
+        }
+        ]
+    },{
+        "label": "Total Supply 2",
+        "amount": 42000000000
+    }
+]

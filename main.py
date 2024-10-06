@@ -11,6 +11,7 @@ from watchdog.events import FileSystemEventHandler
 from background_thread import UpdateThread, MissingEpochsThread
 from treasury import get_treasury_withdrawals_from_database, get_treasury_withdrawal_details_from_database, \
                      get_votes_for_gov_action_from_database, get_reserves_from_database, get_pots_from_database
+from voting import get_drep_votes_from_database, get_pool_votes_from_database, get_vote_timeline_for_pool
 
 
 data_folder = '/var/www/html/mainnet_data/'
@@ -127,6 +128,21 @@ def get_pool_epochs(pool_ticker):
 @app.route("/treasury_withdrawals")
 def get_treasury_withdrawals():
     return get_treasury_withdrawals_from_database()
+
+
+@app.route("/drep/<drep_id>")
+def get_drep(drep_id):
+    return render_template('drep.html', drep_id=drep_id)
+
+
+@app.route("/drep_votes/<drep_id>")
+def get_drep_votes(drep_id):
+    return get_drep_votes_from_database(drep_id)
+
+
+@app.route("/pool_votes/<pool_id>")
+def get_pool_votes(pool_id):
+    return get_vote_timeline_for_pool(pool_id)
 
 
 @app.route("/treasury")

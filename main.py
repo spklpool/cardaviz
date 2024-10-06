@@ -53,8 +53,8 @@ missing_epochs_thread = MissingEpochsThread(map_of_pool_jsons)
 update_thread.start()
 missing_epochs_thread.start()
 
-#directory = 'data/'
-directory = '/var/www/html/mainnet_data/'
+directory = 'data/'
+#directory = '/var/www/html/mainnet_data/'
 
 original_handler = signal.getsignal(signal.SIGINT)
 
@@ -130,9 +130,9 @@ def get_treasury_withdrawals():
     return get_treasury_withdrawals_from_database()
 
 
-@app.route("/drep/<drep_id>")
-def get_drep(drep_id):
-    return render_template('drep.html', drep_id=drep_id)
+@app.route("/voting/<voter_id>")
+def get_drep(voter_id):
+    return render_template('voting.html', voter_id=voter_id)
 
 
 @app.route("/drep_votes/<drep_id>")

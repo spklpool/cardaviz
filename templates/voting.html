@@ -27,7 +27,7 @@ var pool_votes_json = null;
 var canvas = null;
 
 function fetch_data() {
-    var pool_votes_url = '/pool_votes';
+    var pool_votes_url = '/pool_votes/{{voter_id}}';
     console.log('fetching pool votes json from ' + pool_votes_url);
     fetch(pool_votes_url)
     .then(function (response) {
@@ -35,7 +35,7 @@ function fetch_data() {
     })
     .then(function (data) {
         console.log('data fetch completed');
-        pool_votes_json = data;
+        global_data = data;
         data_fetch_completed = true;
     })
     .catch(function (err) {
@@ -48,6 +48,7 @@ function draw_if_data_finished_loading() {
         paper.install(window);
         canvas = document.getElementById('pool_votes_visualization');
         paper.setup(canvas);
+        drawPoolVotes();
         first_drawing_complete = true;
     } else {
         setTimeout(draw_if_data_finished_loading, 100);
@@ -82,7 +83,8 @@ function onNetworkChanged() {
 }
 
 function drawPoolVotes() {
-    
+    chart = new VotingChart(canvas, paper, global_data, document, false);
+    chart.draw(true, true);
 }
 
 </script>

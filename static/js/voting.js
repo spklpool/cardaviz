@@ -1,4 +1,4 @@
-class StakePoolPerformanceChart {
+class VotingChart {
     canvas = null;
     paper = null;
     data = null;
@@ -29,7 +29,7 @@ class StakePoolPerformanceChart {
             this.watermark_enabled = false;
             this.drawing_epoch_numbers = false;
             this.drawing_ticker = true;
-            this.epochWidth = this.paper.view.size.width / this.data['epochs'].length
+            this.epochWidth = this.paper.view.size.width / this.data.length
             this.stroke_width = 1;
         } else {
             this.epochWidth = 30;
@@ -37,11 +37,11 @@ class StakePoolPerformanceChart {
             this.stroke_width = 5;
         }
 
-        this.canvas_required_width = data["epochs"].length * this.epochWidth;
+        this.canvas_required_width = data.length * this.epochWidth;
         if (!this.canvas) {
             this.setupPaper();
         }
-        this.block_height = (this.paper.view.size.height / 2) / (this.data.max_epoch_blocks + 1);
+        this.block_height = 30
         this.blockWidth = this.epochWidth - this.block_to_epoch_width_margin;
     }
 
@@ -143,7 +143,7 @@ class StakePoolPerformanceChart {
         }
         var view_size = this.paper.view.size;
         this.draw_background_solid_rectangle(0, 0, view_size.width, view_size.height, this.background_color);
-        this.draw_matrix_lines(this.data["epochs"].length, view_size.height);
+        this.draw_matrix_lines(this.data.length, view_size.height);
         var max_cumulative_diff_adjustment_buffer = 0.1;
         if (this.drawing_ticker) {
             var gap = view_size.height / 2;
@@ -162,5 +162,5 @@ class StakePoolPerformanceChart {
 }
 
 if (typeof module !== 'undefined') {
-    module.exports = { StakePoolPerformanceChart }
+    module.exports = { VotingChart }
 }

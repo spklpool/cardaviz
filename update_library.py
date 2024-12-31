@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from os.path import exists
 
 
-base_data_folder = './data'
+base_data_folder = '/app/cardaviz/data'
 #base_data_folder = '/var/www/html'
 
 def load_tickers_json(network='mainnet'):

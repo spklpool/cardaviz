@@ -14,7 +14,8 @@ from treasury import get_treasury_withdrawals_from_database, get_treasury_withdr
 from voting import get_drep_votes_from_database, get_pool_votes_from_database, get_vote_timeline_for_pool
 
 
-data_folder = './mainnet_data/'
+#data_folder = '/var/www/html/mainnet_data/'
+data_folder = '/app/cardaviz/data/mainnet_data/'
 
 class DataFileChangedHandler(FileSystemEventHandler):
     def on_modified(self, event):

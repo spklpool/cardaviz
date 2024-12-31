@@ -10,8 +10,8 @@ from datetime import datetime, timedelta
 from os.path import exists
 
 
-#base_data_folder = './data'
-base_data_folder = '/var/www/html'
+base_data_folder = './data'
+#base_data_folder = '/var/www/html'
 
 def load_tickers_json(network='mainnet'):
         return json.load(open('static/' + network + '_tickers.json'))

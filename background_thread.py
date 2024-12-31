@@ -14,7 +14,7 @@ from thread_safe_objects import ThreadSafeDictOfPoolJson
 
 
 TASKS_QUEUE = Queue()
-data_folder = '/var/www/html/mainnet_data/'
+data_folder = './mainnet_data/'
 
 class BackgroundThread(threading.Thread, ABC):
     def __init__(self):

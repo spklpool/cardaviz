@@ -14,8 +14,8 @@ from treasury import get_treasury_withdrawals_from_database, get_treasury_withdr
 from voting import get_drep_votes_from_database, get_pool_votes_from_database, get_vote_timeline_for_pool
 
 
-#data_folder = '/var/www/html/mainnet_data/'
-data_folder = '/app/cardaviz/data/mainnet_data/'
+data_folder = '/var/www/html/mainnet_data/'
+#data_folder = '/app/cardaviz/data/mainnet_data/'
 
 class DataFileChangedHandler(FileSystemEventHandler):
     def on_modified(self, event):
@@ -54,7 +54,7 @@ missing_epochs_thread = MissingEpochsThread(map_of_pool_jsons)
 update_thread.start()
 missing_epochs_thread.start()
 
-directory = 'data/'
+directory = '/app/cardaviz/data/mainnet_data/'
 #directory = '/var/www/html/mainnet_data/'
 
 original_handler = signal.getsignal(signal.SIGINT)

@@ -14,8 +14,9 @@ from treasury import get_treasury_withdrawals_from_database, get_treasury_withdr
 from voting import get_drep_votes_from_database, get_pool_votes_from_database, get_vote_timeline_for_pool
 
 
-data_folder = '/var/www/html/mainnet_data/'
-#data_folder = '/app/cardaviz/data/mainnet_data/'
+#data_folder = '/var/www/html/mainnet_data/'
+data_folder = '/app/cardaviz/data/mainnet_data/'
+os.mkdir(data_folder)
 
 class DataFileChangedHandler(FileSystemEventHandler):
     def on_modified(self, event):
@@ -54,8 +55,7 @@ missing_epochs_thread = MissingEpochsThread(map_of_pool_jsons)
 update_thread.start()
 missing_epochs_thread.start()
 
-directory = '/app/cardaviz/data/mainnet_data/'
-#directory = '/var/www/html/mainnet_data/'
+
 
 original_handler = signal.getsignal(signal.SIGINT)
 
@@ -72,12 +72,10 @@ try:
 except ValueError as e:
     logging.error(f'{e}. Continuing execution...')
 
-logging.info('starting to monitor directory [' + directory + '] for changes')
 event_handler = DataFileChangedHandler()
 observer = Observer()
-observer.schedule(event_handler, path=directory, recursive=False)
+observer.schedule(event_handler, path=data_folder, recursive=False)
 observer.start()
-logging.info('directory monitoring started')
 
 original_handler = signal.getsignal(signal.SIGINT)
 

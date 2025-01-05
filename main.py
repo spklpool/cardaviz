@@ -16,7 +16,15 @@ from voting import get_drep_votes_from_database, get_pool_votes_from_database, g
 
 #data_folder = '/var/www/html/mainnet_data/'
 data_folder = '/app/cardaviz/data/mainnet_data/'
-os.mkdir(data_folder)
+
+try:
+    os.mkdir(data_folder)
+except FileExistsError:
+    print(f"Directory '{data_folder}' already exists. Moving on.")
+except PermissionError:
+    print(f"Permission denied: Unable to create '{data_folder}'.")
+except Exception as e:
+    print(f"An error occurred: {e}")
 
 class DataFileChangedHandler(FileSystemEventHandler):
     def on_modified(self, event):

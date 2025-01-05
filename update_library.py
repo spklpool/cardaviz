@@ -371,7 +371,7 @@ def add_missing_pools(network='mainnet'):
     for ticker in tickers_to_update:
         pool_id = tickers_json[ticker]
         pool_json = {}
-        pool_json['id'] = id
+        pool_json['id'] = pool_id
         pool_json['ticker'] = ticker
         pool_json['epochs'] = []
         progress_count += 1
